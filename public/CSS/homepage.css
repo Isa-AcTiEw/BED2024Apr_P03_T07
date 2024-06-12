@@ -1,0 +1,122 @@
+
+/*Nav styling*/
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    background-color: rgba(24, 110, 209, 0.5) !important;
+    color: rgb(255, 255, 255) !important;
+    border-radius: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    /* Add any additional styling as needed */
+}
+
+.navbar-collapse {
+    justify-content: space-around;
+    display: flex;
+    flex-basis: 1;
+    font-size: 2rem;
+    font-family:'Poppins';
+    }
+
+.navbar-collapse > ul.navbar-nav > li.nav-item a.nav-link{
+    margin-right:5rem;
+    margin-left: 5rem;
+}
+
+
+
+.navbar-brand{
+    font: 2rem "Poppins";
+    color: #4954c7;
+}
+
+.mission-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.about-desc{
+    padding: 10px;
+    font-family: "Poppins";
+    font-size: 20px;
+}
+
+
+.card{
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 20px;
+    
+    
+}
+
+.card-header{
+    padding: 10px;
+    background-color: blanchedalmond;
+    text-align: center;
+}
+
+
+.img-fluid{
+    align-self: center;
+}
+
+.col-md-6{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+}
+
+.container-contacts h1{
+    text-align: center;
+    font-family: "Poppins";
+}
+
+.container-announcements{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: 10px auto;
+    padding: 10px;
+    width: auto;
+    height: auto;
+    
+    
+}
+
+.announcements{
+    margin-top: 10px;
+    padding: 10px;
+    width: auto;
+    height: auto;
+    background-color: antiquewhite;
+    align-items: center;
+    border-radius:5px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.ann-desc>p{
+    font-family: "Poppins";
+    font-size: 2rem;
+    
+}
+
+.ann-date>p{
+    font-family: "Poppins";
+    font-size: 2rem;
+    color: royalblue;
+    
+}
+
+
+
