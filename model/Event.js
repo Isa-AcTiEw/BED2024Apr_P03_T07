@@ -1,10 +1,12 @@
-const sql = require("mssql");
-const dbConfig = require("../dbConfig");
-class EventMgr extends Account{
-    constructor(EventMgrID){
-        //Inherit the accountID attribute from Account class
-        super(AccID)
-        this.AccID = EventMgrID
+class Event{
+    constructor(EventName,EventDesc,EventPrice,EventDate,
+    EventCat,EventLocation,EventRegEndDate,EventMgrID,EventIntake){
+        this.EventName = EventName,
+        this.EventDesc = EventDesc,
+        this.EventPrice = EventPrice,
+        this.EventRegEndDate = EventRegEndDate,
+        this.EventMgrID = EventMgrID,
+        this.EventIntake = EventIntake
     }
 
     // retrive all events based on EventID
@@ -15,19 +17,6 @@ class EventMgr extends Account{
         sqlQuery.input("EventID",id)
         const request = connection.request();
         const result = await request.query(sqlQuery);
-        return result.recordset.map
-        ((row) => new Event(row.EventName,row.EventDesc,row.EventPrice,row.EventDate,row.EventCat,row.EventLocation,row.EventRegEndDate,row.EventIntake));
-
-    }
-
-    // retrive all events managed by a specific event manager e.g. Ae00001
-    static async getAllEventsByEventMgrID(id){
-        const connection = await sql.connect();
-        const sqlQuery = `SELECT * FROM Event WHERE EventMgrID = @EventMgrID`
-        sqlQuery.input("EventMgrID",id);
-        const request = connection.request();
-        const result = await request.query(sqlQuery)
-        // In the recordset returned (num rows) map it to the Event class
         return result.recordset.map
         ((row) => new Event(row.EventName,row.EventDesc,row.EventPrice,row.EventDate,row.EventCat,row.EventLocation,row.EventRegEndDate,row.EventIntake));
 
@@ -65,5 +54,4 @@ class EventMgr extends Account{
         console.log(`Number of rows affected ${rowsAffected} in Event database`);
 
     }
-    
 }
