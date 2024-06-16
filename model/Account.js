@@ -9,4 +9,5 @@ class Account {
     }
     // All the methods for Account class
 }
+module.exports = Account;
 
