@@ -23,8 +23,18 @@ class Event{
         const request = connection.request();
         request.input("EventID",id);
         const result = await request.query(sqlQuery);
+        connection.close()
         return result.recordset.map
-        ((row) => new Event(row.EventName,row.EventDesc,row.EventPrice,row.EventDate,row.EventCat,row.EventLocation,row.EventRegEndDate,row.EventIntake));
+        ((row) => 
+            new Event(
+                     row.EventName,
+                     row.EventDesc,
+                     row.EventPrice,
+                     row.EventDate,
+                     row.EventCat,
+                     row.EventLocation,
+                     row.EventRegEndDate,
+                     row.EventIntake));
 
     }
 
@@ -46,6 +56,7 @@ class Event{
         request.input("EventRegEndDate",Event.EventRegEndDate);
         request.input("EventIntake",Event.EventIntake);
         const result = await request.query(sqlQuery);
+        connection.close();
         return this.getEventByID(id);
     }
 
@@ -53,11 +64,12 @@ class Event{
     static async deleteEvent(id){
         const connection = await sql.connect();
         const sqlQuery = `DELETE FROM Event WHERE EventID = @EventID`
-        sqlQuery.input("EventID",id);
         const request = connection.request();
+        request.input("EventID",id);
         const result = await request.query(sqlQuery);
         const rowsAffected = result.rowsAffected;
-        console.log(`Number of rows affected ${rowsAffected} in Event database`);
+        connection.close();
+        return rowsAffected;
 
     }
 }
