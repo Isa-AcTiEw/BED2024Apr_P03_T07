@@ -17,6 +17,7 @@ class EventMgr extends Account{
         const request = connection.request();
         request.input("EventMgrID",id);
         const result = await request.query(sqlQuery);
+        connection.close();
         // it works
         return result.recordset.map(
             (row) => 
