@@ -5,24 +5,20 @@ const controller = require("./controller/controller");
 const bodyParser = require("body-parser");
 // Middleware to serve static files from the "public" directory
 const staticMiddlewarePublic = express.static('./public');
-
-
-
-
-
-
+// New variabe storing the port environment variable
+const port = process.env.PORT || 3000;
 const app = express();
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddlewarePublic); // Mount the static middleware
 
+// dirname gets the path of the file in html
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// New variabe storing the port environment variable
-const port = process.env.PORT || 3000;
+
 
 
 // Testing our database connection
