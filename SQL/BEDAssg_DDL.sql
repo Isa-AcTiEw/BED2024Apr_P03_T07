@@ -1,4 +1,8 @@
----- Create Account Table
+-- CREATE DATABASE bedAssg_db
+
+-- USE bedAssg_db
+
+-- Create Account Table
 CREATE TABLE Account(
 	AccID varchar(10) NOT NULL,
 	AccName varchar(30) NOT NULL,
@@ -6,9 +10,7 @@ CREATE TABLE Account(
 	AccCtcNo int NOT NULL,
 	AccDOB smalldatetime NOT NULL,
 	AccAddr varchar(100) NOT NULL
-	CONSTRAINT PK_Account PRIMARY KEY (AccID)
-	
-	
+	CONSTRAINT PK_Account PRIMARY KEY (AccID)	
 );
 
 CREATE TABLE EventMgr(
@@ -17,9 +19,6 @@ CREATE TABLE EventMgr(
 	CONSTRAINT FK_EventMgr_Account 
 		FOREIGN KEY(EventMgrID)REFERENCES Account(AccID)
 );
-
-
-
 
 CREATE TABLE Event(
 	EventID varchar(10) NOT NULL,
@@ -41,4 +40,3 @@ CREATE TABLE Event(
 	CONSTRAINT FK_Event_EventMgr
 		FOREIGN KEY (EventMgrID) REFERENCES EventMgr(EventMgrID)
 );
-

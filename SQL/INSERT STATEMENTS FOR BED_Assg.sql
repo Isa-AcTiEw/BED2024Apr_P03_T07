@@ -25,9 +25,3 @@ Values
 ('Ev00005', 'Learning Generative A.I.', 
 'Hone your generative A.I. skills learn how to prompt effectively and understand the ethical concerns of generative A.I.', 
 '0', '2024-07-14' , 'Lifelong Learning', 'Bishan Community Club', '2024-06-30', 'Ae00001', '300')
-
-
-
-
-
-

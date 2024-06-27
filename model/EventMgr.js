@@ -9,7 +9,6 @@ class EventMgr extends Account{
         this.AccID = EventMgrID
     }
 
-
     // retrive all events managed by a specific event manager e.g. Ae00001
     static async getAllEventsByEventMgrID(id){
         const connection = await sql.connect();
@@ -31,15 +30,9 @@ class EventMgr extends Account{
              row.EventLocation,
              row.EventRegEndDate,
              row.EventMgrID,
-             row.EventIntake
-                            
+             row.EventIntake       
             )
           ); // Convert rows to Book objects
-
-
     }
-
-    
-    
 }
 module.exports = EventMgr;
