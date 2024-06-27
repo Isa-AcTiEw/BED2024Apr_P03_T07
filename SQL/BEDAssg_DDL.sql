@@ -40,3 +40,58 @@ CREATE TABLE Event(
 	CONSTRAINT FK_Event_EventMgr
 		FOREIGN KEY (EventMgrID) REFERENCES EventMgr(EventMgrID)
 );
+
+-- Create Admin table
+CREATE TABLE Admin(
+	AdminID varchar(10) NOT NULL,
+	CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
+	CONSTRAINT FK_EventMgr_Account 
+		FOREIGN KEY(AdminID)REFERENCES Account(AccID)
+);
+
+-- Create Announcement table
+CREATE TABLE Announcement(
+	AnnID varchar(10) NOT NULL,
+	AnnName varchar(30) NOT NULL,
+	AnnDesc varchar(300) NOT NULL,
+	AnnSchDate smalldatetime NOT NULL,
+	AnnEndDate smalldatetime NOT NULL,
+	CONSTRAINT CHK_AnnEndDate 
+		CHECK(AnnEndDate > AnnSchDate),
+	CONSTRAINT PK_AnnID PRIMARY KEY (AnnID),
+	CONSTRAINT FK_Announcement_Admin
+		FOREIGN KEY(AnnID)REFERENCES Admin(AdminID)
+);
+
+-- Create Feedback table
+CREATE TABLE Feedback(
+	FbkID varchar(10) NOT NULL,
+	FbkName varchar(30) NOT NULL,
+	FbkDateTime smalldatetime NOT NULL,
+	CONSTRAINT PK_Feedback PRIMARY KEY (FbkID),
+	CONSTRAINT FK_Feedback_Account
+		FOREIGN KEY (FbkID) REFERENCES Account(AnnID)
+);
+
+-- Create FacilitiesMgr table
+CREATE TABLE FacilitiesMgr(
+	FacMgrID varchar(10) NOT NULL,
+	CONSTRAINT PK_FacMgrID PRIMARY KEY (FacMgrID),
+	CONSTRAINT FK_FacilitiesMgr_Account 
+		FOREIGN KEY(FacMgrID)REFERENCES Account(AccID)
+);
+
+-- Create Facilities table
+CREATE TABLE Facilities (
+    FacID varchar(10) NOT NULL PRIMARY KEY,
+    FacName varchar(50) NOT NULL,
+    FacDesc varchar(255) NULL
+);
+
+-- Create FacTimeSlot table (Weak Entity)
+CREATE TABLE FacTimeSlot (
+    FacID varchar(10) NOT NULL,
+    TimeSlotSN varchar(20) NOT NULL,
+    PRIMARY KEY (FacID, TimeSlotSN),
+    FOREIGN KEY (FacID) REFERENCES Facilities(FacID)
+);
