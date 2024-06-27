@@ -1,0 +1,33 @@
+.nav-item.eventMgr a{
+    font-family: "Poppins";
+    font-size: 1.5rem;
+}
+
+.nav-pills .nav-link:hover,
+.nav-pills .nav-link.active {
+    background-color: rgba(24, 110, 209, 0.5) !important;
+    color: black;
+    border-radius: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 10px;
+    /* Add any additional styling as needed */
+}
+
+.table.eventMgr.bdr{
+    width: 90%;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+  
+  thead.theaders th{
+    background-color:black;
+    color:white;
+  }
+  
+  .bdr {
+    border-radius: 6px;
+    overflow: hidden;
+  }
+
+  /* Make the table responsive */
