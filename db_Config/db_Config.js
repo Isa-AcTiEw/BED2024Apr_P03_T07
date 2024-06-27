@@ -1,7 +1,7 @@
 require('dotenv').config();
 module.exports = {
-    user:process.env.isaac_DB_USERNAME,
-    password:process.env.isaac_DB_PASSWORD,
+    user:process.env.DB_USERNAME,
+    password:process.env.DB_PASSWORD,
     server:"localhost",
     database:process.env.isaac_DB_NAME,
     trustServerCertificate: true,
