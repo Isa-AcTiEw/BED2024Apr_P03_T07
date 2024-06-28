@@ -1,7 +1,8 @@
 const sql = require("mssql");
+const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./db_Config/db_Config");
-const controller = require("./controller/controller");
+const eventController = require("./controller/eventController");
 const bodyParser = require("body-parser");
 // Middleware to serve static files from the "public" directory
 const staticMiddlewarePublic = express.static('./public');
@@ -45,7 +46,11 @@ process.on("SIGINT", async () => {
   process.exit(0); // Exit with code 0 indicating successful shutdown
 });
 
-// implement our routes 
-app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
-app.delete('/EventMgr/:id',controller.deleteEvent);
+// implement our routes (delete,create and get works. Update (patch) not working)
+app.get('/EventMgr/:id',eventController.getAllEventsByEventMgrID);
+app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
+app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
+app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
+
+// http://localhost:3000/EventMgr/eventMgr.html
 
