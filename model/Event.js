@@ -1,18 +1,18 @@
 const sql = require('mssql')
-const dbConfig = require("../config/db_Config");
+const dbConfig = require("../db_Config/db_Config");
 class Event{
     constructor(EventID,EventName,EventDesc,EventPrice,EventDate,
     EventCat,EventLocation,EventRegEndDate,EventMgrID,EventIntake){
-        this.EventID = EventID;
-        this.EventName = EventName;
-        this.EventDesc = EventDesc;
-        this.EventPrice = EventPrice;
-        this.EventDate = EventDate;
-        this.EventCat = EventCat;
-        this.EventLocation = EventLocation;
-        this.EventRegEndDate = EventRegEndDate;
-        this.EventMgrID = EventMgrID;
-        this.EventIntake = EventIntake;
+        this.EventID = EventID
+        this.EventName = EventName,
+        this.EventDesc = EventDesc,
+        this.EventPrice = EventPrice,
+        this.EventDate =EventDate,
+        this.EventCat = EventCat,
+        this.EventLocation = EventLocation,
+        this.EventRegEndDate = EventRegEndDate,
+        this.EventMgrID = EventMgrID,
+        this.EventIntake = EventIntake
     }
 
     // retrive all events based on EventID
@@ -72,5 +72,7 @@ class Event{
         return rowsAffected;
 
     }
+
+    // create the event and store in db table
 }
 module.exports = Event;
