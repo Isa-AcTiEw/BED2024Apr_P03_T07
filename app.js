@@ -4,11 +4,14 @@ const express = require("express");
 const dbConfig = require("./config/db_Config");
 const controller = require("./controller/controller");
 const bodyParser = require("body-parser");
+
 // Middleware to serve static files from the "public" directory
 const staticMiddlewarePublic = express.static('./public');
+
 // New variabe storing the port environment variable
 const port = process.env.PORT || 3000;
 const app = express();
+
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
@@ -18,6 +21,16 @@ app.use(staticMiddlewarePublic); // Mount the static middleware
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
+
+// dirname gets the path of the file in html
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/Admin/adminpage.html');
+});
+
+// implement our routes 
+app.get('/Announcements', controller.getAllAnnouncements)
+app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
+app.delete('/EventMgr/:id',controller.deleteEvent);
 
 
 // Testing our database connection
@@ -44,8 +57,5 @@ process.on("SIGINT", async () => {
   process.exit(0); // Exit with code 0 indicating successful shutdown
 });
 
-// implement our routes 
-app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
-app.delete('/EventMgr/:id',controller.deleteEvent);
 
 

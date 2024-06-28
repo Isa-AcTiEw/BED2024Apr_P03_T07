@@ -3,7 +3,106 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Admin Panel</title>
+    <title>Admin Panel - Announcements</title>
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="../Js/bootstrap.bundle.min.js" defer></script>
+    <script src="../Js/announcement.js"></script>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      div.login-form {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 400px;
+      }
+
+      .custom-bg {
+          background-color: teal;
+          border: 1px solid teal;
+      }
+
+      .custom-bg:hover {
+          background-color: darkcyan;
+          border-color: darkcyan;
+      }
+
+      body {
+          font-family: 'Poppins', sans-serif;
+          background-color: #f0f0f0;
+      }
+
+      .custom-alert {
+          position: fixed;
+          top: 10px;
+          right: 10px;
+          z-index: 1000;
+      }
+
+      #menu{
+        position: fixed;
+        height: 100%;
+      }
+
+      @media screen and (max-width:650px){
+        #menu{
+          height: auto;
+          width: 100%;
+        }
+        #main-content{
+          margin-top:60px;
+        }
+      }
+  </style>
   </head>
+
+<body class = "bg-light">
+
+  <div class="container-fluid bg-dark text-light p-3 d-flex align-items-center justify-content-between sticky-top">
+    <h3 class="mb-0">WEBSITE</h3>
+    <a href="adminlogin.html" class="btn btn-light btn-sm">LOG OUT</a>
+  </div>
+
+  <div class="col-lg-2 bg-dark border-top border-3 border-secondary" id="menu">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid flex-lg-column align-items-stretch">
+        <h4 class="mt-2 text-light">ADMIN PANEL</h4> 
+        <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminDropdown" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="adminDropdown">
+          <ul class="nav nan-pills flex-column">
+            <li class="nav-items">
+              <a class="nav-link text-white" href="#">Announcements</a>
+            </li>
+            <li class="nav-items">
+              <a class="nav-link text-white" href="feedback.html">Feedbacks</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="container-fluid" id="main-content">
+    <div class="row">
+        <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+            <h3 class="mb-4">Announcements</h3>
+            <div id="ann-list"></div>
+        </div>
+    </div>
+</div>
+
+<script src="path/to/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 </body>
 </html>
