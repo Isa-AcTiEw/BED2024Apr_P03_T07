@@ -20,8 +20,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
 // Testing our database connection
 app.listen(port, async () => {
   try {
@@ -49,4 +47,5 @@ process.on("SIGINT", async () => {
 // implement our routes 
 app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
+
 

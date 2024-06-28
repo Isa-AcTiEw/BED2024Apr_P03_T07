@@ -1,6 +1,7 @@
 const Event = require('../model/Event');
 const Account = require('../model/Account');
 const EventMgr = require('../model/EventMgr');
+
 // Handle the routes from the EventMgr page 
 const getAllEventsByEventMgrID = async (req,res) =>{
     try {
@@ -29,9 +30,10 @@ const deleteEvent = async (req,res) =>{
   }
 }
 
+
 module.exports = {
     getAllEventsByEventMgrID,
-    deleteEvent
+    deleteEvent,
   };
 
 
