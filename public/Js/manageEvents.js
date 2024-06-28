@@ -1,4 +1,4 @@
-
+//  do not tie to loginBtn
 const eventMgrID = localStorage.getItem('id');
 window.addEventListener('load',handleEvents(eventMgrID));
 
@@ -30,6 +30,10 @@ function displayEvents(listEvent){
     const tableBody = document.getElementById('tableBody');
     // testdata works need to overwrite all table rows 
     createrows(listEvent,tableBody);
+    
+    
+    
+
 }
 
 function createrows(listEvent,tableBody){
@@ -55,6 +59,8 @@ function createrows(listEvent,tableBody){
         </tr>
         `
         tableBody.innerHTML = rowContent
+
+        
     });
 }
 
