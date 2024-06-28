@@ -1,5 +1,5 @@
 const sql = require('mssql')
-const dbConfig = require("../db_Config/db_Config");
+const dbConfig = require("../db_Config");
 class Event{
     constructor(EventID,EventName,EventDesc,EventPrice,EventDate,
     EventCat,EventLocation,EventRegEndDate,EventMgrID,EventIntake){
