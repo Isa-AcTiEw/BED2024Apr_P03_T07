@@ -35,7 +35,8 @@ VALUES
 
 INSERT INTO Admin
 VALUES
-('ADM001');
+('ADM001','iamadmin','123456');
+
 
 INSERT INTO Announcement
 VALUES
