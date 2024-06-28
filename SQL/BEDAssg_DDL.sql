@@ -1,3 +1,6 @@
+-- CREATE DATABASE bedAssg_db
+-- USE bedAssg_db
+
 --DDL
 ---- Drop foreign key constraints
 --ALTER TABLE Booking DROP CONSTRAINT FK_Booking_Account;
