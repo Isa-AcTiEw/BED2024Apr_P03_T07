@@ -20,8 +20,6 @@ app.get('/', (req, res) => {
 });
 
 
-
-
 // Testing our database connection
 app.listen(port, async () => {
   try {
@@ -53,4 +51,5 @@ app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
 
 // http://localhost:3000/EventMgr/eventMgr.html
+
 
