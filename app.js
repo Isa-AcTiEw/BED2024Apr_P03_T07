@@ -1,7 +1,7 @@
 require('dotenv').config();
 const sql = require("mssql");
 const express = require("express");
-const dbConfig = require("./db_Config");
+const dbConfig = require("./config/db_Config");
 const controller = require("./controller/controller");
 const bodyParser = require("body-parser");
 // Middleware to serve static files from the "public" directory

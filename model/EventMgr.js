@@ -1,5 +1,5 @@
 const sql = require("mssql");
-const dbConfig = require("../db_Config");
+const dbConfig = require("../config/db_Config");
 const Account = require("./Account");
 const Event = require("./Event");
 class EventMgr extends Account{
