@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Login Panel</title>
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="../Js/bootstrap.bundle.min.js" defer></script>
+    <script src="../Js/adminlogin.js" defer></script>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../CSS/admin.css">
+    <style>
+        div.login-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+        }
+        .custom-bg {
+            background-color: teal;
+            border: 1px solid teal;
+        }
+        .custom-bg:hover {
+            background-color: darkcyan;
+            border-color: darkcyan;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .custom-alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <div class="login-form text-center rounded bg-white shadow overflow-hidden">
+        <form id="loginForm">
+            <h4 class="bg-dark text-white py-3">ADMIN LOGIN PANEL</h4>
+            <div class="p-4">
+                <div class="mb-3">
+                    <input name="admin_name" required type="text" class="form-control shadow-none text-center" placeholder="Admin Name">
+                </div>
+                <div class="mb-4">
+                    <input name="admin_pass" required type="password" class="form-control shadow-none text-center" placeholder="Password">
+                </div>
+                <button type="submit" class="btn custom-bg text-white">LOGIN</button>
+            </div>
+        </form>
+    </div>
+    <div id="alertPlaceholder"></div>
+</body>
+</html>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
+
+        const frmData = {
+            admin_name: document.querySelector('input[name="admin_name"]').value,
+            admin_pass: document.querySelector('input[name="admin_pass"]').value
+        };
+
+        function filteration(data) {
+            for (let key in data) {
+                if (data.hasOwnProperty(key)) {
+                    data[key] = data[key].trim();
+                    data[key] = data[key].replace(/\\(.)/g, "$1"); // Simulate stripcslashes
+                    data[key] = escapeHTML(data[key]); // Simulate htmlspecialchars
+                    data[key] = stripTags(data[key]); // Simulate strip_tags
+                }
+            }
+            return data;
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(str));
+            return div.innerHTML;
+        }
+
+        function stripTags(str) {
+            return str.replace(/<\/?[^>]+(>|$)/g, "");
+        }
+
+        const filteredData = filteration(frmData);
+
+        try {
+            const response = await fetch('http://localhost:3000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(filteredData)
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                sessionStorage.setItem('adminLogin', true);
+                sessionStorage.setItem('adminId', result.adminId);
+                window.location.href = 'adminpage.html';
+
+            } else {
+                showAlert('error', 'Login failed - Invalid Credentials!');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            showAlert('error', 'An error occurred. Please try again.');
+        }
+    });
+
+    function showAlert(type, msg) {
+        const alertPlaceholder = document.getElementById('alertPlaceholder');
+        const alert = document.createElement('div');
+        alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+        alert.innerHTML = `
+            <strong>${msg}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        alertPlaceholder.appendChild(alert);
+        setTimeout(() => {
+            alert.remove();
+        }, 5000);
+    }
+</script>
