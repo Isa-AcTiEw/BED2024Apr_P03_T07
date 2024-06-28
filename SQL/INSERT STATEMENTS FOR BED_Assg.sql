@@ -1,27 +1,83 @@
-INSERT INTO Account Values
-('Ae00001','Johnathan Foo','johnFoo@OneSGEvents.com','90836789','1998/04/14','7 One-North Residences, #10-10')
+USE bedAssg_db;
+
+INSERT INTO Account 
+VALUES
+('ADM001', 'Admin', '123Admin@gmail.com', '91346128', '1990-02-03', '66 Marine Parade Road, #09-876'),
+('EVT001', 'Event', '123Events@gmail.com', '90836789', '1998-04-14', '7 One-North Residences, #10-10'),
+('FAL001', 'Facilities', '123Faciities@gmail.com', '89203754', '1984-12-25', '15 Pasir Ris Drive 1, #03-20'),
+('ACC002', 'Emily Tan', 'emilytan@gmail.com', '92345678', '1995-08-21', 'Blk 123 Ang Mo Kio Ave 4, #05-12');
 
 INSERT INTO EventMgr
-Values ('Ae00001')
+VALUES 
+('EVT001');
 
-INSERT INTO Event 
-Values
+INSERT INTO Event
+VALUES
 ('Ev00001', 'Mass zumba dancing', 
 'Calling all Elderlies, stay fit and healthy with this mass zumba activity catered especially for you. No learning experience required', 
-'0', '2024-07-14' , 'Active Aging', 'Bishan Community Club', '2024-06-28', 'Ae00001', '300'),
+'0', '2024-07-14' , 'Active Aging', 'Bishan Community Club', '2024-06-28', 'EVT001', '300'),
 
 ('Ev00002', 'Culinary lesson by celebrity chef Eric', 
 'Calling all homecool enthusiasts, hone your skills in cooking local cuisines in this once in a lifetime opportunity taught by Chef Eric', 
-'0', '2024-08-21' , 'Cooking', 'Bishan Community Club', '2024-07-28', 'Ae00001', '80'),
+'0', '2024-08-21' , 'Cooking', 'Bishan Community Club', '2024-07-28', 'EVT001', '80'),
 
 ('Ev00003', 'Chinese calligraphy painting', 
 'Learn more about the chinese culture through the art of traditional chinese calligraphy painting', 
-'0', '2024-09-17' , 'Arts and Culture', 'Bishan Community Club', '2024-08-28', 'Ae00001', '150'),
+'0', '2024-09-17' , 'Arts and Culture', 'Bishan Community Club', '2024-08-28', 'EVT001', '150'),
 
 ('Ev00004', 'New Year''s Eve Countdown Celebration', 
 'Calling all residents usher in 2024 with our annual New Year''s Eve Celebration, accompanied with various performances sure to bring a delight to everyone. ', 
-'0', '2023-12-31' , 'Festivities', 'Bishan Community Club', '2023-12-20', 'Ae00001', '550'),
+'0', '2023-12-31' , 'Festivities', 'Bishan Community Club', '2023-12-20', 'EVT001', '550'),
 
 ('Ev00005', 'Learning Generative A.I.', 
 'Hone your generative A.I. skills learn how to prompt effectively and understand the ethical concerns of generative A.I.', 
-'0', '2024-07-14' , 'Lifelong Learning', 'Bishan Community Club', '2024-06-30', 'Ae00001', '300')
+'0', '2024-07-14' , 'Lifelong Learning', 'Bishan Community Club', '2024-06-30', 'EVT001', '300')
+
+INSERT INTO Admin
+VALUES
+('ADM001','iamadmin','123456');
+
+
+INSERT INTO Announcement
+VALUES
+('ANN001', 'Maintenance', 'We will be performing scheduled maintenance on our website to improve performance and security. The website will be temporarily unavailable from 12:00 AM to 11:59 PM on July 1st. We apologize for any inconvenience this may cause and appreciate your understanding.', 'ADM001'),
+('ANN002', 'Update Your Profile', 'Make sure you don’t miss out on any of our events! Update your profile settings to receive notifications about upcoming events and activities. Stay informed and stay connected.', 'ADM001');
+
+
+INSERT INTO Feedback
+VALUES
+('FBK0001', 'Friendly Staff', '2024-07-25 11:00', 'The staff at the front desk are always friendly and helpful. They make every visit to the community club enjoyable.', 'ADM001'),
+('FBK0002', 'Gym Equipment Issue', '2024-07-22 17:10', 'Some of the gym equipment needs maintenance. The treadmill is making a strange noise, and one of the weight machines is broken.', 'ADM001');
+
+INSERT INTO FacilitiesMgr
+VALUES
+('FAL001')
+
+INSERT INTO Facilities
+VALUES
+('FAC001', 'BBQ Pit', 'Book a barbecue pit to cook and enjoy a meal in the outdoors.'),
+('FAC002', 'Badminton Court', 'Book a badminton court to play and enjoy a game of badminton with friends.'),
+('FAC003', 'Basketball Court', 'Reserve our basketball court to refine your skills and challenge your limits. Perfect for solo practice or competitive play.'),
+('FAC004', 'Pool table', 'Reserve the pool table for a fun game of billiards.');
+
+INSERT INTO FacTimeSlot
+VALUES
+('FAC001', '6:00PM-11:00PM'),
+('FAC002', '8:00AM-10:00AM'),
+('FAC002', '10:00AM-12:00PM'),
+('FAC003', '8:00AM-10:00AM'),
+('FAC003', '10:00AM-12:00PM'),
+('FAC004', '8:00AM-9:00AM'),
+('FAC004', '9:00AM-10:00AM');
+
+INSERT INTO Booking
+VALUES 
+('B001', '2024-06-28', 'Pending', 'FAC001', 'ADM001'),
+('B002', '2024-06-29', 'Pending', 'FAC002', 'ADM001');
+
+INSERT INTO Registration
+VALUES 
+('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
+('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
+
+

@@ -1,0 +1,28 @@
+body {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
+}
+
+
+.h-line {
+    width: 150px;
+    margin: 0 auto;
+    height: 1.7px;
+}
+
+input[type="text"], input[type="password"] {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins to input fields */
+}
+
+
+.btn {
+    background-color: #75d0d0; 
+    color: white; 
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #128484; 
+    color: white; 
+}
