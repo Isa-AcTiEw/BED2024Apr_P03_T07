@@ -95,3 +95,17 @@ CREATE TABLE FacTimeSlot (
     PRIMARY KEY (FacID, TimeSlotSN),
     FOREIGN KEY (FacID) REFERENCES Facilities(FacID)
 );
+
+--Booking
+CREATE TABLE Booking (
+	BookID varchar(10) NOT NULL,
+	BookDate smalldatetime NOT NULL,
+	BookStatus varchar(10) NOT NULL,
+	FacID varchar(10) NOT NULL,
+	EventID varchar(10) NOT NULL,
+	CONSTRAINT PK_Booking PRIMARY KEY (BookID),
+	CONSTRAINT FK_Booking_Facilities FOREIGN KEY (FacID) REFERENCES Facilities(FacID),
+	CONSTRAINT FK_Booking_Event FOREIGN KEY (EventID) REFERENCES Event(EventID),
+	CONSTRAINT CHK_BookStatus CHECK
+		(BookStatus IN ('Pending' , 'Approved' , 'Cancelled') )
+);
