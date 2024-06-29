@@ -66,9 +66,11 @@ CREATE TABLE Event(
 -- Create Admin table
 CREATE TABLE Admin(
 	AdminID varchar(10) NOT NULL,
+	AdminName varchar(30) NOT NULL,
+	AdminPass varchar(30) NOT NULL,
 	CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
 	CONSTRAINT FK_Admin_Account 
-		FOREIGN KEY(AdminID)REFERENCES Account(AccID)
+		FOREIGN KEY(AdminID) REFERENCES Account(AccID)
 );
 
 -- Create Announcement table

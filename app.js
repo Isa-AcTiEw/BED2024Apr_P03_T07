@@ -9,13 +9,14 @@ const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 
 const bodyParser = require("body-parser");
-const Registration = require('./model/Registration');
-const Facilities = require('./model/Facilities');
+
 // Middleware to serve static files from the "public" directory
 const staticMiddlewarePublic = express.static('./public');
+
 // New variabe storing the port environment variable
 const port = process.env.PORT || 3000;
 const app = express();
+
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
@@ -26,8 +27,23 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+// dirname gets the path of the file in html
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/Admin/adminpage.html');
+});
 
+// implement our routes 
+app.get('/Announcements', controller.getAllAnnouncements)
+app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
+app.delete('/EventMgr/:id',controller.deleteEvent);
 
+// Registration
+app.get("/registration", registrationController.getAllRegistration);
+app.get("/registration/:id", registrationController.getRegistrationById)
+
+// Facilities
+app.get("/facilities", facilitiesController.getAllFacilities);
+app.get("/facilities/:id", facilitiesController.getFacilityById);
 
 // Testing our database connection
 app.listen(port, async () => {
@@ -53,14 +69,5 @@ process.on("SIGINT", async () => {
   process.exit(0); // Exit with code 0 indicating successful shutdown
 });
 
-// implement our routes 
-app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
-app.delete('/EventMgr/:id',controller.deleteEvent);
 
-// Registration
-app.get("/registration", registrationController.getAllRegistration);
-app.get("/registration/:id", registrationController.getRegistrationById)
 
-// Facilities
-app.get("/facilities", facilitiesController.getAllFacilities);
-app.get("/facilities/:id", facilitiesController.getFacilityById);

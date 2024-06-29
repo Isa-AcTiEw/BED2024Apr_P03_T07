@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Admin Login Panel</title>
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <script src="../Js/bootstrap.bundle.min.js" defer></script>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        div.login-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+        }
+
+        .custom-bg {
+            background-color: teal;
+            border: 1px solid teal;
+        }
+
+        .custom-bg:hover {
+            background-color: darkcyan;
+            border-color: darkcyan;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        .custom-alert {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+    <div class="login-form text-center rounded bg-white shadow overflow-hidden">
+        <form id="loginForm">
+            <h4 class="bg-dark text-white py-3 mb-4">ADMIN LOGIN PANEL</h4>
+            <div class="mb-3">
+                <input name="admin_name" required type="text" class="form-control shadow-none text-center"
+                    placeholder="Admin Name">
+            </div>
+            <div class="mb-4">
+                <input name="admin_pass" required type="password" class="form-control shadow-none text-center"
+                    placeholder="Password">
+            </div>
+            <button name="adminLogin" type="submit" class="btn custom-bg text-white">LOGIN</button>
+        </form>
+    </div>
+    <div id="alertPlaceholder"></div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const admin_name = document.querySelector('input[name="admin_name"]').value;
+            const admin_pass = document.querySelector('input[name="admin_pass"]').value;
+
+            const filteredData = {
+                admin_name: admin_name.trim(),
+                admin_pass: admin_pass.trim()
+            };
+
+            try {
+                // CHANGE (HARDCODED AdminName and AdminPass)
+                if (admin_name === 'iamadmin' && admin_pass === "123456") {
+                    sessionStorage.setItem('adminLogin', true);
+                    sessionStorage.setItem('AdminID', 'ADM001');
+                    window.location.href = 'adminpage.html'; // Redirect to adminpage.html
+                } else {
+                    showAlert('error', 'Login failed - Invalid Credentials!');
+                    document.getElementById('loginForm').reset();
+                }
+            } catch (error) {
+                console.error('Error querying database:', error);
+                showAlert('error', 'An error occurred. Please try again.');
+                document.getElementById('loginForm').reset();
+            }
+        });
+
+        function showAlert(type, msg) {
+            const alertPlaceholder = document.getElementById('alertPlaceholder');
+            const alert = document.createElement('div');
+            alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+            alert.innerHTML = `
+                <strong>${msg}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+            alertPlaceholder.appendChild(alert);
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
