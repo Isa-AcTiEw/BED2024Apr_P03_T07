@@ -2,7 +2,12 @@ require('dotenv').config();
 const sql = require("mssql");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
+
+//controller
 const controller = require("./controller/controller");
+const registrationController = require("./controller/registrationController");
+const facilitiesController = require("./controller/facilitiesController");
+
 const bodyParser = require("body-parser");
 
 // Middleware to serve static files from the "public" directory
@@ -34,6 +39,13 @@ app.put('/Announcements/:id', controller.updateAnnouncement);
 app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
 
+// Registration
+app.get("/registration", registrationController.getAllRegistration);
+app.get("/registration/:id", registrationController.getRegistrationById)
+
+// Facilities
+app.get("/facilities", facilitiesController.getAllFacilities);
+app.get("/facilities/:id", facilitiesController.getFacilityById);
 
 // Testing our database connection
 app.listen(port, async () => {
