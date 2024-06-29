@@ -29,6 +29,8 @@ app.get('/', (req, res) => {
 
 // implement our routes 
 app.get('/Announcements', controller.getAllAnnouncements)
+app.get('/Announcements/:id', controller.getAllAnnouncementById);
+app.put('/Announcements/:id', controller.updateAnnouncement);
 app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
 
