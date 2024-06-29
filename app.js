@@ -34,9 +34,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/Admin/adminpage.html');
 });
 
-// implement our routes 
+// EventMgr and Event routes
 app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
+app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
+app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
 
 // Announcments
 app.get('/Announcements', annController.getAllAnnouncements)
