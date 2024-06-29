@@ -1,10 +1,11 @@
-require('dotenv').config();
 const sql = require("mssql");
+const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 
 //controller
-const controller = require("./controller/controller");
+const eventController = require("./controller/eventController");
+const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
@@ -33,9 +34,11 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/Admin/adminpage.html');
 });
 
-// implement our routes 
-app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
-app.delete('/EventMgr/:id',controller.deleteEvent);
+// EventMgr and Event routes
+app.get('/EventMgr/:id',eventController.getAllEventsByEventMgrID);
+app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
+app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
+app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
@@ -44,8 +47,12 @@ app.post('/announcements', annController.createAnnouncement);
 app.put('/announcements/:id', annController.updateAnnouncement);
 app.delete('/announcements/:id', annController.deleteAnnouncement);
 
+// Booking
+app.get("/booking", bookingController.getAllBookings);
+app.get("/booking/:id", bookingController.getBookingById);
+
 // Registration
-app.get("/registration", registrationController.getAllRegistration);
+app.get("/registration", registrationController.getAllRegistrations);
 app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities
