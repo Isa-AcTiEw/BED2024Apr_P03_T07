@@ -1,8 +1,6 @@
 const Event = require('../model/Event');
 const Account = require('../model/Account');
 const EventMgr = require('../model/EventMgr');
-const Announcement = require('../model/Announcement');
-
 
 // Handle the routes from the EventMgr page 
 const getAllEventsByEventMgrID = async (req,res) =>{
@@ -12,7 +10,7 @@ const getAllEventsByEventMgrID = async (req,res) =>{
         res.json(Events);
       } catch (error) {
         console.error(error);
-        res.status(500).send("Error retrieving books");
+        res.status(500).send("Error retrieving events");
       }
 };
 
@@ -28,24 +26,14 @@ const deleteEvent = async (req,res) =>{
   }
   catch(error){
     console.error(error);
-    res.status(500).send("Error retrieving books");
+    res.status(500).send("Error retrieving events");
   }
 }
-
-const getAllAnnouncements = async (req, res) => {
-  try {
-    const announcements = await Announcement.getAllAnnouncements();
-    res.json(announcements);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Error retrieving announcements");
-  }
-};
 
 module.exports = {
     getAllEventsByEventMgrID,
     deleteEvent,
-    getAllAnnouncements,
   };
+
 
 

@@ -8,6 +8,7 @@ const controller = require("./controller/controller");
 const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
+const annController = require("./controller/annController");
 
 const bodyParser = require("body-parser");
 
@@ -34,9 +35,13 @@ app.get('/', (req, res) => {
 });
 
 // implement our routes 
-app.get('/Announcements', controller.getAllAnnouncements)
 app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
+
+// Announcments
+app.get('/Announcements', annController.getAllAnnouncements)
+app.get('/Announcements/:id', annController.getAllAnnouncementById);
+app.put('/Announcements/:id', annController.updateAnnouncement);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
