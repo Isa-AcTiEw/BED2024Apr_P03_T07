@@ -5,6 +5,7 @@ const dbConfig = require("./config/db_Config");
 
 //controller
 const controller = require("./controller/controller");
+const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
@@ -42,8 +43,12 @@ app.get('/Announcements', annController.getAllAnnouncements)
 app.get('/Announcements/:id', annController.getAllAnnouncementById);
 app.put('/Announcements/:id', annController.updateAnnouncement);
 
+// Booking
+app.get("/booking", bookingController.getAllBookings);
+app.get("/booking/:id", bookingController.getBookingById);
+
 // Registration
-app.get("/registration", registrationController.getAllRegistration);
+app.get("/registration", registrationController.getAllRegistrations);
 app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities

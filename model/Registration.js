@@ -10,7 +10,7 @@ class Registration {
         this.AccID = AccID;
     }
 
-    static async getAllRegistration() {
+    static async getAllRegistrations() {
 		const connection = await sql.connect(dbConfig);
 		const sqlQuery = `SELECT * FROM Registration`;
 		const request = connection.request();

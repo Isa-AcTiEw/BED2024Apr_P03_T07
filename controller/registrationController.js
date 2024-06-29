@@ -1,8 +1,8 @@
 const Registration = require("../model/Registration");
 
-const getAllRegistration = async (req, res) => {
+const getAllRegistrations = async (req, res) => {
     try {
-        const registration = await Registration.getAllRegistration();
+        const registration = await Registration.getAllRegistrations();
         res.json(registration);
     } catch(error) {
         console.log(error);
@@ -25,6 +25,6 @@ const getRegistrationById = async (req, res) => {
 };
 
 module.exports = {
-    getAllRegistration,
+    getAllRegistrations,
     getRegistrationById
 };
