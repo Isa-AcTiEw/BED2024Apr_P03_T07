@@ -38,9 +38,11 @@ app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
 app.delete('/EventMgr/:id',controller.deleteEvent);
 
 // Announcments
-app.get('/Announcements', annController.getAllAnnouncements)
-app.get('/Announcements/:id', annController.getAllAnnouncementById);
-app.put('/Announcements/:id', annController.updateAnnouncement);
+app.get('/announcements', annController.getAllAnnouncements);
+app.get('/announcements/:id', annController.getAnnouncementById);
+app.post('/announcements', annController.createAnnouncement);
+app.put('/announcements/:id', annController.updateAnnouncement);
+app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistration);
