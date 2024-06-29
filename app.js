@@ -4,7 +4,7 @@ const express = require("express");
 const dbConfig = require("./config/db_Config");
 
 //controller
-const controller = require("./controller/controller");
+const eventController = require("./controller/eventController");
 const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
@@ -35,8 +35,8 @@ app.get('/', (req, res) => {
 });
 
 // EventMgr and Event routes
-app.get('/EventMgr/:id',controller.getAllEventsByEventMgrID);
-app.delete('/EventMgr/:id',controller.deleteEvent);
+app.get('/EventMgr/:id',eventController.getAllEventsByEventMgrID);
+app.delete('/EventMgr/:id',eventController.deleteEvent);
 app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
 
