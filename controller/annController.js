@@ -10,40 +10,37 @@ const getAllAnnouncements = async (req, res) => {
     }
 };
 
-const getAnnouncementById = async (req,res) => {
-    const announcementId = parseInt(req.params.id);
+const getAnnouncementById = async (req, res) => {
     try {
-        const announcement = await Announcement.getAnnouncementById(announcementId)
-        if(!announcement) {
-            return res.status(404).send("Announcement not found");
-        } 
-        res.json(announcement)
-    } catch(error) {
+        const announcementId = req.params.id;
+        const announcement = await Announcement.getAnnouncementById(announcementId);
+        res.json(announcement);
+    } catch (error) {
         console.error(error);
-        res.status(500).send("Error retriving announcement");
+        res.status(500).send("Error retrieving announcement")
     }
 };
-
 
 const createAnnouncement = async (req, res) => {
     const newAnn = req.body;
     try {
-      const createdAnn = await Announcement.createAnnouncement(newAnn);
-      res.status(201).json(createdAnn);
+        const createdAnn = await Announcement.createAnnouncement(newAnn);
+        res.status(201).json(createdAnn);
     } catch (error) {
-      console.error(error);
-      res.status(500).send("Error creating announcement");
+        console.error(error);
+        res.status(500).send("Error creating announcement");
     }
 };
 
 const updateAnnouncement = async (req, res) => {
-    const AnnID = req.params.id;
-    const { AnnName, AnnDesc } = req.body;
+    const AnnID = parseInt(req.params.id);
+    const newAnnData = req.body;
     try {
-        const updatedAnnouncement = await Announcement.updateAnnouncement(AnnID, AnnName, AnnDesc);
-        if (updatedAnnouncement) {
-            res.status(200).json(updatedAnnouncement); // Ensure proper response status and data
+        const updatedAnnouncement = await Announcement.updateAnnouncement(AnnID, newAnnData);
+        if (!updatedAnnouncement) {
+            return res.status(404).json("Announcement not found");
         } 
+        res.json(updateAnnouncement);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error updating announcement");
@@ -52,7 +49,7 @@ const updateAnnouncement = async (req, res) => {
 
 
 const deleteAnnouncement = async (req, res) => {
-    const announcementId = req.params.id; // Use req.params.id to match the route parameter
+    const announcementId = req.params.id; 
     try {
         const success = await Announcement.deleteAnnouncement(announcementId);
         if (!success) {
@@ -63,7 +60,7 @@ const deleteAnnouncement = async (req, res) => {
         console.error(error);
         res.status(500).send("Error deleting announcement");
     }
-}; 
+};
 
 module.exports = {
     getAllAnnouncements,

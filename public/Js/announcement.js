@@ -104,24 +104,21 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 document.body.appendChild(deleteModal);
 
-                // Add Event Listeners
+                // add Event Listener for Update
                 document.getElementById(`submitBtn_${index}`).addEventListener("click", async (e) => {
                     e.preventDefault();
                     const title = document.getElementById(`updateTitle_${index}`).value;
                     const desc = document.getElementById(`updateDesc_${index}`).value;
-                    
                     await fetch(`/announcements/${ann.AnnID}`, {
                         method: 'PUT',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({ AnnName: title, AnnDesc: desc })
                     });
+                    document.getElementById(`announcement_title_${index}`).textContent = title;
+                    document.getElementById(`announcement_desc_${index}`).textContent = desc;
 
-                     // Update the announcement on the page
-                     document.getElementById(`announcement_title_${index}`).textContent = title;
-                     document.getElementById(`announcement_desc_${index}`).textContent = desc;
-
-                     const modalElement = document.getElementById(`updateAnn_${index}`);
-                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    const modalElement = document.getElementById(`updateAnn_${index}`);
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     modalInstance.hide();
                 });
 
@@ -152,6 +149,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Failed to load announcements. Please try again later.');
         }
     }
+
+    // Function to handle form submission for adding new announcement
+    const addForm = document.getElementById("addAnnouncementForm");
+    addForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const title = document.getElementById("addAnnouncementTitle").value;
+        const desc = document.getElementById("addAnnouncementDesc").value;
+        await fetch("/announcements", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ AnnName: title, AnnDesc: desc })
+        });
+
+        await fetchAnnouncements();
+        const modalElement = document.getElementById(`addAnnouncementModal`);
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        modalInstance.hide();
+    });
 
     await fetchAnnouncements();
 });

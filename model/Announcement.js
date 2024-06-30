@@ -21,10 +21,11 @@ class Announcement {
 
     static async getAnnouncementById(id) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Announcement WHERE AnnID = @id`;
-		const request = connection.request()
-        request.input("AnnID", id);
+        const sqlQuery = `SELECT * FROM Facilities WHERE AnnID = @id`;
+		const request = connection.request().input("id", id);
 		const result = await request.query(sqlQuery);
+
+		connection.close();
 
 		return result.recordset[0]
 			? new Announcement(
@@ -33,28 +34,22 @@ class Announcement {
 				result.recordset[0].AnnDesc
 			)
 			: null;
-    }
-
+    }    
 
     static async createAnnouncement(newAnnData) {
-        try {
-            const connection = await sql.connect(dbConfig);
-            const sqlQuery = `INSERT INTO Announcement (AnnName, AnnDesc) 
-                              VALUES (@AnnName, @AnnDesc); SELECT SCOPE_IDENTITY() AS AnnID`;
+        const connection = await sql.connect(dbConfig);
     
-            const request = connection.request();
-            request.input('AnnName', newAnnData.AnnName);
-            request.input('AnnDesc', newAnnData.AnnDesc);
+        const sqlQuery = `INSERT INTO Announcement (AnnName, AnnDesc) 
+        VALUES (@AnnName, @AnnDesc); SELECT SCOPE_IDENTITY() AS AnnID`;
+
+        const request = connection.request();
+        request.input("AnnName", newAnnData.AnnName);
+        request.input("AnnDesc", newAnnData.AnnDesc);
     
-            const result = await request.query(sqlQuery);
-            const createdAnnouncement = await this.getAnnouncementById(result.recordset[0].AnnID);
+        const result = await request.query(sqlQuery);
     
-            connection.close();
-            return createdAnnouncement;
-        } catch (error) {
-            console.error('Error in createAnnouncement:', error.message);
-            throw error;
-        }
+        connection.close();
+        return this.getBookById(result.recordset[0].AnnID);
     }
 
     static async updateAnnouncement(AnnID, newAnnouncementData) {
@@ -78,6 +73,6 @@ class Announcement {
         connection.close();
         return result.rowsAffected > 0;
     }
-} 
+}
 
 module.exports = Announcement;
