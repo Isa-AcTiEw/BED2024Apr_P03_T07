@@ -10,19 +10,20 @@ const getAllAnnouncements = async (req, res) => {
     }
 };
 
-const getAnnouncementById = async (req, res) => {
-    const announcementId = req.params.id;
+const getAnnouncementById = async (req,res) => {
+    const announcementId = parseInt(req.params.id);
     try {
-        const announcement = await Announcement.getAnnouncementById(announcementId);
-        if (!announcement) {
+        const announcement = await Announcement.getAnnouncementById(announcementId)
+        if(!announcement) {
             return res.status(404).send("Announcement not found");
-        }
-        res.json(announcement);
-    } catch (error) {
+        } 
+        res.json(announcement)
+    } catch(error) {
         console.error(error);
-        res.status(500).send("Error retrieving announcement")
+        res.status(500).send("Error retriving announcement");
     }
 };
+
 
 const createAnnouncement = async (req, res) => {
     const newAnn = req.body;
@@ -62,7 +63,7 @@ const deleteAnnouncement = async (req, res) => {
         console.error(error);
         res.status(500).send("Error deleting announcement");
     }
-};
+}; 
 
 module.exports = {
     getAllAnnouncements,
