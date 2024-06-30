@@ -11,8 +11,8 @@ const getAllAnnouncements = async (req, res) => {
 };
 
 const getAnnouncementById = async (req, res) => {
+    const announcementId = req.params.id;
     try {
-        const announcementId = req.params.id;
         const announcement = await Announcement.getAnnouncementById(announcementId);
         res.json(announcement);
     } catch (error) {

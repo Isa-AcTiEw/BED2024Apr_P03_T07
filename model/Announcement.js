@@ -21,7 +21,7 @@ class Announcement {
 
     static async getAnnouncementById(id) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Facilities WHERE AnnID = @id`;
+        const sqlQuery = `SELECT * FROM Announcement WHERE AnnID = @id`;
 		const request = connection.request().input("id", id);
 		const result = await request.query(sqlQuery);
 
