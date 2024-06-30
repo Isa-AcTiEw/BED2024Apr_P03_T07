@@ -4,7 +4,7 @@
 
 const logIn = document.getElementById('eventMgrLogin')
 const eventMgrEmail = document.getElementById('eventMgrPassword')
-const eventMgrId = 'Ae00001'
+const eventMgrId = 'EVT001'
 logIn.addEventListener('click',validatInput)
 
 function validatInput(){

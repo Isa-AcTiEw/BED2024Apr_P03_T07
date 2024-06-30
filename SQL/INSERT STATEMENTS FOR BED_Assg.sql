@@ -40,8 +40,8 @@ VALUES
 
 INSERT INTO Announcement
 VALUES
-('ANN001', 'Maintenance', 'We will be performing scheduled maintenance on our website to improve performance and security. The website will be temporarily unavailable from 12:00 AM to 11:59 PM on July 1st. We apologize for any inconvenience this may cause and appreciate your understanding.', 'ADM001'),
-('ANN002', 'Update Your Profile', 'Make sure you don’t miss out on any of our events! Update your profile settings to receive notifications about upcoming events and activities. Stay informed and stay connected.', 'ADM001');
+('Maintenance', 'We will be performing scheduled maintenance on our website to improve performance and security. The website will be temporarily unavailable from 12:00 AM to 11:59 PM on July 1st. We apologize for any inconvenience this may cause and appreciate your understanding.', 'ADM001'),
+('Update Your Profile', 'Make sure you don’t miss out on any of our events! Update your profile settings to receive notifications about upcoming events and activities. Stay informed and stay connected.', 'ADM001');
 
 
 INSERT INTO Feedback
