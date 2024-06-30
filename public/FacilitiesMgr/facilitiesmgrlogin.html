@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Facilities Manager Login Panel</title>
+    <link href="../CSS/bootstrap.min.css" rel="stylesheet">  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="../Js/bootstrap.bundle.min.js" defer></script>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+</head>
+<body>
+    <div>
+        <style>
+            * {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .login-form {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border-radius: 100px;
+                width: 432.5px;
+            }
+
+            .login-title,
+            .login-input,
+            .login-signin {
+                text-align: center;
+            }
+
+            .login-title {
+                display: block;
+                padding: 15px 20px;
+                font-size:20px;
+                margin-bottom: 25px;
+                width: 100%;
+                border-radius: 10px 10px 0px 0px;
+                color: white;
+                background: black;
+            }
+
+            .login-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                border-radius: 10px 10px 10px 10px;
+                box-shadow: 0px 0px 10px 0px black;
+            }
+
+            input[type="text"], input[type="password"] {
+                font-family: 'Poppins', sans-serif;
+            }
+
+            .login-input {
+                padding: 5px 100px;
+                margin-bottom: 15px;
+            }
+
+            .login-signin {
+                padding: 5px 10px;
+                margin-top: 5px;
+                color: white;
+                cursor: pointer;
+                background-color: teal;
+                border: 1px solid teal;
+                border-radius: 5px;
+            }
+
+            .login-signin:hover {
+                background-color: darkcyan;
+                border: 1px solid darkcyan;
+            }
+        </style>
+        <form class="login-form" id="login-form">
+            <div class="login-container">
+                <p class="login-title">FACILITIES MANAGER LOGIN PANEL</p>
+                <input class="login-input" name="facilitiesmanager-name" id="facilitiesmanager-name" required type="text" placeholder="Name">
+                <input class="login-input" name="facilitiesmanager-password" id="facilitiesmanager-password" required type="password" placeholder="Password">
+                <button  class="login-signin" name="facilitiesmanager-loginbtn" id="facilitiesmanager-loginbtn" type="submit">LOGIN</button>
+            </div>
+        </form>
+        <!-- rename id-->
+        <div id="alertPlaceholder"></div>
+        <script>
+            document.getElementById("login-form").addEventListener("submit", async function(event) {
+                event.preventDefault();
+
+                const facmgr_name = document.querySelector("input[name='facilitiesmanager-name']").value;
+                const facmgr_password = document.querySelector("input[name='facilitiesmanager-password']").value;
+                const filteredData = {
+                    facmgr_name: facmgr_name.trim(),
+                    facmgr_password: facmgr_password.trim()
+                };
+
+                console.log(facmgr_name);
+
+                try {
+                    if (facmgr_name === "yes" && facmgr_password === "yes") {
+                        sessionStorage.setItem("login-signin", true);
+                        sessionStorage.setItem("FacID", "FAC001");
+                        window.location.href = "facilitiesmgrpage.html"
+                    } else {
+                        showAlert("error", "Login failed - Invalid Credentials!");
+                        //document.getElementId("login-form").reset();
+                    }
+                } catch (error) {
+                    console.error('Error querying database:', error);
+                    showAlert('error', 'An error occurred. Please try again.');
+                    //document.getElementId("login-form").reset();
+                }
+            });
+            
+            //rewrite css
+            function showAlert(type, msg) {
+            const alertPlaceholder = document.getElementById('alertPlaceholder');
+            const alert = document.createElement('div');
+            alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+            alert.innerHTML = `
+                <strong>${msg}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+            alertPlaceholder.appendChild(alert);
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+            };
+        </script>
+    </div>
+
+
+</body>
+</html>
