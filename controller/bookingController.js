@@ -24,7 +24,19 @@ const getBookingById = async (req, res) => {
     }
 };
 
+const createBooking = async (req, res) => {
+    const newBooking = req.body;
+    try {
+        const createdBooking = await Booking.createBooking(newBooking);
+        res.status(201).json(createdBooking);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error creating booking");
+    }
+};
+
 module.exports = {
     getAllBookings,
-    getBookingById
+    getBookingById,
+    createBooking
 };

@@ -50,6 +50,7 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 // Booking
 app.get("/booking", bookingController.getAllBookings);
 app.get("/booking/:id", bookingController.getBookingById);
+app.post("/booking", bookingController.createBooking);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistrations);
@@ -58,6 +59,9 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 // Facilities
 app.get("/facilities", facilitiesController.getAllFacilities);
 app.get("/facilities/:id", facilitiesController.getFacilityById);
+app.post("/facilities", facilitiesController.createFacility);
+app.put("/facilities/:id", facilitiesController.updateFacility);
+app.delete("/facilities/:id", facilitiesController.deleteFacility);
 
 // Testing our database connection
 app.listen(port, async () => {
