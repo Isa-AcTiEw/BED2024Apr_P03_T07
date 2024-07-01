@@ -36,5 +36,52 @@ class Facilities {
 			)
 			: null;
     }
+
+    static async createFacility(newFacility) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES (@FacID, @FacName, @FacDesc);`;
+        const request = connection.request();
+
+        request.input("FacID", newFacility.FacID);
+        request.input("FacName", newFacility.FacName);
+        request.input("FacDesc", newFacility.FacDesc);
+
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getFacilityById(result.recordset[0].FacID); 
+    }
+
+    static async updateFacility(id, newFacility) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `UPDATE Facilities SET FacName = @FacName, FacDesc = @FacDesc WHERE FacID = @id`;
+        const request = connection.request();
+
+        request.input("id", id);
+        request.input("FacName", newFacility.FacName);
+        request.input("FacDesc", newFacility.FacDesc);
+        
+        await request.query(sqlQuery);
+
+        connection.close();
+
+        return this.getFacilityById(id);
+    }
+
+    static async deleteFacility(id) {
+
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `DELETE FROM Facilities WHERE FacID = @id`;
+        const request = connection.request();
+
+        request.input("id", sql.VarChar, id);
+
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.rowsAffected > 0;
+    }
 }
 module.exports = Facilities;
