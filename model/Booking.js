@@ -41,5 +41,23 @@ class Booking {
 			)
 			: null;
     }
+
+	static async createBooking(newBooking) {
+		const connection = await sql.connect(dbConfig);
+		const sqlQuery = `INSERT INTO Booking (BookID, BookDate, BookStatus, FacID, AccID) OUTPUT inserted.BookID, inserted.BookDate, inserted.BookStatus, inserted.FacID, inserted.AccID VALUES (@BookID, GETDATE(), 'Pending', @FacID, @AccID);`
+		const request = connection.request();
+
+		request.input("BookID", newBooking.BookID);
+		// request.input("BookDate", newBooking.BookDate);
+		// request.input("BookStatus", newBooking.BookStatus);
+		request.input("FacID", newBooking.FacID);
+		request.input("AccID", newBooking.AccID);
+
+		const result = await request.query(sqlQuery);
+
+		connection.close();
+
+		return this.getBookingById(result.recordset[0].BookID);
+	}
 }
 module.exports = Booking;
