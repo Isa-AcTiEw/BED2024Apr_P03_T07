@@ -1,27 +1,6 @@
 -- CREATE DATABASE bedAssg_db
 -- USE bedAssg_db
 
---DDL
----- Drop foreign key constraints
---ALTER TABLE Booking DROP CONSTRAINT FK_Booking_Account;
---ALTER TABLE Registration DROP CONSTRAINT FK_Registration_Event;
---ALTER TABLE Registration DROP CONSTRAINT FK_Registration_Account;
---ALTER TABLE Announcement DROP CONSTRAINT FK_Announcement_Admin;
---ALTER TABLE Feedback DROP CONSTRAINT FK_Feedback_Account;
-
----- Drop tables
---DROP TABLE IF EXISTS Booking;
---DROP TABLE IF EXISTS Registration;
---DROP TABLE IF EXISTS Announcement;
---DROP TABLE IF EXISTS Feedback;
---DROP TABLE IF EXISTS Facilities;
---DROP TABLE IF EXISTS Admin;
---DROP TABLE IF EXISTS Account;
---DROP TABLE IF EXISTS Event;
---DROP TABLE IF EXISTS EventMgr;
---DROP TABLE IF EXISTS FacilitiesMgr;
---DROP TABLE IF EXISTS FacTimeSlot;
-
 -- Create Account Table
 CREATE TABLE Account(
 	AccID varchar(10) NOT NULL,
@@ -75,11 +54,10 @@ CREATE TABLE Admin(
 
 -- Create Announcement table
 CREATE TABLE Announcement (
-    AnnID varchar(10) NOT NULL,
-    AnnName varchar(30) NOT NULL,
-    AnnDesc varchar(500) NOT NULL,
+    AnnID INT IDENTITY(1,1) PRIMARY KEY,
+    AnnName varchar(255) NOT NULL,
+    AnnDesc varchar(MAX) NOT NULL,
     AdminID varchar(10) NOT NULL,
-    CONSTRAINT PK_Announcement PRIMARY KEY (AnnID),
     CONSTRAINT FK_Announcement_Admin
         FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)  
 );

@@ -41,13 +41,16 @@ app.patch('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
 
 // Announcments
-app.get('/Announcements', annController.getAllAnnouncements)
-app.get('/Announcements/:id', annController.getAllAnnouncementById);
-app.put('/Announcements/:id', annController.updateAnnouncement);
+app.get('/announcements', annController.getAllAnnouncements);
+app.get('/announcements/:id', annController.getAnnouncementById);
+app.post('/announcements', annController.createAnnouncement);
+app.put('/announcements/:id', annController.updateAnnouncement);
+app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
 app.get("/booking/:id", bookingController.getBookingById);
+app.post("/booking", bookingController.createBooking);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistrations);
@@ -56,6 +59,9 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 // Facilities
 app.get("/facilities", facilitiesController.getAllFacilities);
 app.get("/facilities/:id", facilitiesController.getFacilityById);
+app.post("/facilities", facilitiesController.createFacility);
+app.put("/facilities/:id", facilitiesController.updateFacility);
+app.delete("/facilities/:id", facilitiesController.deleteFacility);
 
 // Testing our database connection
 app.listen(port, async () => {
