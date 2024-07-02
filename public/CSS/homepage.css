@@ -1,33 +1,8 @@
-
-/*Nav styling*/
-.navbar-nav .nav-link:hover,
-.navbar-nav .nav-link.active {
-    background-color: rgba(24, 110, 209, 0.5) !important;
-    color: rgb(255, 255, 255) !important;
-    border-radius: 20px;
-    margin-left: 5%;
-    margin-right: 5%;
-    /* Add any additional styling as needed */
-}
-
-.navbar-collapse {
-    justify-content: space-around;
-    display: flex;
-    flex-basis: 1;
-    font-size: 2rem;
-    font-family:'Poppins';
-    }
-
-.navbar-collapse > ul.navbar-nav > li.nav-item a.nav-link{
-    margin-right:5rem;
-    margin-left: 5rem;
-}
-
-
-
 .navbar-brand{
-    font: 2rem "Poppins";
-    color: #4954c7;
+    font-family: "Playwrite IT Moderna", cursive;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: #d2b5bc;
 }
 
 .mission-header{
