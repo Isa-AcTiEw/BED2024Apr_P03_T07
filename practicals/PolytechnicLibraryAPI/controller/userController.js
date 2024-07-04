@@ -2,7 +2,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const sql = require('mssql');
 const User = require('../model/User');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
+const secretKey = process.env.ACCESS_TOKEN_SECRET;
+
 async function registerUser(req, res) {
     const { username, password, role } = req.body;
   
@@ -19,7 +21,7 @@ async function registerUser(req, res) {
   
     try {
       // Check for existing username
-      const existingUser = await User.getUserByUsername(username);
+      const existingUser = await User.getUserByUsername(username,password);
       if (existingUser) {
         return res.status(400).json({ message: "Username already exists" });
       }
@@ -29,13 +31,7 @@ async function registerUser(req, res) {
       const hashedPassword = await bcrypt.hash(password, salt);
   
       // Create user in database
-      const pool = await sql.connect(dbConfig);
-      await pool.request()
-        .input('username', username)
-        .input('passwordHash', hashedPassword)
-        .input('role', role)
-        .query('INSERT INTO Users (username, passwordHash, role) VALUES (@username, @passwordHash, @role)');
-  
+      const createdUser = User.registerUser(username,hashedPassword,role);
       return res.status(201).json({ message: "User created successfully" });
     } catch (err) { 
         console.error(err);
@@ -48,15 +44,16 @@ async function login(req, res) {
 
     try {
         // Validate user credentials
+        // Hash password
         const user = await User.getUserByUsername(username);
         if (!user) {
           return res.status(401).json({ message: "Invalid credentials" });
         }
 
         // Compare password with hash
-        const isMatch = await bcrypt.compare(password, user.hashedPassword);
+        const isMatch = await bcrypt.compare(password, user.passwordHash);
         if (!isMatch) {
-          return res.status(401).json({ message: "Invalid credentials" });
+            return res.status(401).json({ message: "Invalid password" });
         }
 
         // Generate JWT token
@@ -64,8 +61,7 @@ async function login(req, res) {
           id: user.id,
           role: user.role,
         };
-        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "3600s" }); // Expires in 1 hour
-
+        const token = jwt.sign(payload, secretKey, { expiresIn: "3600s" }); // Expires in 1 hour
         return res.status(200).json({ token });
     } catch (err) {
       console.error(err);

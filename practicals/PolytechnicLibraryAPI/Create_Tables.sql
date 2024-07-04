@@ -1,7 +1,7 @@
 CREATE DATABASE PolytechnicLibraryDB;
 USE PolytechnicLibraryDB;
 CREATE TABLE Users(
-    user_id INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+     UserID INT IDENTITY(1,1) PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     passwordHash VARCHAR(255) NOT NULL,
     role VARCHAR(20)
