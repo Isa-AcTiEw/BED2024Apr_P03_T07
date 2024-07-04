@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const sql = require('mssql');
-const secretKey = require('../config/secretKey');
-
+const User = require('../model/User');
+require('dotenv').config();
 async function registerUser(req, res) {
     const { username, password, role } = req.body;
   
@@ -19,7 +19,7 @@ async function registerUser(req, res) {
   
     try {
       // Check for existing username
-      const existingUser = await getUserByUsername(username);
+      const existingUser = await User.getUserByUsername(username);
       if (existingUser) {
         return res.status(400).json({ message: "Username already exists" });
       }
@@ -37,9 +37,9 @@ async function registerUser(req, res) {
         .query('INSERT INTO Users (username, passwordHash, role) VALUES (@username, @passwordHash, @role)');
   
       return res.status(201).json({ message: "User created successfully" });
-    } catch (err) {
-      console.error(err);
-      return res.status(500).json({ message: "Internal server error" });
+    } catch (err) { 
+        console.error(err);
+        return res.status(500).json({ message: "Internal server error" });
     }
 }
 
@@ -48,28 +48,28 @@ async function login(req, res) {
 
     try {
         // Validate user credentials
-        const user = await getUserByUsername(username);
+        const user = await User.getUserByUsername(username);
         if (!user) {
-        return res.status(401).json({ message: "Invalid credentials" });
+          return res.status(401).json({ message: "Invalid credentials" });
         }
 
         // Compare password with hash
-        const isMatch = await bcrypt.compare(password, user.recordset[0].passwordHash);
+        const isMatch = await bcrypt.compare(password, user.hashedPassword);
         if (!isMatch) {
-            return res.status(401).json({ message: "Invalid credentials" });
+          return res.status(401).json({ message: "Invalid credentials" });
         }
 
         // Generate JWT token
         const payload = {
-            id: user.id,
-            role: user.role,
+          id: user.id,
+          role: user.role,
         };
-        const token = jwt.sign(payload, secretKey, { expiresIn: "3600s" }); // Expires in 1 hour
+        const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, { expiresIn: "3600s" }); // Expires in 1 hour
 
         return res.status(200).json({ token });
     } catch (err) {
-        console.error(err);
-        return res.status(500).json({ message: "Internal server error" });
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
     }
 };
 
