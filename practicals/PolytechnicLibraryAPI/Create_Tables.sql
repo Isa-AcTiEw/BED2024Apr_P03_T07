@@ -1,15 +1,12 @@
 CREATE DATABASE PolytechnicLibraryDB;
 USE PolytechnicLibraryDB;
 CREATE TABLE Users(
-    user_id INT NOT NULL,
+    user_id INT NOT NULL PRIMARY KEY,
     username VARCHAR(255) NOT NULL UNIQUE,
     passwordHash VARCHAR(255) NOT NULL,
     role VARCHAR(20)
-        CONSTRAINT_Pk_Users PRIMARY KEY (user_id),
-        CONSTRAINT CHECK_role 
-        CHECK (role IN 
-        ('member' , 'libarian' )
-        )
+	CONSTRAINT CHECK_role CHECK (role IN 
+        ('member' , 'libarian' ))
 )
 
 CREATE TABLE Books(
