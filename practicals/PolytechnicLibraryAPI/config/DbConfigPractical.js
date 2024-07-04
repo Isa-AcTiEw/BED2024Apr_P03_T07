@@ -1,4 +1,4 @@
-require('dotenv').config();   
+require('dotenv').config({ path: 'public/PolytechnicLibraryAPI/.env' });
 module.exports = {
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
