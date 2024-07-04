@@ -5,12 +5,8 @@ const bodyParser = require("body-parser");
 const verifyJWT = require('./middleware/authorizeTokenAndRoles');
 const userController = require('./controller/userController');
 const booksController = require('./controller/booksController');
-require('dotenv').config();
-const scretKey = process.env.SECRET_KEY; 
-
-
 const app = express();
-const port = 2000;
+const port = process.env.PORT || 2000;
 
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
@@ -19,7 +15,6 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 // Routes
 app.post('/register', userController.registerUser);
 app.post('/login', userController.login);
-
 app.get('/books', verifyJWT, booksController.getAllBooks);
 app.put('/books/:bookId/availability', verifyJWT, booksController.updateAvailability);
 
