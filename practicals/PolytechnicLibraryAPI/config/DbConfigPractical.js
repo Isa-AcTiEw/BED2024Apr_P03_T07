@@ -1,5 +1,5 @@
 require('dotenv').config({ path: './.env' });
-console.log(process.env.DB_NAME);
+// specifies the env folder to access the envoronment variables
 module.exports = {
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
