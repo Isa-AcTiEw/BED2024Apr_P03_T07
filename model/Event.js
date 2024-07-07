@@ -39,23 +39,35 @@ class Event{
 
     // update the event details 
 
-    static async updateEventDetails(id,Event){
+    static async updateEventDetails(id,EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake){
+        console.log(id);
         const connection = await sql.connect();
         const sqlQuery = 
-        `UPDATE Event SET EventName = @EventName, EventDesc = @EventDesc, 
-        EventDate = @EventDate, EventLocation = @EventLocation, 
-        EventRegEndDate = @EventRegEndDate, EventIntake = @EventIntake WHERE EventID = @EventID`
+        `
+    UPDATE Event 
+    SET EventName = @EventName,
+        EventDesc = @EventDesc,
+        EventPrice = @EventPrice,
+        EventCat = @EventCat,
+        EventDate = @EventDate,
+        EventLocation = @EventLocation,
+        EventRegEndDate = @EventRegEndDate,
+        EventIntake = @EventIntake
+    WHERE EventID = @EventID;
+        `
         const request = connection.request();
-        request.input("EventID",Event.EventID);
-        request.input("EventName",Event.EventName);
-        request.input("EventDesc",Event.EventDesc);
-        request.input("EventDate",Event.EventDate);
-        request.input("EventCat",Event.EventCat)
-        request.input("EventLocation",Event.EventLocation);
-        request.input("EventRegEndDate",Event.EventRegEndDate);
-        request.input("EventIntake",Event.EventIntake);
-        const result = await request.query(sqlQuery);
-        return this.getAllEventsById(id);
+        request.input("EventID",id);
+        request.input("EventName",EventName);
+        request.input("EventDesc", EventDesc);
+        request.input("EventPrice",EventPrice);
+        request.input("EventDate",EventDate);
+        request.input("EventCat",EventCat);
+        request.input("EventLocation",EventLocation);
+        request.input("EventRegEndDate",EventRegEndDate);
+        request.input("EventIntake",EventIntake);
+        await request.query(sqlQuery);
+        const update = await this.getAllEventsById(id);
+        return update[0];
     }
 
     // delete the event based on EventID given 
@@ -69,6 +81,7 @@ class Event{
         return rowsAffected;
 
     }
+
 
     static async createEvent(event){
         // select SCOPE_IDENTITY AS id returns the id of the current scope in the sql table
