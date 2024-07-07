@@ -10,3 +10,5 @@ INSERT INTO books (book_id, title, author, availability) VALUES
 (9, 'Ulysses', 'James Joyce', 'N'),
 (10, 'The Odyssey', 'Homer', 'Y');
 
+
+SELECT * FROM Users

@@ -8,7 +8,7 @@ function verifyJWT(req, res, next) {
     return res.status(401).json({token:token });
   }
 
-  jwt.verify(token, secretKey, (err, decoded) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       return res.status(403).json({ message: "Forbidden" });
     }
