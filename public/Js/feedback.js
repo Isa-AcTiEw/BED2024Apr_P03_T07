@@ -20,6 +20,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>${fbk.FbkQuality}</td>
                     <td>${fbk.FbkDateTime}</td>
                     <td>${fbk.FbkDesc}</td>
+                    <td class="actions-column">
+                        <div class="d-flex flex-column align-items-center justify-content-between">
+                            <button type="button" class="btn btn-dark shadow-none btn-sm me-2" data-bs-toggle="modal" data-bs-target="#updateAnn_${index}">
+                                <i class="bi bi-check2-circle"></i> Mark as resolve
+                            </button>
+                            <button type="button" style="margin-top: 2px" class="btn btn-danger shadow-none btn-sm" data-bs-toggle="modal" data-bs-target="#deleteAnn_${index}">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </div>
+                    </td>
                 `;
 
                 // Append row to tbody

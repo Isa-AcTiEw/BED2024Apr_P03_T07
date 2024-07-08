@@ -70,6 +70,16 @@
             text-align: center;
             justify-content: center;
         }
+
+        .dt-column{
+            width: 300px;
+        }
+        .desc-column{
+            width: 450px;
+        }
+        .actions-column{
+            width: 300px;
+        }
     </style>
 </head>
 
@@ -117,8 +127,9 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Quality of Service</th>
-                                    <th scope="col">Date and Time</th>
-                                    <th scope="col">Description/Suggestions</th>
+                                    <th class="dt-column" scope="col">Date and Time</th>
+                                    <th class="desc-column" scope="col">Description/Suggestions</th>
+                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="feedbacks-data">
