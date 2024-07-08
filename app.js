@@ -50,6 +50,7 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Feedbacks
 app.get('/feedbacks', fbkController.getAllFeedbacks);
+app.get('/feedbacks/:id', fbkController.getFeedbackById);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
