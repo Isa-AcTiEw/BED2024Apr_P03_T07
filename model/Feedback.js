@@ -2,13 +2,13 @@ const sql = require('mssql');
 const dbConfig = require('../config/db_Config'); 
 
 class Feedback {
-    constructor(FbkID, FbkName, FbkQuality, FbkDateTime, FbkDesc, AdminID ) {
+    constructor(FbkID, FbkName, FbkQuality, FbkDateTime, FbkDesc, AccID ) {
         this.FbkID = FbkID;
         this.FbkName = FbkName;
         this.FbkQuality = FbkQuality;
         this.FbkDateTime = FbkDateTime;
         this.FbkDesc = FbkDesc;
-        this.AdminID = AdminID;
+        this.AccID = AccID;
     }
 
     static async getAllFeedbacks() {
@@ -18,7 +18,7 @@ class Feedback {
         const result = await request.query(sqlQuery);
         connection.close();
         return result.recordset.map(
-            (row) => new Feedback(row.FbkID, row.FbkName, row.FbkQuality, row.FbkDateTime, row.FbkDesc, row.AdminID)
+            (row) => new Feedback(row.FbkID, row.FbkName, row.FbkQuality, row.FbkDateTime, row.FbkDesc, row.AccID)
         );
     }
 
@@ -37,7 +37,7 @@ class Feedback {
 				result.recordset[0].FbkQuality,
 				result.recordset[0].FbkDateTime,
 				result.recordset[0].FbkDesc,
-				result.recordset[0].AdminID
+				result.recordset[0].AccID
 			)
 			: null;
     }    
@@ -45,20 +45,22 @@ class Feedback {
     static async createFeedback(newFbkData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `INSERT INTO Feedback (FbkName, FbkQuality, FbkDateTime, FbkDesc, AdminID) 
-        VALUES (@FbkName, @FbkDesc); SELECT SCOPE_IDENTITY() AS FbkID`;
+        const sqlQuery = `INSERT INTO Feedback (FbkName, FbkQuality, FbkDateTime, FbkDesc, AccID) 
+        VALUES (@FbkName, @FbkQuality, @FbkDateTime, @FbkDesc, @AccID); SELECT SCOPE_IDENTITY() AS FbkID`;
 
         const request = connection.request();
         request.input("FbkName", newFbkData.FbkName);
         request.input("FbkQuality", newFbkData.FbkQuality);
         request.input("FbkDateTime", newFbkData.FbkDateTime);
         request.input("FbkDesc", newFbkData.FbkDesc);
-        request.input("AdminID", "ADM001");
+
+        // accID must change after implementing user sign in to set accID to the respective user
+        request.input("AccID", "ACC002");
     
         const result = await request.query(sqlQuery);
     
         connection.close();
-        return this.getBookById(result.recordset[0].FbkID);
+        return this.getFeedbackById(result.recordset[0].FbkID);
     }
 
     static async updateFeedback(FbkID, newFeedbackData) {
@@ -80,7 +82,7 @@ class Feedback {
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `DELETE FROM Feedback WHERE FbkID = @FbkID`;
         const request = connection.request();
-        request.input("FbkID", FbkID); // Use the correct data type
+        request.input("FbkID", FbkID); 
         const result = await request.query(sqlQuery);
         connection.close();
         return result.rowsAffected > 0;

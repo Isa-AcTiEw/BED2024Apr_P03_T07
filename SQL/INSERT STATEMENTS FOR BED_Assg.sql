@@ -46,8 +46,8 @@ VALUES
 
 INSERT INTO Feedback
 VALUES
-('Friendly Staff','Excellent', '2024-07-25 11:00', 'The staff at the front desk are always friendly and helpful. They make every visit to the community club enjoyable.', 'ADM001'),
-('Gym Equipment Issue', 'Poor', '2024-07-22 17:10', 'Some of the gym equipment needs maintenance. The treadmill is making a strange noise, and one of the weight machines is broken.', 'ADM001');
+('Friendly Staff','Excellent', '2024-07-25 11:00', 'The staff at the front desk are always friendly and helpful. They make every visit to the community club enjoyable.', 'ACC002'),
+('Gym Equipment Issue', 'Poor', '2024-07-22 17:10', 'Some of the gym equipment needs maintenance. The treadmill is making a strange noise, and one of the weight machines is broken.', 'ACC002');
 
 INSERT INTO FacilitiesMgr
 VALUES

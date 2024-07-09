@@ -50,7 +50,10 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Feedbacks
 app.get('/feedbacks', fbkController.getAllFeedbacks);
-app.get('/feedbacks/:id', fbkController.getFeedbackById);
+app.get('/feedbacks/:id',fbkController.getFeedbackById);
+app.post('/feedbacks',fbkController.createFeedback);
+app.put('/feedbacks/:id',fbkController.updateFeedback);
+app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
