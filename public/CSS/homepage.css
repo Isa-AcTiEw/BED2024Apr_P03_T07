@@ -1,3 +1,7 @@
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+}
 .navbar-brand{
     font-family: "Playwrite IT Moderna", cursive;
     font-optical-sizing: auto;
@@ -17,7 +21,7 @@
 .about-desc{
     padding: 10px;
     font-family: "Poppins";
-    font-size: 20px;
+    font-size: 18px;
 }
 
 
@@ -41,18 +45,20 @@
     align-self: center;
 }
 
-.col-md-6{
+.container-bottom {
+    background-color: aliceblue;
+
+}
+.container-contacts{
+    font-size: small;
     margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: aliceblue;
 }
-
-.container-contacts h1{
-    text-align: center;
-    font-family: "Poppins";
+.container-contacts h2{
+    margin-bottom: 5px;
 }
 
 .container-announcements{
@@ -63,8 +69,8 @@
     padding: 10px;
     width: auto;
     height: auto;
-    
-    
+    justify-content: center;
+    align-items: center;
 }
 
 .announcements{
@@ -82,16 +88,13 @@
 
 .ann-desc>p{
     font-family: "Poppins";
-    font-size: 2rem;
+    font-size: 18px;
     
 }
 
 .ann-date>p{
     font-family: "Poppins";
-    font-size: 2rem;
+    font-size: 18px;
     color: royalblue;
     
 }
-
-
-
