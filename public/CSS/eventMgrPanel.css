@@ -1,0 +1,30 @@
+.offcanvas {
+    --bs-offcanvas-width: 290px;
+}
+
+@media (min-width: 900px){
+    .offcanvas.offcanvas.offcanvas-start{
+        -webkit-transform: none;
+        transform: none;
+        visibility: visible !important;
+        /* Make it match to the height of the header */
+        height: auto;
+    }
+
+    .add-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+    }
+
+    .add-button {
+        border-color: black;
+    }
+
+    .add-button:hover {
+        background-color: #f0f0f0;
+        color: black;
+    }
+}
+
