@@ -80,4 +80,9 @@ VALUES
 ('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
 ('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
 
+SELECT * FROM Facilities WHERE FacID = 'FAC005';
+INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES ('FAC005', 'Function Room', 'Reserve the function room to host a birthday party or an event.');
+SELECT SCOPE_IDENTITY() AS FacID;
 
+DELETE FROM Booking WHERE BookID = 'B003';
+SELECT * FROM Booking;

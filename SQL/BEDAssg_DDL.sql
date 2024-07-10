@@ -1,4 +1,5 @@
 -- CREATE DATABASE bedAssg_db
+-- DROP DATABASE bedAssg_db
 -- USE bedAssg_db
 
 -- Create Account Table
