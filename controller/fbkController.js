@@ -40,7 +40,7 @@ const updateFeedback = async (req, res) => {
         if (!updatedFeedback) {
             return res.status(404).json("Feedback not found");
         } 
-        res.json(updateFeedback);
+        res.json(updatedFeedback);
     } catch (error) {
         console.error(error);
         res.status(500).send("Error updating Feedback");

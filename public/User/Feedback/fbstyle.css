@@ -2,7 +2,6 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -160,12 +159,13 @@ form .textarea textarea{
   color: #ffffff;
 }
 
-.btn-close {
-  margin-bottom: 5%;
+.btn-close-custom {
+  margin-right: 10px;
   background: none;
   border: none;
-  font-size: 35px;
+  padding: 0;
   cursor: pointer;
-  color: rgba(51, 51, 51);
+  font-size: 1.9rem;
+  line-height: 1;
+  color: #000;
 }
-
