@@ -26,4 +26,5 @@ const validateEvent = (req, res, next) => {
     next(); // If validation passes, proceed to the next route handler
   };
 
-  module.exports = validateEvent;
+
+module.exports = validateEvent;
