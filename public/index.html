@@ -1,142 +1,152 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-        <link href= "./CSS/bootstrap.min.css" type="text/css" rel ="stylesheet">
-        <link href= "CSS/homepage.css" rel ="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins&display=swap" rel="stylesheet">
-        <script src="./Js/bootstrap.bundle.min.js" defer></script>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-              <a class="navbar-brand" href="#">OneSingapore</a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="./CSS/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="./CSS/homepage.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+IT+Moderna:wght@100..400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900&family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="./Js/bootstrap.bundle.min.js" defer></script>
+    <script src="./Js/feedback.js" defer></script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.html">SGoofy</a>
+            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Events</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="./Login/EventMgrLogin.html">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Contact Us</a>
-                  </li>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active me-2" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="#">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="#">Facilities</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="#">Contact Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link me-2" href="User/Feedback/userFeedback.html">Feedback</a>
+                    </li>
                 </ul>
-              </div>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                </form>
             </div>
-          </nav>
-        <!-- Make the about us segment of the page -->
-        <div class = "mission-header">
-            <h2>Our Mission</h2>
         </div>
+    </nav>
 
-        <div class = "container mission">
-            <div class="row">
-                <!-- One row has 12 available columns -->
-                <!-- About us part 1 strengthening communities-->
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Engaging Communities</h2>
-                        </div>
-                        <dotlottie-player class="img-fluid" src="https://lottie.host/5051dfb9-611c-4430-b2e0-70588cd61916/YojQ04Ir6W.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-                        <div class = "about-desc">
-                            <p>Engaging Communities, community clubs being a communal space allows others <br>
-                            to interract with Singaporeans from a walks of life <br> widening our social circle and forging new friendships</p>
-                        </div>
+    <div class="mission-header">
+        <h2>Our Mission</h2>
+    </div>
+
+    <div class="container mission">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Engaging Communities</h2>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Nurturing Communities</h2>
-                        </div>
-                        <dotlottie-player class = "img-fluid" src="https://lottie.host/a67015ee-4a37-4a21-aa9a-27b7024615be/cvJfOhNrCm.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-                        <div class = "about-desc">
-                            <p>Community clubs serves as the foundation for establishing social cohesion,<br>
-                                support networks, and platforms for communicating with the government, all of which are necessary for Singaporean communities.
-                                </p>                                
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2>Fostering our Singapore Spirit</h2>
-                        </div>
-                        <dotlottie-player class="img-fluid" src="https://lottie.host/35b24327-0e34-4bb7-b2a4-dc5f7f57953d/FktAVfvvi6.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
-                        <div class = "about-desc">
-                            <p>Focusing on the motto of One People, One Nation and One Singpore. 
-                               our community clubs celebrates our cultural and ethnic 
-                            </p> 
-                        </div>
+                    <dotlottie-player class="img-fluid" src="https://lottie.host/5051dfb9-611c-4430-b2e0-70588cd61916/YojQ04Ir6W.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+                    <div class="about-desc">
+                        <p>Engaging Communities, community clubs being a communal space allows others <br>
+                        to interract with Singaporeans from a walks of life <br> widening our social circle and forging new friendships</p>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <!-- Contact us and about Us segment -->
-
-        <div class = "container-bottom">
-            <div class = "row">
-                <div class="col-md-6">
-                    <div class = "container-contacts">
-                        <h1>Contact Us</h1>
-                        <h2>Telephone Number:89076789</h2>
-                        <h2>Email Address: onePA@PA.gov.sg</h2>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Nurturing Communities</h2>
+                    </div>
+                    <dotlottie-player class="img-fluid" src="https://lottie.host/a67015ee-4a37-4a21-aa9a-27b7024615be/cvJfOhNrCm.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+                    <div class="about-desc">
+                        <p>Community clubs serves as the foundation for establishing social cohesion,<br>
+                            support networks, and platforms for communicating with the government, all of which are necessary for Singaporean communities.
+                            </p>                                
                     </div>
                 </div>
-
-                <div class="col-md-6">
-                    <h1>Announcements</h1>
-                    <div class = "container-announcements">
-                        <div class = "announcements">
-                            <div class = "ann-desc">
-                                <p>Bukit Batok CC Gym under renovation</p>
-                            </div>
-    
-                            <div class = "ann-date">
-                                <p>10 June 2024</p>
-                            </div>
-                        </div>
-
-                        <div class = "announcements">
-                            <div class = "ann-desc">
-                                <p>Bukit Batok CC Gym under renovation</p>
-                            </div>
-    
-                            <div class = "ann-date">
-                                <p>10 June 2024</p>
-                            </div>
-                        </div>
-
-                        <div class = "announcements">
-                            <div class = "ann-desc">
-                                <p>Bukit Batok CC Gym under renovation</p>
-                            </div>
-    
-                            <div class = "ann-date">
-                                <p>10 June 2024</p>
-                            </div>
-                        </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Fostering our Singapore Spirit</h2>
+                    </div>
+                    <dotlottie-player class="img-fluid" src="https://lottie.host/35b24327-0e34-4bb7-b2a4-dc5f7f57953d/FktAVfvvi6.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></dotlottie-player>
+                    <div class="about-desc">
+                        <p>Focusing on the motto of One People, One Nation and One Singpore. 
+                            our community clubs celebrates our cultural and ethnic 
+                        </p> 
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div class="container-bottom">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="container-contacts">
+                    <h1>Contact Us</h1>
+                    <h2>Telephone Number:89076789</h2>
+                    <h2>Email Address: onePA@PA.gov.sg</h2>
+                </div>
+            </div>
 
-    </body>   
+            <div class="col-md-6">
+                <h1>Announcements</h1>
+                <div class="container-announcements">
+                    <div class="announcements">
+                        <div class="ann-desc">
+                            <p>Bukit Batok CC Gym under renovation</p>
+                        </div>
 
+                        <div class="ann-date">
+                            <p>10 June 2024</p>
+                        </div>
+                    </div>
+
+                    <div class="announcements">
+                        <div class="ann-desc">
+                            <p>Bukit Batok CC Gym under renovation</p>
+                        </div>
+
+                        <div class="ann-date">
+                            <p>10 June 2024</p>
+                        </div>
+                    </div>
+
+                    <div class="announcements">
+                        <div class="ann-desc">
+                            <p>Bukit Batok CC Gym under renovation</p>
+                        </div>
+
+                        <div class="ann-date">
+                            <p>10 June 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>   
 </html>

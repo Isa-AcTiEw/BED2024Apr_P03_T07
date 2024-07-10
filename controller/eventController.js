@@ -47,21 +47,32 @@ const createEvent = async (req,res) => {
 
 const updateEvent = async (req,res) => {
   try{
-    const eventID = req.params;
-    // what uf eventID not found should do a resource not found respond 404
-    const event = req.body;
-    const updatedEvent = Event.updateEventDetails(eventID,event);
-    res.json(updatedEvent);
-    if(!updatedEvent){
-      res.status(404).send("Unable to find event to update")
+    const EventID = req.params.id;
+    const {EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake} = req.body;
+    if(EventCat == "Arts and Culture" || EventCat == "Active Aging" || EventCat == "Cooking" || EventCat == "Environment" || EventCat == "Festivities" || EventCat == "LifeLong Learning"){
+      const updatedEvent = await Event.updateEventDetails(EventID,EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake);
+      if(!updatedEvent){
+        res.status(404).send("Unable to update event");
+      }
+      res.status(200).json({message:"Updated Event Sucessfully",
+                                 updatedEvent: updatedEvent
+      });
     }
-    res.status(200).send("Updated event sucessfully");
+
+    else{
+      res.status(404).send("Incorrect event category entered");
+    }
+    
   }
   catch (error){
-    console.error(error);
+    console.error(error.stack);
     res.status(500).send("Error updating event")
   }
 }
+
+// patch check validation the value passed (patch certain value some value cannot allowed)
+
+// put for updating but fields that cannot be changed hidden field 
 
 module.exports = {
     getAllEventsByEventMgrID,

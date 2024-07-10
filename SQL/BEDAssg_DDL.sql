@@ -63,14 +63,15 @@ CREATE TABLE Announcement (
         FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)  
 );
 
+DROP TABLE IF EXISTS Feedback;
 -- Create Feedback table
 CREATE TABLE Feedback (
-    FbkID varchar(10) NOT NULL,
+    FbkID INT IDENTITY(1,1) PRIMARY KEY,
     FbkName varchar(30) NOT NULL,
-    FbkDateTime smalldatetime NOT NULL,
-    FbkDesc varchar(300) NOT NULL,
+    FbkQuality varchar(10) NOT NULL,
+	FbkDateTime datetime NOT NULL,
+    FbkDesc varchar(MAX) NOT NULL,
     AdminID varchar(10) NOT NULL,
-    CONSTRAINT PK_Feedback PRIMARY KEY (FbkID),
     CONSTRAINT FK_Feedback_Account
         FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
 );
