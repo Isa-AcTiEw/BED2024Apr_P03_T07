@@ -9,6 +9,7 @@ const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
+const fbkController = require("./controller/fbkController");
 
 const bodyParser = require("body-parser");
 
@@ -46,6 +47,13 @@ app.get('/announcements/:id', annController.getAnnouncementById);
 app.post('/announcements', annController.createAnnouncement);
 app.put('/announcements/:id', annController.updateAnnouncement);
 app.delete('/announcements/:id', annController.deleteAnnouncement);
+
+// Feedbacks
+app.get('/feedbacks', fbkController.getAllFeedbacks);
+app.get('/feedbacks/:id',fbkController.getFeedbackById);
+app.post('/feedbacks',fbkController.createFeedback);
+app.put('/feedbacks/:id',fbkController.updateFeedback);
+app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
