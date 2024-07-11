@@ -1,10 +1,11 @@
+
+
 //  do not tie to loginBtn
-const eventMgrID = localStorage.getItem('id');
-window.addEventListener('load',handleEvents(eventMgrID));
+
 
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
-async function handleEvents(eventMgrID){
-    const url = `http://localhost:3000/EventMgr/${eventMgrID}`;
+async function handleEvents(){
+    const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
     displayEvents(listEvent);
@@ -16,18 +17,20 @@ async function getEvents(url){
         throw new Error(`HTTP error: ${response.status}`);
       }
     const events = await response.json();
-    try {
-        return events; // Return 'events' if no error occurs
-    } catch (error) {
-        console.error(error);
+    if(events != null){
+        try {
+            return events; // Return 'events' if no error occurs
+        } catch (error) {
+            console.error(error);
+        }
     }
+    
 }
 
 function displayEvents(listEvent){
     // parent div
-    const table = document.getElementsByClassName('table');
 
-    const tableBody = document.getElementById('tableBody');
+    const tableBody = document.getElementById('EventData');
     // testdata works need to overwrite all table rows 
     createrows(listEvent,tableBody);
     
@@ -41,10 +44,14 @@ function createrows(listEvent,tableBody){
     let rowContent = '';
     listEvent.forEach(element => {
     // Step 1:Cast datestring to date object
-    const date = new Date(element.EventRegEndDate);
+
+    const eventDate = new Date(element.EventDate);
+    
+    const regEnddate = new Date(element.EventRegEndDate);
 
     // Step 2: return the date in human readable form
-    const formattedDate = date.toDateString();
+    const formattedeventDate = eventDate.toDateString();
+    const formattedregEndDate = regEnddate.toDateString();
         // append each row to rowcontent, initialize it as an empty string so it stores the prev added rows
         rowContent += 
         `
@@ -52,8 +59,11 @@ function createrows(listEvent,tableBody){
             <td>${element.EventID}</td>
             <td>${element.EventName}</td>
             <td>${element.EventDesc}</td>
+            <td>${element.EventPrice}</td>
+            <td>${formattedeventDate}
+            <td>${element.EventCat}</td>
             <td>${element.EventLocation}</td>
-            <td>${formattedDate}</td>
+            <td>${formattedregEndDate}</td>
             <td>${element.EventIntake}</td>
             <td>Update</td>
         </tr>

@@ -5,6 +5,8 @@ const bodyParser = require("body-parser");
 const verifyJWT = require('./middleware/authorizeTokenAndRoles');
 const userController = require('./controller/userController');
 const booksController = require('./controller/booksController');
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./Output/swagger.json"); // Import generated spec
 const app = express();
 const port = process.env.PORT || 2000;
 
@@ -17,6 +19,11 @@ app.post('/register', userController.registerUser); // user registration route
 app.post('/login', userController.login);
 app.get('/books', verifyJWT, booksController.getAllBooks);
 app.put('/books/:bookId/:availability', verifyJWT, booksController.updateAvailability);
+
+// swagger api docs
+
+// Serve the Swagger UI at a specific route
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 app.listen(port, async () => {

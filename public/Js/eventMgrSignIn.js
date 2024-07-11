@@ -5,12 +5,8 @@
 const logIn = document.getElementById('eventMgrLogin')
 const eventMgrEmail = document.getElementById('eventMgrPassword')
 const eventMgrId = 'EVT001'
-logIn.addEventListener('click',validatInput)
+localStorage.setItem("id",eventMgrId);
 
-function validatInput(){
-    // we send a get request to our database to retrive the information of the coresponding acount (i want the eventMgrID)
-    // we store the eventMgrID in localStorage so that we can use in eventMgr.html
-    localStorage.setItem('id', eventMgrId)
-    window.location = '../EventMgr/eventMgr.html'
 
-}
+
+// log in causing the issue 
