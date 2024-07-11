@@ -5,7 +5,7 @@
     "description": "PolytechnicLibarary API",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "localhost:2000",
   "basePath": "/",
   "schemes": [
     "http"
@@ -134,7 +134,7 @@
               "type": "object",
               "properties": {
                 "availability": {
-                  "example": "any"
+                  "example": "Y/N"
                 }
               }
             }

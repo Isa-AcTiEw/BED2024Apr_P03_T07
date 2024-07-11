@@ -1,13 +1,11 @@
 
 
 //  do not tie to loginBtn
-const eventMgrID = localStorage.getItem('id');
-handleEvents(eventMgrID);
+
 
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
-async function handleEvents(eventMgrID){
-    const url = `http://localhost:3000/EventMgr/getEvents/${eventMgrID}`;
-    console.log(url);
+async function handleEvents(){
+    const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
     displayEvents(listEvent);
