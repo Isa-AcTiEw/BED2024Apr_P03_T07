@@ -6,11 +6,12 @@ const { request } = require('express');
 const getAllEventsByEventMgrID = async (req,res) =>{
     try {
         const EventMgrID = req.params.id;
+        console.log(EventMgrID);
         const Events = await EventMgr.getAllEventsByEventMgrID(EventMgrID);
         res.json(Events);
       } catch (error) {
         console.error(error);
-        res.status(500).send("Error retrieving books");
+        res.status(500).send("Error retrieving Event");
       }
 };
 

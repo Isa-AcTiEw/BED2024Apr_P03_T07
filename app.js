@@ -36,7 +36,7 @@ app.get('/', (req, res) => {
 });
 
 // EventMgr and Event routes
-app.get('/EventMgr/:id',eventController.getAllEventsByEventMgrID);
+app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
 app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
 app.post('/EventMgr/updateEvents/:id',validateEvent,eventController.updateEvent);
 app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
