@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel = "stylesheet" href = "../CSS/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Poppins&display=swap" rel="stylesheet">
+        <link rel = "stylesheet" href = "../CSS/eventMgrPanel.css">
+        <script src = "../Js/manageEvents.js" defer></script>
+        <!-- <script src = "../Js/manageEvents.js" defer></script> -->
+    </head>
+    <body class="bg-light">
+
+        
+
+        <div class="container-fluid bg-dark text-light p-3 ml-3 d-flex align-items-center justify-content-between sticky-top" id="header">
+            <!-- Place offcanvas trigger -->
+            <button class="navbar-toggler bg-white shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#offcanvasOverride" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon bg-dark"></span>
+            </button>
+            <h3 class="mb-0">Event Manager Panel</h3>
+            <a href="../Login/EventMgrLogin.html" class="btn btn-light btn-sm">LOG OUT</a>
+        </div>
+        
+        <!-- Show offcanvas navbar only on fullscreen-->
+        
+          <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasOverride" aria-controls="offcanvasExample">
+            Button with data-bs-target
+          </button>
+          
+          <div class="offcanvas offcanvas-start sidebar-nav bg-dark" tabindex="-1" id="offcanvasOverride" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header text-white text-uppercase">
+              <h5 class="offcanvas-title fw-bold" id="offcanvasExampleLabel">Admin Manager Panel</h5>
+            </div>
+            <div class="offcanvas-body">
+              <!-- store our navbar and style it here -->
+              <navbar class="navbar bg-dark" id="adminDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-items">
+                        <a class="nav-link text-white fw-bold text-uppercase" href="#">Create Event</a>
+                    </li>
+                    <li class="nav-items">
+                        <a class="nav-link text-white fw-bold text-uppercase" href="feedback.html">Update Event</a>
+                    </li>
+                </ul>
+              </navbar>
+            </div>
+          </div>
+
+          <div class="container-fluid" id="EventContent">
+            <div class="row flex-wrap">
+                <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+                    <div class="add-button-container">
+                        <h3 class="mb-4">Events Managed</h3>
+                        <button type="button" class="btn btn-dark shadow-none btn-sm me-2 add-button" data-bs-toggle="modal" data-bs-target="#addEventsModal">
+                            <i class="bi bi-plus-circle-fill"></i> Add Events +
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="container-fluid" id="main-content">
+            <div class="row">
+                <div class="col-lg-10 ms-auto p-4 overflow-hidden">
+                    <div class="add-button-container">
+                        <h3 class="mb-4">Event Details</h3>
+                    </div>
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="table-responsive-md" style="height: 400px; overflow-y: scroll;">
+                                <table class="table table-hover border text-center" style="min-width: 1000px;">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Event ID</th>
+                                            <th scope="col">Event Name</th>
+                                            <th scope="col">Event Description</th>
+                                            <th class="dt-column" scope="col">Event Price</th>
+                                            <th class="desc-column" scope="col">Event Date</th>
+                                            <th scope="col">Event Category</th>
+                                            <th scope = "col">Event Location</th>
+                                            <th scope = "col">Event Registration End Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="EventData">
+                                        <!-- -- Event data will be inserted here so create a new row for each column-> -->
+                                         
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+          <!-- Create modal for Creating new Events -->
+          <div class="modal" id = "addEventsModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Create a new Event</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Event Name</label>
+                        <input type="text" name="Event Name" class="form-control" id="addAnnouncementTitle" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Event Description</label>
+                        <textarea name="event_desc" class="form-control" rows="6" id="addAnnouncementDesc" required></textarea>
+                    </div>
+
+                    <div class = "mb-3">
+                        <label class="form-label">Event Date</label>
+                        <input type ="datetime-local" name="event_desc" class="form-control" rows="6" id="addAnnouncementDesc" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event_cat" class="form-label">Event Category</label>
+                        <select class="form-select" id="event_cat" required>
+                            <option selected disabled>Select Event Category</option>
+                            <option value="Active Ageing">Active Ageing</option>
+                            <option value="Cooking">Cooking</option>
+                            <option value="Arts and Culture">Arts and Culture</option>
+                            <option value="Festivities">Festivities</option>
+                            <option value="Lifelong Learning">Lifelong Learning</option>
+                        </select>
+                    </div>
+
+                    <div class = "mb-3">
+                        <label class = "form-label">Event Location</label>
+                        <input type = "text" name = "eventlocation" class = "form-control" rows= "6" id = "addlocation" required>
+                    </div>
+
+                    <div class = "mb-3">
+                        <label class="form-label">Event Registration End Date</label>
+                        <input type ="datetime-local" name="event_desc" class="form-control" rows="6" id="addAnnouncementDesc" required></textarea>
+                    </div>
+
+                    <div class = "mb-3">
+                        <label class = "form-label">Event Intake</label>
+                        <input type = "text" name = "eventintake" class = "form-control" rows= "6" id = "addlocation" required>
+                    </div>
+
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <script src="../Js/bootstrap.bundle.min.js" defer></script>
+    </body>
+</html>
