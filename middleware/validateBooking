@@ -1,0 +1,18 @@
+const Joi = require("joi");
+const validateBooking = (req, res, next) => {
+    const schema = Joi.object({
+        BookID: Joi.string().min(4).max(4).required(),
+        //BookDate: Joi.date().format('YYYY-MM-DD').required(),
+        //BookStatus: Joi.string().valid("Pending", "Approved", "Cancelled").required(),
+        FacID: Joi.string().min(6).max(6).required(),
+        AccID: Joi.string().min(6).max(6).required()
+    });
+    const validation = schema.validate(req.body, { abortEarly: false });
+    if (validation.error) {
+        const errors = validation.error.details.map((error) => error.meessage);
+        res.status(400).json({ message: "Validation error", errors});
+        return;
+    }
+    next()
+};
+module.exports = validateBooking;

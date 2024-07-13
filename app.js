@@ -10,8 +10,12 @@ const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
 const fbkController = require("./controller/fbkController");
+const authController = require("./controller/authController");
+
+//middleware
 
 const bodyParser = require("body-parser");
+const validateBooking = require("./middleware/validateBooking");
 
 // Middleware to serve static files from the "public" directory
 const staticMiddlewarePublic = express.static('./public');
@@ -39,6 +43,8 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/EventMgr/eventMgrPanel.html');
 });
 
+// Login
+app.post('/login', authController.loginUser);
 
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
@@ -63,7 +69,7 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 // Booking
 app.get("/booking", bookingController.getAllBookings);
 app.get("/booking/:id", bookingController.getBookingById);
-app.post("/booking", bookingController.createBooking);
+app.post("/booking", validateBooking, bookingController.createBooking);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistrations);
