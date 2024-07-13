@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// dirname gets the path of the file in html
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/Admin/adminpage.html');
 });
@@ -43,8 +42,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/EventMgr/eventMgrPanel.html');
 });
 
-// Login
-app.post('/login', authController.loginUser);
+app.get('/facilitiesMgr', (req, res) => {
+  res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
+});
 
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
