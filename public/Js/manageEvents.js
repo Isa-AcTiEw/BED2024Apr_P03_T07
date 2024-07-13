@@ -67,11 +67,10 @@ function createrows(listEvent,tableBody){
             <td>${element.EventIntake}</td>
             <td>Update</td>
         </tr>
-        `
-        tableBody.innerHTML = rowContent
-
-        
+        `;
     });
+    tableBody.innerHTML = rowContent;
 }
+document.addEventListener('DOMContentLoaded', handleEvents);
 
 // need to fix when reloaded page the thing don't work anymore 

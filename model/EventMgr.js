@@ -11,7 +11,7 @@ class EventMgr extends Account{
 
     // retrive all events managed by a specific event manager e.g. Ae00001
     static async getAllEventsByEventMgrID(id){
-        const connection = await sql.connect();
+        const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event WHERE EventMgrID = @EventMgrID`
         const request = connection.request();
         request.input("EventMgrID",id);
