@@ -18,11 +18,12 @@ class Event{
     // retrive all events based on EventID
 
     static async getAllEventsById(id){
-        const connection = await sql.connect();
+        const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event WHERE EventID = @EventID`;
         const request = connection.request();
         request.input("EventID",id);
         const result = await request.query(sqlQuery);
+        connection.close();
         return result.recordset.map
         ((row) => 
             new Event(
@@ -41,7 +42,7 @@ class Event{
 
     static async updateEventDetails(id,EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake){
         console.log(id);
-        const connection = await sql.connect();
+        const connection = await sql.connect(dbConfig);
         const sqlQuery = 
         `
     UPDATE Event 
@@ -66,6 +67,7 @@ class Event{
         request.input("EventRegEndDate",EventRegEndDate);
         request.input("EventIntake",EventIntake);
         await request.query(sqlQuery);
+        connection.close();
         const update = await this.getAllEventsById(id);
         return update[0];
     }
@@ -78,6 +80,7 @@ class Event{
         request.input("EventID",id);
         const result = await request.query(sqlQuery);
         const rowsAffected = result.rowsAffected;
+        connection.close();
         return rowsAffected;
 
     }
@@ -85,7 +88,7 @@ class Event{
 
     static async createEvent(event){
         // select SCOPE_IDENTITY AS id returns the id of the current scope in the sql table
-        const connection = await sql.connect();
+        const connection = await sql.connect(dbConfig);
         const sqlQuery = 
         `
         INSERT INTO Event (EventID ,EventName, EventDesc, EventPrice, EventDate, EventCat, EventLocation, EventRegEndDate, EventMgrID, EventIntake) 
@@ -103,6 +106,7 @@ class Event{
         request.input("EventMgrID",event.EventMgrID);
         request.input("EventIntake",event.EventIntake);
         const result = await request.query(sqlQuery);
+        connection.close();
         // retrive the newlt created event to veriffy that the a new event is added
         return this.getAllEventsById(result.recordset[0].EventID); 
     }
