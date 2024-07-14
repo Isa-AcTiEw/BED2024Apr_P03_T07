@@ -1,6 +1,4 @@
--- CREATE DATABASE bedAssg_db
--- DROP DATABASE bedAssg_db
--- USE bedAssg_db
+--DDL
 
 -- Create Account Table
 CREATE TABLE Account(
@@ -8,8 +6,11 @@ CREATE TABLE Account(
 	AccName varchar(30) NOT NULL,
 	AccEmail varchar(30) UNIQUE NOT NULL,
 	AccCtcNo varchar(15) NOT NULL,
+	AccPfp image,
+	AccAddr varchar(100) NOT NULL,
+	AccPostalCode varchar(10) NOT NULL,
 	AccDOB smalldatetime NOT NULL,
-	AccAddr varchar(100) NOT NULL
+	AccPassword varchar(MAX) NOT NULL,
 	CONSTRAINT PK_Account PRIMARY KEY (AccID)
 );
 
@@ -43,6 +44,7 @@ CREATE TABLE Event(
 		FOREIGN KEY (EventMgrID) REFERENCES EventMgr(EventMgrID)
 );
 
+
 -- Create Admin table
 CREATE TABLE Admin(
 	AdminID varchar(10) NOT NULL,
@@ -58,22 +60,19 @@ CREATE TABLE Announcement (
     AnnID INT IDENTITY(1,1) PRIMARY KEY,
     AnnName varchar(255) NOT NULL,
     AnnDesc varchar(MAX) NOT NULL,
-    AdminID varchar(10) NOT NULL,
-    CONSTRAINT FK_Announcement_Admin
-        FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)  
 );
 
-DROP TABLE IF EXISTS Feedback;
 -- Create Feedback table
+-- Service Quality: Excellent, Very Good, Good, Average, Poor
 CREATE TABLE Feedback (
     FbkID INT IDENTITY(1,1) PRIMARY KEY,
-    FbkName varchar(30) NOT NULL,
+    FbkName varchar(MAX) NOT NULL,
     FbkQuality varchar(10) NOT NULL,
-	FbkDateTime datetime NOT NULL,
+	FbkDateTime smalldatetime NOT NULL,
     FbkDesc varchar(MAX) NOT NULL,
-    AdminID varchar(10) NOT NULL,
+    AccID varchar(10) NOT NULL,
     CONSTRAINT FK_Feedback_Account
-        FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
+        FOREIGN KEY (AccID) REFERENCES Account(AccID)
 );
 
 -- Create FacilitiesMgr table
