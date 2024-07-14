@@ -1,14 +1,11 @@
 
-
-//  do not tie to loginBtn
-
-
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
 async function handleEvents(){
     const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
     displayEvents(listEvent);
+    
 }
 
 async function getEvents(url){
@@ -33,9 +30,7 @@ function displayEvents(listEvent){
     const tableBody = document.getElementById('EventData');
     // testdata works need to overwrite all table rows 
     createrows(listEvent,tableBody);
-    
-    
-    
+    handleActions();
 
 }
 
@@ -56,7 +51,7 @@ function createrows(listEvent,tableBody){
         rowContent += 
         `
         <tr>
-            <td>${element.EventID}</td>
+            <td id = "eventID">${element.EventID}</td>
             <td>${element.EventName}</td>
             <td>${element.EventDesc}</td>
             <td>${element.EventPrice}</td>
@@ -65,12 +60,86 @@ function createrows(listEvent,tableBody){
             <td>${element.EventLocation}</td>
             <td>${formattedregEndDate}</td>
             <td>${element.EventIntake}</td>
-            <td>Update</td>
+            <td class = "eventActions" id="eventButton">
+                <div class = "d-flex justify-content-around flex-column">
+                    <div class="btn btn-round btn-outline-dark  p-2 m-2 delete button" id = "Delete"  data-bs-toggle="modal" >Delete</div>
+                    <div class = "btn btn-round btn-outline-dark p-2 m-2 update button" id = "Update">Update</div>
+                </div>
+            </td>
         </tr>
         `;
     });
     tableBody.innerHTML = rowContent;
 }
+
 document.addEventListener('DOMContentLoaded', handleEvents);
 
-// need to fix when reloaded page the thing don't work anymore 
+function handleActions(){
+    let eventID = null;
+    // need to target button instead
+    // buttonContainer is a NodeList of all the HTML elements matching the css selctor #eventButton
+    const buttonContainer = document.querySelectorAll('#eventButton'); // Example selector
+    
+    
+    for (let i = 0; i < buttonContainer.length; i++) {
+        const container = buttonContainer[i];
+        const buttons = container.querySelectorAll(".btn");
+
+        for (let j = 0; j < buttons.length; j++) {
+            const button = buttons[j];
+
+            button.addEventListener('click', function(e) {
+                const buttonid = e.target.id;
+                switch (buttonid) {
+                    case "Delete":
+                        // Retrieve the elementId of the thing
+                        
+                        // Traverse DOM tree by finding closest element tag inside the button container and use DELETE method
+                        const tr = container.closest("tr")
+                        // get the text value of the the EventID
+                        const eventIDELement = tr.querySelector("#eventID")
+                        
+                        eventID = eventIDELement.innerHTML.trim();
+
+                        // callback baby
+                        openModal(eventID)
+
+                        // function to call modal and pass eventID
+
+                        console.log("Delete button pressed");
+                        break;
+
+                    case "Update":
+                        // Traverse DOM tree and use DELETE or POST method 
+                        console.log("Update button pressed");
+                        break;
+                }
+            });
+            
+            
+        }
+
+        
+    }
+
+    function openModal(eID){
+        // get the modal yes 
+    }
+    
+    
+    // button is an empty variable only when it had been clicked inside our div than i set the button 
+    
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
