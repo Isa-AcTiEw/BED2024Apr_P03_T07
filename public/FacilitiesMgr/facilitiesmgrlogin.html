@@ -24,8 +24,10 @@
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
-                border-radius: 100px;
-                width: 432.5px;
+                width: 400px;
+                background: white;
+                border-radius: 5px 5px 5px 5px;
+                box-shadow: 0px 0px 10px 0px rgb(192, 192, 192);
             }
 
             .login-title,
@@ -36,22 +38,21 @@
 
             .login-title {
                 display: block;
-                padding: 15px 20px;
-                font-size:20px;
-                margin-bottom: 25px;
+                padding: 16px 20px;
+                font-size:23px;
+                margin-bottom: 24px;
                 width: 100%;
-                border-radius: 10px 10px 0px 0px;
+                border-radius: 5px 5px 0px 0px;
                 color: white;
-                background: black;
+                background-color: black;
             }
 
             .login-container {
                 display: flex;
+                padding: 10px;
                 flex-wrap: wrap;
                 justify-content: center;
                 width: 100%;
-                border-radius: 10px 10px 10px 10px;
-                box-shadow: 0px 0px 10px 0px black;
             }
 
             input[type="text"], input[type="password"] {
@@ -59,28 +60,32 @@
             }
 
             .login-input {
-                padding: 5px 100px;
-                margin-bottom: 15px;
+                padding: 6px 12px;
+                margin-bottom: 16px;
+                width: 100%;
+                border: 1px solid #dee2e6;
+                border-radius: 5px 5px 5px 5px;
             }
 
             .login-signin {
-                padding: 5px 10px;
-                margin-top: 5px;
+                padding: 6px 12px;
+                margin-top: 8px;
                 color: white;
                 cursor: pointer;
-                background-color: teal;
-                border: 1px solid teal;
+                background-color: rgb(72, 182, 182);
+                border: 1px solid rgb(72, 182, 182);
                 border-radius: 5px;
             }
 
             .login-signin:hover {
-                background-color: darkcyan;
-                border: 1px solid darkcyan;
+                color: rgb(72, 182, 182);
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(72, 182, 182);
             }
         </style>
         <form class="login-form" id="login-form">
+            <h4 class="login-title">FACILITIES MANAGER<br>LOGIN PANEL</h4>
             <div class="login-container">
-                <p class="login-title">FACILITIES MANAGER LOGIN PANEL</p>
                 <input class="login-input" name="facilitiesmanager-name" id="facilitiesmanager-name" required type="text" placeholder="Name">
                 <input class="login-input" name="facilitiesmanager-password" id="facilitiesmanager-password" required type="password" placeholder="Password">
                 <button  class="login-signin" name="facilitiesmanager-loginbtn" id="facilitiesmanager-loginbtn" type="submit">LOGIN</button>
