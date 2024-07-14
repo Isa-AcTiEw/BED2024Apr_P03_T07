@@ -49,7 +49,7 @@ class Announcement {
         const result = await request.query(sqlQuery);
     
         connection.close();
-        return this.getBookById(result.recordset[0].AnnID);
+        return this.getAnnouncementById(result.recordset[0].AnnID);
     }
 
     static async updateAnnouncement(AnnID, newAnnouncementData) {
