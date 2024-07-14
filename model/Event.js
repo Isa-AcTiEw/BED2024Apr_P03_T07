@@ -111,6 +111,26 @@ class Event{
         return this.getAllEventsById(result.recordset[0].EventID); 
     }
 
+    static async getAllEvent(){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT * FROM Event`
+        const request = connection.request();
+        const result = await request.query(sqlQuery);
+        connection.close()
+        return result.recordset.map(
+            ((row) => 
+                new Event(
+                         row.EventName,
+                         row.EventDesc,
+                         row.EventPrice,
+                         row.EventDate,
+                         row.EventCat,
+                         row.EventLocation,
+                         row.EventRegEndDate,
+                         row.EventIntake))
+        );
+    }
+
     // create the event and store in db table
 }
 module.exports = Event;

@@ -31,6 +31,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddlewarePublic); // Mount the static middleware
 
+// User routes
+app.get('/retrieveEvents/All',eventController.getAllEvents);
+
 // dirname gets the path of the file in html
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
