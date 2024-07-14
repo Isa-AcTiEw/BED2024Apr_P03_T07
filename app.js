@@ -46,6 +46,9 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
+// Login
+app.post('/Login', authController);
+
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
 app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
