@@ -71,6 +71,25 @@ const updateEvent = async (req,res) => {
   }
 }
 
+const getAllEvents = async (req,res) => {
+  try{
+    const Events = await Event.getAllEvent();
+    if(Events.length != 0){
+      res.json(Events);
+      
+    }
+    else{
+      res.status(404).json({"message":"There are no events listed"})
+    }
+    
+
+  }
+  catch(error){
+    console.error(error)
+    res.status(500).send("Error retriving all events")
+  }
+}
+
 // patch check validation the value passed (patch certain value some value cannot allowed)
 
 // put for updating but fields that cannot be changed hidden field 
@@ -80,6 +99,7 @@ module.exports = {
     deleteEvent,
     createEvent,
     updateEvent,
+    getAllEvents
   };
 
 
