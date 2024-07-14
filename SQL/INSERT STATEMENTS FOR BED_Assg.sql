@@ -1,11 +1,12 @@
 USE bedAssg_db;
 
+
 INSERT INTO Account 
 VALUES
-('ADM001', 'Admin', '123Admin@gmail.com', '91346128', '1990-02-03', '66 Marine Parade Road, #09-876'),
-('EVT001', 'Event', '123Events@gmail.com', '90836789', '1998-04-14', '7 One-North Residences, #10-10'),
-('FAL001', 'Facilities', '123Faciities@gmail.com', '89203754', '1984-12-25', '15 Pasir Ris Drive 1, #03-20'),
-('ACC002', 'Emily Tan', 'emilytan@gmail.com', '92345678', '1995-08-21', 'Blk 123 Ang Mo Kio Ave 4, #05-12');
+('ADM001', 'Admin', '123Admin@gmail.com', '91346128','', '66 Marine Parade Road, #09-876', '783273', '1990-02-03', '123456'),
+('EVT001', 'Event', '123Events@gmail.com', '90836789','', '7 One-North Residences, #10-10','729346', '1998-04-14','123456'),
+('FAL001', 'Facilities', '123Faciities@gmail.com', '89203754', '','15 Pasir Ris Drive 1, #03-20', '238893', '1984-12-25','123456'),
+('ACC002', 'Emily Tan', 'emilytan@gmail.com', '92345678', 'public/images/homepage pictures/woodlands-cc.jpg', 'Blk 123 Ang Mo Kio Ave 4, #05-12', '659083', '1995-08-21', '123456');
 
 INSERT INTO EventMgr
 VALUES 
@@ -37,17 +38,15 @@ INSERT INTO Admin
 VALUES
 ('ADM001','iamadmin','123456');
 
-
 INSERT INTO Announcement
 VALUES
-('Maintenance', 'We will be performing scheduled maintenance on our website to improve performance and security. The website will be temporarily unavailable from 12:00 AM to 11:59 PM on July 1st. We apologize for any inconvenience this may cause and appreciate your understanding.', 'ADM001'),
-('Update Your Profile', 'Make sure you don’t miss out on any of our events! Update your profile settings to receive notifications about upcoming events and activities. Stay informed and stay connected.', 'ADM001');
-
+('Maintenance', 'We will be performing scheduled maintenance on our website to improve performance and security. The website will be temporarily unavailable from 12:00 AM to 11:59 PM on July 1st. We apologize for any inconvenience this may cause and appreciate your understanding.'),
+('Update Your Profile', 'Make sure you don’t miss out on any of our events! Update your profile settings to receive notifications about upcoming events and activities. Stay informed and stay connected.');
 
 INSERT INTO Feedback
 VALUES
-('Friendly Staff','Excellent', '2024-07-25 11:00', 'The staff at the front desk are always friendly and helpful. They make every visit to the community club enjoyable.', 'ACC002'),
-('Gym Equipment Issue', 'Poor', '2024-07-22 17:10', 'Some of the gym equipment needs maintenance. The treadmill is making a strange noise, and one of the weight machines is broken.', 'ACC002');
+('Friendly Staff', 'Excellent', '2024-05-30 13:13:49', 'The staff at the front desk are always friendly and helpful. They make every visit to the community club enjoyable.', 'ACC002'),
+('Gym Equipment Issue', 'Poor', '2024-06-13 10:36:52', 'Some of the gym equipment needs maintenance. The treadmill is making a strange noise, and one of the weight machines is broken.', 'ACC002');
 
 INSERT INTO FacilitiesMgr
 VALUES
@@ -80,4 +79,9 @@ VALUES
 ('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
 ('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
 
+SELECT * FROM Facilities WHERE FacID = 'FAC005';
+INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES ('FAC005', 'Function Room', 'Reserve the function room to host a birthday party or an event.');
+SELECT SCOPE_IDENTITY() AS FacID;
 
+DELETE FROM Booking WHERE BookID = 'B003';
+SELECT * FROM Booking;
