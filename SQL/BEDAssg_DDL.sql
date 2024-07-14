@@ -6,7 +6,7 @@
 CREATE TABLE Account(
 	AccID varchar(10) NOT NULL,
 	AccName varchar(30) NOT NULL,
-	AccEmail varchar(30) NOT NULL,
+	AccEmail varchar(30) UNIQUE NOT NULL,
 	AccCtcNo varchar(15) NOT NULL,
 	AccDOB smalldatetime NOT NULL,
 	AccAddr varchar(100) NOT NULL

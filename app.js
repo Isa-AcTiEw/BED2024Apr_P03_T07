@@ -4,6 +4,8 @@ const express = require("express");
 const dbConfig = require("./config/db_Config");
 
 //controller
+const accountController = require("./controller/accountController");
+const adminController = require("./controller/adminController");
 const eventController = require("./controller/eventController");
 const bookingController = require("./controller/bookingController");
 const registrationController = require("./controller/registrationController");
@@ -47,7 +49,7 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 // Login
-app.post('/Login', authController);
+//app.post('/Login', authController);
 
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
@@ -85,6 +87,12 @@ app.post("/facilities", facilitiesController.createFacility);
 app.put("/facilities/:id", facilitiesController.updateFacility);
 app.delete("/facilities/:id", facilitiesController.deleteFacility);
 
+// Admin
+app.get("/admin/:id", adminController.getAdminById);
+
+// Account
+app.get("/account/:email", accountController.getAccountByEmail);
+
 // Testing our database connection
 app.listen(port, async () => {
   try {
@@ -108,6 +116,3 @@ process.on("SIGINT", async () => {
   console.log("Database connection closed");
   process.exit(0); // Exit with code 0 indicating successful shutdown
 });
-
-
-
