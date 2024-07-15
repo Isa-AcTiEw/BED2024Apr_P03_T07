@@ -30,7 +30,7 @@ function displayEvents(listEvent){
     const tableBody = document.getElementById('EventData');
     // testdata works need to overwrite all table rows 
     createrows(listEvent,tableBody);
-    handleActions();
+   
 
 }
 
@@ -62,7 +62,7 @@ function createrows(listEvent,tableBody){
             <td>${element.EventIntake}</td>
             <td class = "eventActions" id="eventButton">
                 <div class = "d-flex justify-content-around flex-column">
-                    <div class="btn btn-round btn-outline-dark  p-2 m-2 delete button" id = "Delete"  data-bs-toggle="modal" >Delete</div>
+                    <div class="btn btn-round btn-outline-dark  p-2 m-2 delete button" id = "Delete">Delete</div>
                     <div class = "btn btn-round btn-outline-dark p-2 m-2 update button" id = "Update">Update</div>
                 </div>
             </td>
@@ -70,67 +70,47 @@ function createrows(listEvent,tableBody){
         `;
     });
     tableBody.innerHTML = rowContent;
+    
+    // this is where you will call the method
+    deleteEvent();
 }
 
 document.addEventListener('DOMContentLoaded', handleEvents);
 
-function handleActions(){
-    let eventID = null;
-    // need to target button instead
-    // buttonContainer is a NodeList of all the HTML elements matching the css selctor #eventButton
-    const buttonContainer = document.querySelectorAll('#eventButton'); // Example selector
+
+
+function deleteEvent(){
+    // retrieve the delete button 
+    // get the nearest td and tr to find eventID
+    const deleteButtonList = document.querySelectorAll("#Delete");
+    console.log(deleteButtonList)
+    // pass a lambda function that is triggered when event occurs to call findEventID
+    deleteButtonList.forEach(delBtn =>{
+        delBtn.addEventListener('click', () => {
+            passToModal(delBtn);
+        })
+    })
     
-    
-    for (let i = 0; i < buttonContainer.length; i++) {
-        const container = buttonContainer[i];
-        const buttons = container.querySelectorAll(".btn");
 
-        for (let j = 0; j < buttons.length; j++) {
-            const button = buttons[j];
+    function passToModal(delbtn){
+        const row = delbtn.closest('tr');
+        const eventIDElement = row.querySelector("#eventID");
+        const eventID = eventIDElement.innerHTML.trim();
+        try{
+            const myModal = new bootstrap.Modal(document.getElementById('deleteEventModal'))
 
-            button.addEventListener('click', function(e) {
-                const buttonid = e.target.id;
-                switch (buttonid) {
-                    case "Delete":
-                        // Retrieve the elementId of the thing
-                        
-                        // Traverse DOM tree by finding closest element tag inside the button container and use DELETE method
-                        const tr = container.closest("tr")
-                        // get the text value of the the EventID
-                        const eventIDELement = tr.querySelector("#eventID")
-                        
-                        eventID = eventIDELement.innerHTML.trim();
-
-                        // callback baby
-                        openModal(eventID)
-
-                        // function to call modal and pass eventID
-
-                        console.log("Delete button pressed");
-                        break;
-
-                    case "Update":
-                        // Traverse DOM tree and use DELETE or POST method 
-                        console.log("Update button pressed");
-                        break;
-                }
-            });
-            
-            
+            myModal.show();
         }
+        catch(error){
+            console.error(error)
+        }
+        
 
+        // target the submit button
         
     }
-
-    function openModal(eID){
-        // get the modal yes 
-    }
-    
-    
-    // button is an empty variable only when it had been clicked inside our div than i set the button 
-    
-
 }
+
 
 
 
