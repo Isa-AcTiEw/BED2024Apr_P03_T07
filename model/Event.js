@@ -87,7 +87,7 @@ class Event{
 
 
     static async createEvent(event){
-        // select SCOPE_IDENTITY AS id returns the id of the current scope in the sql table
+        // Consider a subquery to autoincrement last EventID
         const connection = await sql.connect(dbConfig);
         const sqlQuery = 
         `
@@ -129,6 +129,14 @@ class Event{
                          row.EventRegEndDate,
                          row.EventIntake))
         );
+    }
+
+    static async getLastEventID(){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT MAX(EventID) FROM Event`
+        const request = connection.request();
+        const result = await request.query(sqlQuery)
+        return result.recordset[0];
     }
 
     // create the event and store in db table

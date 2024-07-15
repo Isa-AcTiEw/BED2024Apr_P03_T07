@@ -115,7 +115,7 @@ CREATE TABLE Registration (
 	RegID varchar(10) NOT NULL,
 	RegDate smalldatetime NOT NULL,
 	RegStatus varchar(10) NOT NULL CHECK (RegStatus IN ('Active', 'Cancelled')),
-	EventID varchar(10) NOT NULL,
+	EventID varchar(10) NULL,
 	AccID varchar(10) NOT NULL,
 	CONSTRAINT PK_Registration PRIMARY KEY (RegID),
 	CONSTRAINT FK_Registration_Event FOREIGN KEY (EventID) REFERENCES Event(EventID),

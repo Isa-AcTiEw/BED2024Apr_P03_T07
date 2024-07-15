@@ -90,6 +90,19 @@ function deleteEvent(){
             passToModal(delBtn);
         })
     })
+
+
+    async function deleteRequest(eventID){
+        console.log(eventID);
+        const url = `http://localhost:3000/EventMgr/deleteEvents/${eventID}`
+        const response = await fetch(url,{
+            method: 'DELETE'
+        })
+
+        if(!response){
+            console.log("Unable to handle response")
+        }
+    }
     
 
     function passToModal(delbtn){
@@ -100,6 +113,21 @@ function deleteEvent(){
             const myModal = new bootstrap.Modal(document.getElementById('deleteEventModal'))
 
             myModal.show();
+
+
+            const confirm = document.getElementById("confirmDel");
+            console.log(confirm)
+            confirm.addEventListener('click',() => {
+                // DELETE METHOD
+                deleteRequest(eventID)
+            })
+
+            const returnbtn = document.getElementById("return");
+            returnbtn.addEventListener('click',() => {
+                // close modal
+                myModal.hide();
+            })
+
         }
         catch(error){
             console.error(error)
@@ -109,6 +137,51 @@ function deleteEvent(){
         // target the submit button
         
     }
+}
+
+
+function createEvent(){
+    // target the create button and get all the fields
+    const createBtn = document.getElementById("createBtn");
+    createBtn.addEventListener('click', async (e)=>{
+        e.preventDefault();
+        // call the retrive eventID scope here 
+        const result = await fetch("/getEventID");
+        const lastEventID = result.value;
+        const substring = lastEventID.substring(0,lastEventID.length)
+        const newNum = parseInt(lastEventID.charAt(myString.length - 1)) + 1;
+        const eventID = substring + newNum
+        const eventName = document.getElementById("addEventName").value;
+        const eventDesc = document.getElementById("addEventDesc").value;
+        const eventDate = document.getElementById("addEventDate").value;
+        const eventCat = document.getElementById("addEventCat").value;
+        const eventLocation = document.getElementById("addEventLocation").value;
+        const eventRegEndDate = document.getElementById("addEventRegEndDate").value;
+        const eventIntake = document.getElementById("addEventIntake").value;
+        
+        // fetch request from the endpoint
+        const request = await fetch(`http://localhost:3000/EventMgr/createEvents`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                
+            },
+            body: JSON.stringify({ EventID:eventID,
+                                   EventName: eventName,
+                                   EventDesc: eventDesc,
+                                   EventPrice:"0",
+                                   EventDate: eventDate,
+                                   EventCat : eventCat,
+                                   EventLocation: eventLocation,
+                                   EventRegEndDate: eventRegEndDate,
+                                   EventMgrID: "EVT001",
+                                   EventIntake: eventIntake
+                                   })
+        })
+
+
+    })
+
 }
 
 

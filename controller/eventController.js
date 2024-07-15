@@ -90,6 +90,21 @@ const getAllEvents = async (req,res) => {
   }
 }
 
+const LastEventID = async (req,res) =>{
+  try{
+    const EventID = await Event.getLastEventID();
+    if(EventID != null){
+      res.status(200).json({"message":"Sucessfully retrived last EventID in Event table", "value":EventID[""]} 
+      );
+    }
+    
+  }
+  catch(error){
+    console.error(error);
+    res.status(500).send("Unable to retrive the EventID")
+  }
+}
+
 // patch check validation the value passed (patch certain value some value cannot allowed)
 
 // put for updating but fields that cannot be changed hidden field 
@@ -99,7 +114,8 @@ module.exports = {
     deleteEvent,
     createEvent,
     updateEvent,
-    getAllEvents
+    getAllEvents,
+    LastEventID
   };
 
 
