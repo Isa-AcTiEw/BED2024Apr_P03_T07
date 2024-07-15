@@ -2,13 +2,16 @@ const sql = require("mssql");
 const dbConfig = require("../config/db_Config");
 
 class Account {
-    constructor(AccID,AccName,AccEmail,AccCtcNo,AccDOB,AccAddr){
+    constructor(AccID,AccName,AccEmail,AccCtcNo,AccPfp,AccAddr,AccPostalCode,AccDOB,AccPassword){
         this.AccID = AccID;
         this.AccName = AccName;
         this.AccEmail = AccEmail;
         this.AccCtcNo = AccCtcNo;
-        this.AccDOB = AccDOB;
+        this.AccPfp = AccPfp;
         this.AccAddr = AccAddr;
+        this.AccPostalCode = AccPostalCode;
+        this.AccDOB = AccDOB;
+        this.AccPassword = AccPassword;
     }
     
     static async getAccountByEmail(email){
@@ -24,8 +27,11 @@ class Account {
 				result.recordset[0].AccName,
 				result.recordset[0].AccEmail,
                 result.recordset[0].AccCtcNo,
+                result.recordset[0].AccPfp,
+                result.recordset[0].AccAddr,
+                result.recordset[0].AccPostalCode,
                 result.recordset[0].AccDOB,
-                result.recordset[0].AccAddr
+                result.recordset[0].AccPassword
 			)
 			: null;
 
