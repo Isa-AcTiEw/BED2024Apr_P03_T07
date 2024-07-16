@@ -20,25 +20,11 @@ class Account {
         request.input("email", email);
         const result = await request.query(sqlQuery);
 
-        return result.recordset[0]
-			? new Account(
-				result.recordset[0].AccID,
-				result.recordset[0].AccName,
-				result.recordset[0].AccEmail,
-                result.recordset[0].AccCtcNo,
-                result.recordset[0].AccAddr,
-                result.recordset[0].AccPostalCode,
-                result.recordset[0].AccDOB,
-                result.recordset[0].AccPassword,
-			)
-			: null;
-
-        // if (result.recordset.length > 0) {
-        //     const row = result.recordset[0];
-        //     return new Account(row.AccID, row.AccName, row.AccCtcNo, row.AccEmailAddr, row.AccAddr, row.AccDOB);
-        // }
-        // return null;
-        
+        if (result.recordset.length > 0) {
+            const row = result.recordset[0];
+            return new Account(row.AccID, row.AccName, row.AccEmail, row.AccCtcNo, row.AccAddr, row.AccPostalCode, row.DOB, row.AccPassword);
+        }
+        return null;
     }
 
     static async registerAccount(AccName,AccEmail,AccCtcNo,AccAddr,AccPostalCode,AccDOB,AccPassword){

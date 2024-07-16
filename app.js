@@ -52,7 +52,7 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 // Login
-//app.post('/Login', authController);
+app.post('/accountLogin', accountController.login);
 
 // Register
 app.post('/accountReg',accountController.registerAccount);

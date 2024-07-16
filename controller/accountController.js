@@ -1,7 +1,9 @@
 const Account = require("../model/Account");
 const bcrypt = require('bcrypt');
 const sql = require('mssql');
+const jwt = require('jsonwebtoken');
 require('dotenv').config({ path: '../.env' });
+const secretKey = process.env.ACCESS_TOKEN_SECRET;
 
 async function registerAccount(req, res) {
     const { AccName,AccEmail,AccCtcNo,AccAddr,AccPostalCode,AccDOB,AccPassword } = req.body;
@@ -30,6 +32,35 @@ async function registerAccount(req, res) {
     }
 }
 
+async function login(req, res) {
+    const { AccEmail, AccPassword } = req.body;
+
+    try {
+        const user = await Account.getAccountByEmail(AccEmail);
+        if (!user) {
+          return res.status(401).json({ message: "Invalid credentials" });
+        }
+
+        // Compare password with hash
+        const isMatch = await bcrypt.compare(AccPassword, user.AccPassword);
+        // if the hashed passowrd from db does not match the bcryot hashed password return a json message Invalid password
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid password" });
+        }
+
+        // Generate JWT token, payload refers to data and information we would like to store inside the user's token
+        const payload = {
+          id: user.AccID,
+          // role not created ?? role: user.role, 
+        };
+        const token = jwt.sign(payload, secretKey, { expiresIn: "1800s" }); // Expires in 30min (automatically logsout user after 30min is up)
+        return res.status(200).json({ token });
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 const getAccountByEmail = async (req, res) => {
     const email = req.params.email;
     try {
@@ -45,6 +76,7 @@ const getAccountByEmail = async (req, res) => {
 };
 
 module.exports = {
+    login,
     getAccountByEmail,
     registerAccount,
 };

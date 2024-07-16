@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const createAccount = document.getElementById('register-form');
+    const myModal = new bootstrap.Modal(document.getElementById('registerModal'));
 
     createAccount.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -39,11 +40,25 @@ document.addEventListener('DOMContentLoaded', async () => {
             })
         });
 
-        const myModal = new bootstrap.Modal(document.getElementById('registerModal'));
-        myModal.hide();
+        if (response.ok) {
+            myModal.hide();
 
-        // Show success message
-        alert('Registration successful!');
-
+            showAlert('success', 'Registration successful!');
+        } else {
+            showAlert('danger', 'Registration failed. Account exist.');
+        }
     });
 });
+
+function showAlert(type, msg) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    const alert = document.createElement('div');
+    alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+    alert.innerHTML = `
+        <strong>${msg}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+    alertPlaceholder.appendChild(alert);
+    setTimeout(() => {
+        alert.remove();
+    }, 5000);
+}
