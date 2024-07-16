@@ -1,41 +1,49 @@
-function setActive () {
-    const register_form = document.getElementById('register-form');
+document.addEventListener('DOMContentLoaded', async () => {
+    const createAccount = document.getElementById('register-form');
 
-    register_form.addEventListener('submit', async (e) => {
+    createAccount.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const data = new FormData();
-        data.append('name', register_form.elements['name'].value)
-        data.append('email', register_form.elements['email'].value)
-        data.append('phonenum', register_form.elements['phonenum'].value)
-        data.append('address', register_form.elements['address'].value)
-        data.append('postalcode', register_form.elements['postalcode'].value)
-        data.append('dob', register_form.elements['dob'].value)
-        data.append('pass', register_form.elements['pass'].value)
-        data.append('cfmpass', register_form.elements['cfmpass'].value)
-        data.append('profile', register_form.elements['profile'].file[0])
-        data.append('register','');
+        // Retrieve form data
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phonenum = document.getElementById("phonenum").value;
+        //const profile = document.getElementById("profile").files[0]; 
+        const address = document.getElementById("address").value;
+        const postalcode = document.getElementById("postalcode").value;
+        const dob = document.getElementById("dob").value;
+        const pass = document.getElementById("pass").value;
+        const cfmpass = document.getElementById("cfmpass").value;
 
-        const myModal = document.getElementById('registerModal');
-        const modal = bootstrap.Modal.getInstance(myModal);
-        modal.hide();
+        // Check if password matches confirm password
+        if (pass !== cfmpass) {
+            alert('Passwords do not match. Check your password');
+            console.log('Passwords do not match');
+            return;
+        }
 
-        const userRes = document.getElementById("addAnnouncementForm");
-        addForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const title = document.getElementById("addAnnouncementTitle").value;
-        const desc = document.getElementById("addAnnouncementDesc").value;
-        await fetch("/announcements", {
+        // Send data to server
+        const response = await fetch("/accountReg", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ AnnName: title, AnnDesc: desc })
+            body: JSON.stringify({
+                AccName: name,
+                AccEmail: email,
+                AccCtcNo: phonenum,
+                AccAddr: address,
+                AccPostalCode: postalcode,
+                AccDOB: dob,
+                AccPassword: pass
+            })
         });
 
+        const myModal = new bootstrap.Modal(document.getElementById('registerModal'));
+        myModal.hide();
+
+        // Show success message
+        alert('Registration successful!');
 
     });
-    })
-}
-
-setActive();
+});

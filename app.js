@@ -54,6 +54,9 @@ app.get('/facilitiesMgr', (req, res) => {
 // Login
 //app.post('/Login', authController);
 
+// Register
+app.post('/accountReg',accountController.registerAccount);
+
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
 app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
