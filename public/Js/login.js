@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const email = document.getElementById("login-email").value;
         const password = document.getElementById("login-password").value;
-        const name = document.getElementById("")
+        //const name = document.getElementById("")
 
         const response = await fetch("/accountLogin", {
             method: 'POST',
@@ -23,7 +23,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         myModal.hide();
         if (response.ok) {
             showAlert('success', 'Login successful!');
-            displayUserMenu();
+            const name = await fetch(`/account/${email}`)
+            .then(response => response.json())
+            .then(data => {return data.AccName;})
+            displayUserMenu(name);
+            document.getElementById('contentz').remove();
         } else {
             showAlert('danger', 'Login failed. Try again.');
         }
