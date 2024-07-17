@@ -22,7 +22,7 @@ class Account {
 
         if (result.recordset.length > 0) {
             const row = result.recordset[0];
-            return new Account(row.AccID, row.AccName, row.AccEmail, row.AccCtcNo, row.AccAddr, row.AccPostalCode, row.DOB, row.AccPassword);
+            return new Account(row.AccID, row.AccName, row.AccEmail, row.AccCtcNo, row.AccAddr, row.AccPostalCode, row.AccDOB, row.AccPassword);
         }
         return null;
     }

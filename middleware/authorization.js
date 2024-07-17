@@ -14,7 +14,7 @@ function verifyJWT(req, res, next) {
             return res.status(403).json({ message: "Forbidden" });
         }
 
-        const authrizedRoles = {
+        const authorizedRoles = {
             "/booking": ["member", "admin"],
             "/booking/[0-9]+": ["admin"],
         };

@@ -36,7 +36,7 @@ VALUES
 
 INSERT INTO Admin
 VALUES
-('ADM001','iamadmin','123456');
+('ADM001', 'Peter', 'SGGoofyAdmin@gmail.com','Approved');
 
 INSERT INTO Announcement
 VALUES
