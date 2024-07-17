@@ -52,7 +52,10 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 // Login
-app.post('/Login', authController.login);
+app.post('/accountLogin', accountController.login);
+
+// Register
+app.post('/accountReg',accountController.registerAccount);
 
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);

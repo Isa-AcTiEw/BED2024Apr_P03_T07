@@ -16,6 +16,7 @@
     <script src="./Js/bootstrap.bundle.min.js" defer></script>
     <script src="./Js/feedback.js" defer></script>
     <script src="./Js/register.js" defer></script>
+    <script src="./Js/login.js" defer></script>
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
@@ -58,7 +59,7 @@
     <div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form>
+                <form id="login-form">
                     <div class="modal-header">
                         <h5 class="modal-title d-flex align-items-center">
                             <i class="bi bi-person-circle fs-3 me-2"></i> User Login
@@ -68,11 +69,11 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Email address</label>
-                            <input type="email" class="form-control shadow-none">
+                            <input id="login-email" type="email" class="form-control shadow-none" required>
                         </div>
                         <div class="mb-4">
                             <label class="form-label">Password</label>
-                            <input type="password" class="form-control shadow-none">
+                            <input id="login-password" type="password" class="form-control shadow-none" required>
                         </div>
                         <div class="d-flex align-items-center justify-content-between mb-2">
                             <button type="submit" class="btn btn-dark shadow-none">LOGIN</button>
@@ -103,39 +104,39 @@
                             <div class="row">
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Name</label>
-                                    <input name="name "type="text" class="form-control shadow-none" required>
+                                    <input id="name" type="text" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Email</label>
-                                    <input name="email" type="email" class="form-control shadow-none" required>
+                                    <input id="email" type="email" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Phone Number</label>
-                                    <input name="phonenum" type="number" class="form-control shadow-none" required>
+                                    <input id="phonenum" type="number" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Picture</label>
-                                    <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none">
+                                    <input id="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none">
                                 </div>
                                 <div class="col-md-12 ps-0 mb-3">
                                     <label class="form-label">Address</label>
-                                    <textarea name="address" class="form-control shadow-none" rows="1"></textarea>
+                                    <textarea id="address" class="form-control shadow-none" rows="1"></textarea>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Postal Code</label>
-                                    <input name="postalcode" type="number" class="form-control shadow-none" required>
+                                    <input id="postalcode" type="number" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Date of birth</label>
-                                    <input name="dob" type="date" class="form-control shadow-none" required>
+                                    <input id="dob" type="date" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Password</label>
-                                    <input name="pass" type="password" class="form-control shadow-none" required>
+                                    <input id="pass" type="password" class="form-control shadow-none" required>
                                 </div>
                                 <div class="col-md-6 ps-0 mb-3">
                                     <label class="form-label">Confirm Password</label>
-                                    <input name="cfmpass" type="password" class="form-control shadow-none" required>
+                                    <input id="cfmpass" type="password" class="form-control shadow-none" required>
                                 </div>
                             </div>
                             <div class="text-center my-1">
@@ -147,6 +148,7 @@
             </div>
         </div>
     </div>
+    <div id="alertPlaceholder"></div>
 
     <div class="container-fluid ps lg-4 mt-4">
         <div class="swiper swiper-container">
@@ -438,6 +440,7 @@
             }
 
             await fetchAnnouncements();
+            
         });
 
 
