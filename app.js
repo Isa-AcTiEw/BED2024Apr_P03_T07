@@ -56,6 +56,26 @@ app.get('/facilitiesMgr', (req, res) => {
 
 // Login
 app.post('/accountLogin', accountController.login);
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+
+  if (!token) {
+      return res.status(401).json({ message: 'Access denied. No token provided.' });
+  }
+
+  try {
+      const decoded = jwt.verify(token, secretKey);
+      req.user = decoded;
+      next();
+  } catch (err) {
+      return res.status(403).json({ message: 'Invalid token.' });
+  }
+}
+
+// Route to verify token
+app.post('/verifyToken', verifyToken, (req, res) => {
+  res.json({ valid: true }); // Token is valid
+});
 
 // Register
 app.post('/accountReg',accountController.registerAccount);
