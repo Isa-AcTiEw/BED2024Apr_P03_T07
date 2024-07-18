@@ -1,12 +1,12 @@
 USE bedAssg_db;
 
-
+SELECT * FROM Account
 INSERT INTO Account 
 VALUES
-('ADM001', 'Admin', '123Admin@gmail.com', '91346128','', '66 Marine Parade Road, #09-876', '783273', '1990-02-03', '123456'),
-('EVT001', 'Event', '123Events@gmail.com', '90836789','', '7 One-North Residences, #10-10','729346', '1998-04-14','123456'),
-('FAL001', 'Facilities', '123Faciities@gmail.com', '89203754', '','15 Pasir Ris Drive 1, #03-20', '238893', '1984-12-25','123456'),
-('ACC002', 'Emily Tan', 'emilytan@gmail.com', '92345678', 'public/images/homepage pictures/woodlands-cc.jpg', 'Blk 123 Ang Mo Kio Ave 4, #05-12', '659083', '1995-08-21', '123456');
+('ADM001', 'Admin', '123Admin@gmail.com', '91346128', '66 Marine Parade Road, #09-876', '783273', '1990-02-03', '123456'),
+('EVT001', 'Event', '123Events@gmail.com', '90836789', '7 One-North Residences, #10-10','729346', '1998-04-14','123456'),
+('FAL001', 'Facilities', '123Faciities@gmail.com', '89203754','15 Pasir Ris Drive 1, #03-20', '238893', '1984-12-25','123456'),
+('ACC002', 'Emily Tan', 'emilytan@gmail.com', '92345678', 'Blk 123 Ang Mo Kio Ave 4, #05-12', '659083', '1995-08-21', '123456');
 
 INSERT INTO EventMgr
 VALUES 
@@ -36,7 +36,7 @@ VALUES
 
 INSERT INTO Admin
 VALUES
-('ADM001','iamadmin','123456');
+('ADM001', 'Peter', 'SGGoofyAdmin@gmail.com','Approved');
 
 INSERT INTO Announcement
 VALUES
@@ -79,9 +79,4 @@ VALUES
 ('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
 ('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
 
-SELECT * FROM Facilities WHERE FacID = 'FAC005';
-INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES ('FAC005', 'Function Room', 'Reserve the function room to host a birthday party or an event.');
-SELECT SCOPE_IDENTITY() AS FacID;
 
-DELETE FROM Booking WHERE BookID = 'B003';
-SELECT * FROM Booking;

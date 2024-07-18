@@ -73,6 +73,8 @@ function createrows(listEvent,tableBody){
     
     // this is where you will call the method
     deleteEvent();
+
+    createEvent();
 }
 
 document.addEventListener('DOMContentLoaded', handleEvents);
