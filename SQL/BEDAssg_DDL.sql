@@ -1,12 +1,9 @@
---DDL
-
 -- Create Account Table
 CREATE TABLE Account(
 	AccID varchar(10) NOT NULL,
 	AccName varchar(30) NOT NULL,
 	AccEmail varchar(30) UNIQUE NOT NULL,
 	AccCtcNo varchar(15) NOT NULL,
-	AccPfp image,
 	AccAddr varchar(100) NOT NULL,
 	AccPostalCode varchar(10) NOT NULL,
 	AccDOB smalldatetime NOT NULL,
@@ -49,10 +46,14 @@ CREATE TABLE Event(
 CREATE TABLE Admin(
 	AdminID varchar(10) NOT NULL,
 	AdminName varchar(30) NOT NULL,
-	AdminPass varchar(30) NOT NULL,
+	AdminEmail varchar(30) NOT NULL,
+	AdminApproval varchar(30) NOT NULL,
 	CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
 	CONSTRAINT FK_Admin_Account 
-		FOREIGN KEY(AdminID) REFERENCES Account(AccID)
+		FOREIGN KEY(AdminID) REFERENCES Account(AccID),
+	CONSTRAINT CHK_AdminApproval CHECK 
+		(AdminApproval IN 
+		('Approved', 'Pending', 'Rejected'))
 );
 
 -- Create Announcement table

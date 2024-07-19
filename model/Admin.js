@@ -2,10 +2,11 @@ const sql = require("mssql");
 const dbConfig = require("../config/db_Config");
 
 class Admin {
-    constructor(AdminID, AdminName, AdminPass) {
+    constructor(AdminID, AdminName, AdminEmail, AdminApproval) {
         this.AdminID = AdminID;
         this.AdminName = AdminName;
-        this.AdminPass = AdminPass;
+        this.AdminEmail = AdminEmail;
+        this.AdminApproval = AdminApproval;
     }
 
     static async getAdminById(id) {
@@ -19,8 +20,9 @@ class Admin {
 		return result.recordset[0]
 			? new Admin(
 				result.recordset[0].AdminID,
-				result.recordset[0].AdminName,
-				result.recordset[0].AdminPass,
+                result.recordset[0].AdminName,
+				result.recordset[0].AdminEmail,
+				result.recordset[0].AdminApproval,
 			)
 			: null;
     }
