@@ -83,8 +83,9 @@ app.post('/accountReg',accountController.registerAccount);
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
 app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
-app.post('/EventMgr/updateEvents/:id',validateEvent,eventController.updateEvent);
-app.post('/EventMgr/createEvents', validateEvent,eventController.createEvent);
+app.put('/EventMgr/updateEvents/:id',eventController.updateEvent);
+app.post('/EventMgr/createEvents',eventController.createEvent);
+app.get('/getEventID',eventController.LastEventID);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);

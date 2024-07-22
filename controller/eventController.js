@@ -6,7 +6,7 @@ const { request } = require('express');
 const getAllEventsByEventMgrID = async (req,res) =>{
     try {
         const EventMgrID = req.params.id;
-        console.log(EventMgrID);
+        console.log(EventMgrID, "page reloded");
         const Events = await EventMgr.getAllEventsByEventMgrID(EventMgrID);
         res.json(Events);
       } catch (error) {
@@ -34,8 +34,8 @@ const deleteEvent = async (req,res) =>{
 const createEvent = async (req,res) => {
   try{
     const event = req.body;
-    const eventMgrID = req.params;
-    const createdEvent = await Event.createEvent(event,eventMgrID);
+    // const eventMgrID = req.params;
+    const createdEvent = await Event.createEvent(event);
     res.status(201).json(createdEvent);
     console.log('Event created sucessfully')
 
@@ -49,6 +49,7 @@ const createEvent = async (req,res) => {
 const updateEvent = async (req,res) => {
   try{
     const EventID = req.params.id;
+    console.log(EventID);
     const {EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake} = req.body;
     if(EventCat == "Arts and Culture" || EventCat == "Active Aging" || EventCat == "Cooking" || EventCat == "Environment" || EventCat == "Festivities" || EventCat == "LifeLong Learning"){
       const updatedEvent = await Event.updateEventDetails(EventID,EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake);
@@ -90,6 +91,21 @@ const getAllEvents = async (req,res) => {
   }
 }
 
+const LastEventID = async (req,res) =>{
+  try{
+    const EventID = await Event.getLastEventID();
+    if(EventID != null){
+      res.status(200).json({"message":"Sucessfully retrived last EventID in Event table", "value":EventID[""]} 
+      );
+    }
+    
+  }
+  catch(error){
+    console.error(error);
+    res.status(500).send("Unable to retrive the EventID")
+  }
+}
+
 // patch check validation the value passed (patch certain value some value cannot allowed)
 
 // put for updating but fields that cannot be changed hidden field 
@@ -99,7 +115,8 @@ module.exports = {
     deleteEvent,
     createEvent,
     updateEvent,
-    getAllEvents
+    getAllEvents,
+    LastEventID
   };
 
 
