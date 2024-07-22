@@ -27,7 +27,7 @@ CREATE TABLE Event(
 	EventPrice tinyint NOT NULL,
 	EventDate smalldatetime NOT NULL,
 	EventCat varchar(100) NOT NULL,
-	EventLocation varchar(30) NOT NULL,
+	EventLocation varchar(100) NOT NULL,
 	EventRegEndDate smalldatetime NOT NULL,
 	EventMgrID varchar(10) NULL,
 	EventIntake smallint NOT NULL,

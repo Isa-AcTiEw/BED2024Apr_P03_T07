@@ -144,7 +144,7 @@
         <div class="col-lg-10 ms-auto p-4 overflow-hidden">
             <div class="add-button-container">
                 <h3 class="mb-4">Events Managed</h3>
-                <button type="button" class="btn btn-dark shadow-none btn-sm me-2 add-button" data-bs-toggle="modal" data-bs-target="#addEventModal">
+                <button type="button" class="btn btn-dark shadow-none btn-sm me-2 add-button" data-bs-toggle="modal" data-bs-target="#addEventsModal">
                     <i class="bi bi-plus-circle-fill"></i> Add Events 
                 </button>
             </div>
@@ -192,59 +192,59 @@
 <!-- Create modal for Creating new Events -->
 <div class="modal" id="addEventsModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Create a new Event</h5>
+        <form id="addEventForm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create a new Event</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Event Name</label>
+                        <input type="text" name="Event Name" class="form-control" id="addEventName" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Event Description</label>
+                        <textarea name="event_desc" class="form-control" rows="6" id="addEventDesc" required/></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Event Date</label>
+                        <input type="datetime-local" name="event_date" class="form-control" id="addEventDate" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="event_cat" class="form-label">Event Category</label>
+                        <select class="form-select" id="addEventCat" required>
+                            <option selected disabled>Select Event Category</option>
+                            <option value="Active Ageing">Active Ageing</option>
+                            <option value="Cooking">Cooking</option>                                                                         
+                            <option value="Arts and Culture">Arts and Culture</option>
+                            <option value="Festivities">Festivities</option>
+                            <option value="Lifelong Learning">Lifelong Learning</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Event Location</label>
+                        <input type="text" name="event_location" class="form-control" id="addEventLocation" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Event Registration End Date</label>
+                        <input type="datetime-local" name="event_reg_end_date" class="form-control" id="addEventRegEndDate" required/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Event Intake</label>
+                        <input type="text" name="event_intake" class="form-control" id="addEventIntake" required/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id ="createBtn">Save changes and Submit</button>
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label">Event Name</label>
-                    <input type="text" name="Event Name" class="form-control" id="addEventName" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Event Description</label>
-                    <textarea name="event_desc" class="form-control" rows="6" id="addEventDesc" required></textarea>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Event Date</label>
-                    <input type="datetime-local" name="event_date" class="form-control" id="addEventDate" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="event_cat" class="form-label">Event Category</label>
-                    <select class="form-select" id="addEventCat" required>
-                        <option selected disabled>Select Event Category</option>
-                        <option value="Active Ageing">Active Ageing</option>
-                        <option value="Cooking">Cooking</option>                                                                         
-                        <option value="Arts and Culture">Arts and Culture</option>
-                        <option value="Festivities">Festivities</option>
-                        <option value="Lifelong Learning">Lifelong Learning</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Event Location</label>
-                    <input type="text" name="event_location" class="form-control" id="addEventLocation" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Event Registration End Date</label>
-                    <input type="datetime-local" name="event_reg_end_date" class="form-control" id="addEventRegEndDate" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Event Intake</label>
-                    <input type="text" name="event_intake" class="form-control" id="addEventIntake" required>
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id ="createBtn">Save changes and Submit</button>
-            </div>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -268,6 +268,11 @@
       </div>
     </div>
   </div>
+
+  
+
+  
+
 
 
 
