@@ -75,6 +75,21 @@ const getAccountByEmail = async (req, res) => {
     }
 };
 
+const updateAccount = async (req, res) => {
+    const AccID = parseInt(req.params.id);
+    const newAccData = req.body;
+    try {
+        const updatedAcc = await Feedback.updateFeedback(AccID, newAccData);
+        if (!updatedAcc) {
+            return res.status(404).json("Account not found");
+        } 
+        res.json(updatedAcc);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Error updating Account information");
+    }
+};
+
 async function verifyToken(req, res, next) {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
@@ -96,4 +111,5 @@ module.exports = {
     getAccountByEmail,
     registerAccount,
     verifyToken,
+    updateAccount,
 }

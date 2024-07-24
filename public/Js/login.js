@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
     if (token) {
+        console.log('Token found:', token);
         await checkUserLogin(token); 
         loadUserMenu(); 
     }
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const password = document.getElementById("login-password").value;
 
         try {
-            const response = await fetch("/accountLogin", {
+            const response = await fetch(`/accountLogin/${email}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,23 +28,31 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             });
 
-            myModal.hide();
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
 
+                console.log('Token received:', token);
                 localStorage.setItem('token', token);
-                console.log('Token stored:', token);
 
-                const nameResponse = await fetch(`/account/${email}`);
-                const nameData = await nameResponse.json();
-                const AccName = nameData.AccName;
+                const nameResponse = await fetch(`/accountLogin/${email}`);
+                if (nameResponse.ok) {
+                    const nameData = await nameResponse.json();
+                    const { AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
 
-                localStorage.setItem('AccName', AccName); // Store AccName in localStorage
-                displayUserMenu(AccName);
-                showAlert('success', 'Login successful!');
-                document.getElementById('contentz').remove(); // Example action after login
+                    localStorage.setItem('AccName', AccName);
+                    localStorage.setItem('AccEmail', AccEmail);
+                    localStorage.setItem('AccCtcNo', AccCtcNo);
+                    localStorage.setItem('AccAddr', AccAddr);
+                    localStorage.setItem('AccPostalCode', AccPostalCode);
+                    localStorage.setItem('AccDOB', AccDOB);
 
+                    displayUserMenu(AccName);
+                    showAlert('success', 'Login successful!');
+                    document.getElementById('contentz').remove();
+                }
+
+                myModal.hide();
             } else {
                 showAlert('danger', 'Login failed. Try again.');
             }
@@ -51,12 +60,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Login error:', error);
             showAlert('danger', 'Login failed. Please try again later.');
         }
-    });
-
-    document.getElementById('logout-button').addEventListener('click', () => {
-        localStorage.removeItem('token'); 
-        localStorage.removeItem('AccName'); 
-        location.reload();
     });
 });
 
@@ -100,22 +103,48 @@ function displayUserMenu(AccName) {
             <i class="bi bi-person-circle"></i> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
-            <li><button class="dropdown-item" type="button">Profile</button></li>
+            <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
             <li><button class="dropdown-item" type="button">Bookings</button></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;
+
     menuPlaceholder.innerHTML = ''; // Clear previous menu content
     menuPlaceholder.appendChild(userMenu);
+
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', () => {
+            localStorage.removeItem('token'); 
+            localStorage.removeItem('AccName'); 
+
+            // Log the token status after clearing
+            const clearedToken = localStorage.getItem('token');
+            console.log('Token after logout:', clearedToken);
+
+            showAlert('success', 'Logout successful!');
+            setTimeout(() => {
+                window.location.href = '../index.html'; 
+            }, 1000); 
+        });
+    }
 }
+
 
 function showAlert(type, msg) {
     const alertPlaceholder = document.getElementById('alertPlaceholder');
+    if (!alertPlaceholder) {
+        console.error('Alert placeholder element not found.');
+        return;
+    }
+
     const alert = document.createElement('div');
     alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
     alert.innerHTML = `
         <strong>${msg}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
     alertPlaceholder.appendChild(alert);
     setTimeout(() => {
         alert.remove();

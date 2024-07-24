@@ -46,5 +46,23 @@ class Account {
         const result = await request.query(sqlQuery);
         return result.rowsAffected > 0;
     }
+
+    static async updateAccount(AccID, newAccData) {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `UPDATE Account SET AccName = @AccName, AccEmail = @AccEmail, AccCtcNo = @AccCtcNo,
+        AccPostalCode = @AccPostalCode, AccDOB = @AccDOB, AccPassword = @AccPassword WHERE AccID = @AccID`;
+        const request = connection.request();
+        request.input("AccID", AccID);
+        request.input("AccName", newAccData.AccName || null);        
+        request.input("AccEmail", newAccData.AccEmail || null);
+        request.input("AccCtcNo", newAccData.AccCtcNo || null);
+        request.input("AccPostalCode", newAccData.AccPostalCode || null);
+        request.input("AccDOB", newAccData.AccDOB || null);
+        request.input("AccPassword", newAccData.AccPassword || null);
+        await request.query(sqlQuery);
+        connection.close();
+        return this.getAccountByEmail(AccEmail);
+    }
+
 }
 module.exports = Account;
