@@ -1,5 +1,5 @@
 body {
-    font-family: 'Poppins', sans-serif; /* Apply Poppins font to the entire body */
+    font-family: 'Poppins', sans-serif; 
 }
 
 
@@ -10,7 +10,7 @@ body {
 }
 
 input[type="text"], input[type="password"] {
-    font-family: 'Poppins', sans-serif; /* Apply Poppins to input fields */
+    font-family: 'Poppins', sans-serif; 
 }
 
 
