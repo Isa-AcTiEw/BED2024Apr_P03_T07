@@ -49,7 +49,6 @@ const createEvent = async (req,res) => {
 const updateEvent = async (req,res) => {
   try{
     const EventID = req.params.id;
-    console.log(EventID);
     const {EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake} = req.body;
     if(EventCat == "Arts and Culture" || EventCat == "Active Aging" || EventCat == "Cooking" || EventCat == "Environment" || EventCat == "Festivities" || EventCat == "LifeLong Learning"){
       const updatedEvent = await Event.updateEventDetails(EventID,EventName,EventDesc,EventPrice,EventDate,EventCat,EventLocation,EventRegEndDate,EventIntake);
