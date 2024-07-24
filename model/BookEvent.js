@@ -1,9 +1,9 @@
 const sql = require("mssql");
 const dbConfig = require("../config/db_Config");
 class BookEvent{
-    constructor(BookEventID,BookDate,EventID,AccID){
+    constructor(BookEventID,BookEventDate,EventID,AccID){
         this.BookEventID = BookEventID;
-        this.BookDate = BookDate;
+        this.BookEventDate = BookEventDate;
         this.EventID = EventID;
         this.AccID = AccID;
     }
@@ -29,32 +29,38 @@ class BookEvent{
         const request = connection.request();
         request.input("BookEventID",BookEventID);
         const result = await request.query(sqlQuery);
+        connection.close();
         return result.rowsAffected
     }
 
     static async retrieveUserEventBooked(AccID){
+        console.log(AccID);
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT FROM EventBooking WHERE AccID = @AccID`;
+        const sqlQuery = `SELECT * FROM EventBooking WHERE AccID = @AccID`;
         const request = connection.request();
         request.input("AccID",AccID);
         const result = await request.query(sqlQuery);
-        return result.recordset.map((row) =>{
-            new BookEvent(
-                row.BookEventID,
-                row.BookDate,
-                row.EventID,
-                row.AccID
-            )
-        })
+        connection.close();
+        return result.recordset.map(
+            ((row) => 
+                new BookEvent(
+                         row.BookEventID,
+                         row.BookEventDate,
+                         row.EventID,
+                         row.AccID,
+                        ))
+        );
 
     }
 
     static async retriveLastBookingID(){
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT MAX(BookEventID) FROM EventBooking`;
+        const sqlQuery = `SELECT MAX(BookEventID) AS BookEventID FROM EventBooking;`;
         const request = connection.request();
         const result = await request.query(sqlQuery)
+        connection.close();
         return result.recordset[0];
+       
     }
 }
 

@@ -41,6 +41,17 @@ CREATE TABLE Event(
 		FOREIGN KEY (EventMgrID) REFERENCES EventMgr(EventMgrID)
 );
 
+CREATE TABLE EventBooking(
+	BookEventID varchar(10) NOT NULL,
+	BookEventDate smalldatetime NOT NULL,
+	EventID varchar(10) NULL,
+	AccID varchar(10) NULL,
+	CONSTRAINT PK_EventBooking PRIMARY KEY (BookEventID),
+	CONSTRAINT FK_EventBooking_Event 
+		FOREIGN KEY (EventID) REFERENCES Event(EventID)
+	CONSTRAINT FK_EventBooking_Account 
+		FOREIGN KEY (AccID) REFERENCES Account(AccID)
+);
 
 -- Create Admin table
 CREATE TABLE Admin(

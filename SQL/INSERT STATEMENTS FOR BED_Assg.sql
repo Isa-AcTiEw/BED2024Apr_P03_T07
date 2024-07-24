@@ -34,6 +34,10 @@ VALUES
 'Hone your generative A.I. skills learn how to prompt effectively and understand the ethical concerns of generative A.I.', 
 '0', '2024-07-14' , 'Lifelong Learning', 'Bishan Community Club', '2024-06-30', 'EVT001', '300')
 
+INSERT INTO EventBooking
+VALUES
+('BE001','2024-24-7 17:44:55','Ev00003','ACC002');
+
 INSERT INTO Admin
 VALUES
 ('ADM001', 'Peter', 'SGGoofyAdmin@gmail.com','Approved');
