@@ -16,6 +16,8 @@ const annController = require("./controller/annController");
 const fbkController = require("./controller/fbkController");
 const authController = require("./controller/authController");
 
+const eventBookingController = require("./controller/bookEventController");
+
 //middleware
 
 const bodyParser = require("body-parser");
@@ -86,6 +88,11 @@ app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
 app.put('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents',eventController.createEvent);
 app.get('/getEventID',eventController.LastEventID);
+
+// routes for BookEvents
+app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
+app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
+app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
