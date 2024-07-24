@@ -1,3 +1,24 @@
+// firebaseConfig.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB5bmV1U17GEdr0IzsM7FlRj82tSB3c_W8",
+    authDomain: "bedprofilepic-a6848.firebaseapp.com",
+    projectId: "bedprofilepic-a6848",
+    storageBucket: "bedprofilepic-a6848.appspot.com",
+    messagingSenderId: "1004495624019",
+    appId: "1:1004495624019:web:9fcdf52d6f137d95c333a6",
+    measurementId: "G-0G6HG1V438"
+  };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const db = getFirestore(app);
+
 document.addEventListener('DOMContentLoaded', async () => {
     const createAccount = document.getElementById('register-form');
     const myModal = new bootstrap.Modal(document.getElementById('registerModal'));
@@ -9,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const name = document.getElementById("name").value;
         const email = document.getElementById("email").value;
         const phonenum = document.getElementById("phonenum").value;
-        //const profile = document.getElementById("profile").files[0]; 
+        const profile = document.getElementById("profile").files[0]; 
         const address = document.getElementById("address").value;
         const postalcode = document.getElementById("postalcode").value;
         const dob = document.getElementById("dob").value;
@@ -23,8 +44,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // Send data to server
-        const response = await fetch("/accountReg", {
+        let profileUrl = '';
+        if (profile) {
+            const storageRef = ref(storage, 'profiles/' + profile.name);
+            await uploadBytes(storageRef, profile);
+            profileUrl = await getDownloadURL(storageRef);
+        }
+
+        // Send data to mssql
+        const response = await fetch("/accountLogin", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -41,10 +69,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         if (response.ok) {
-            myModal.hide();
+            const auth = getAuth();
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    await setDoc(doc(db, "users", email), {
+                        email: email,
+                        profileUrl: profileUrl
+                    });
 
-            showAlert('success', 'Registration successful!');
+                    myModal.hide();
+                    showAlert('success', 'Registration successful!');
+                } else {
+                    showAlert('danger', 'User is not authenticated.');
+                }
+            });
         } else {
+            myModal.hide();
             showAlert('danger', 'Registration failed. Account exist.');
         }
     });

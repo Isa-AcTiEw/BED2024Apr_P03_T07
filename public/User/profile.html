@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="../Js/bootstrap.bundle.min.js" defer></script>
-    <script src="../Js/login.js" defer></script>
+    <script type="module" src="../Js/login.js" defer></script>
     <script src="../Js/profile.js" defer></script>
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 </head>
@@ -74,7 +74,6 @@
             <div class="col-12 mb-5 px-4">
                 <div class="bg-white p-3 p-md-4 rounded shadow-sm">
                     <form id="profile-form">
-                        <h5 class="mb-3 fw-bold">Basic Information</h5>
                         <div class="row">
                             <div class="col-md-4 mb-3">
                                 <label class="form-label">Name</label>
@@ -101,6 +100,19 @@
                     </form>
                 </div>
             </div>
+            
+            <div class="col-md-4 mb-5 px-4">
+                <div class="bg-white p-3 p-md-4 rounded shadow-sm">
+                    <form id="picture-form">
+                        <h5 class="mb-3 fw-bold">Picture</h5>
+                        <img id="image" src="../images/homepage pictures/blank-profile-picture-973460_1280.png" class="img-fluid mb-3" alt="Profile Picture">
+                        <label class="form-label">New Picture</label>
+                        <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
+                        <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -112,5 +124,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js"></script>
 </body>
 </html>
