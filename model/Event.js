@@ -111,6 +111,17 @@ class Event{
         return this.getAllEventsById(result.recordset[0].EventID); 
     }
 
+    
+
+    static async getLastEventID(){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT MAX(EventID) FROM Event`
+        const request = connection.request();
+        const result = await request.query(sqlQuery)
+        return result.recordset[0];
+    }
+
+    // getAllEvents
     static async getAllEvent(){
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event`
@@ -129,14 +140,6 @@ class Event{
                          row.EventRegEndDate,
                          row.EventIntake))
         );
-    }
-
-    static async getLastEventID(){
-        const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT MAX(EventID) FROM Event`
-        const request = connection.request();
-        const result = await request.query(sqlQuery)
-        return result.recordset[0];
     }
 
     // create the event and store in db table
