@@ -88,6 +88,8 @@ app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
 app.put('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents',eventController.createEvent);
 app.get('/getEventID',eventController.LastEventID);
+app.get('/getEvents',eventController.getAllEvents);
+app.get('/getEventByID/:id',eventController.getAllEventsById);
 
 // routes for BookEvents
 app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);

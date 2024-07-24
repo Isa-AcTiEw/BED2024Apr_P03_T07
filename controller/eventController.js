@@ -15,6 +15,22 @@ const getAllEventsByEventMgrID = async (req,res) =>{
       }
 };
 
+const getAllEventsById = async (req,res) =>{
+  try{
+    const EventID = req.params.id;
+    console.log(EventID);
+    const Events = await Event.getAllEventsById(EventID);
+    if(!Events){
+      res.status(404).json({message:"No event ID associated with event"})
+    }
+    res.json(Events);
+  }
+  catch(error){
+    console.error(error);
+    res.status(500).send("Error retrieving events by eventID");
+  }
+}
+
 const deleteEvent = async (req,res) =>{
   try{
     const EventID = req.params.id;
@@ -74,15 +90,7 @@ const updateEvent = async (req,res) => {
 const getAllEvents = async (req,res) => {
   try{
     const Events = await Event.getAllEvent();
-    if(Events.length != 0){
-      res.json(Events);
-      
-    }
-    else{
-      res.status(404).json({"message":"There are no events listed"})
-    }
-    
-
+    res.json(Events)
   }
   catch(error){
     console.error(error)
@@ -115,7 +123,8 @@ module.exports = {
     createEvent,
     updateEvent,
     getAllEvents,
-    LastEventID
+    LastEventID,
+    getAllEventsById
   };
 
 

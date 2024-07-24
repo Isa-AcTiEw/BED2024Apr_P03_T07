@@ -23,10 +23,12 @@ class Event{
         const request = connection.request();
         request.input("EventID",id);
         const result = await request.query(sqlQuery);
+        console.log(result);
         connection.close();
         return result.recordset.map
         ((row) => 
             new Event(
+                     row.EventID,
                      row.EventName,
                      row.EventDesc,
                      row.EventPrice,
@@ -34,6 +36,7 @@ class Event{
                      row.EventCat,
                      row.EventLocation,
                      row.EventRegEndDate,
+                     row.EventMgrID,
                      row.EventIntake));
 
     }
@@ -126,20 +129,23 @@ class Event{
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event`
         const request = connection.request();
-        const result = await request.query(sqlQuery);
-        connection.close()
-        return result.recordset.map(
-            ((row) => 
-                new Event(
-                         row.EventName,
-                         row.EventDesc,
-                         row.EventPrice,
-                         row.EventDate,
-                         row.EventCat,
-                         row.EventLocation,
-                         row.EventRegEndDate,
-                         row.EventIntake))
-        );
+        const result = await request.query(sqlQuery)
+        connection.close;
+        return result.recordset.map
+        ((row) => 
+            new Event(
+                     row.EventID,
+                     row.EventName,
+                     row.EventDesc,
+                     row.EventPrice,
+                     row.EventDate,
+                     row.EventCat,
+                     row.EventLocation,
+                     row.EventRegEndDate,
+                     row.EventMgrID,
+                     row.EventIntake));
+
+        
     }
 
     // create the event and store in db table
