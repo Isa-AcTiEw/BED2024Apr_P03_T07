@@ -76,10 +76,10 @@ const getAccountByEmail = async (req, res) => {
 };
 
 const updateAccount = async (req, res) => {
-    const AccID = parseInt(req.params.id);
+    const AccEmail = req.params.email;
     const newAccData = req.body;
     try {
-        const updatedAcc = await Feedback.updateFeedback(AccID, newAccData);
+        const updatedAcc = await Account.updateAccount(AccEmail, newAccData);
         if (!updatedAcc) {
             return res.status(404).json("Account not found");
         } 

@@ -47,18 +47,17 @@ class Account {
         return result.rowsAffected > 0;
     }
 
-    static async updateAccount(AccID, newAccData) {
+    static async updateAccount(AccEmail, newAccData) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `UPDATE Account SET AccName = @AccName, AccEmail = @AccEmail, AccCtcNo = @AccCtcNo,
-        AccPostalCode = @AccPostalCode, AccDOB = @AccDOB, AccPassword = @AccPassword WHERE AccID = @AccID`;
+        const sqlQuery = `UPDATE Account SET AccName = @AccName, AccCtcNo = @AccCtcNo, AccAddr = @AccAddr,
+        AccPostalCode = @AccPostalCode, AccDOB = @AccDOB WHERE AccEmail = @AccEmail`;
         const request = connection.request();
-        request.input("AccID", AccID);
-        request.input("AccName", newAccData.AccName || null);        
-        request.input("AccEmail", newAccData.AccEmail || null);
+        request.input("AccName", newAccData.AccName || null);    
+        request.input("AccEmail", AccEmail);    
         request.input("AccCtcNo", newAccData.AccCtcNo || null);
+        request.input("AccAddr", newAccData.AccAddr || null);
         request.input("AccPostalCode", newAccData.AccPostalCode || null);
         request.input("AccDOB", newAccData.AccDOB || null);
-        request.input("AccPassword", newAccData.AccPassword || null);
         await request.query(sqlQuery);
         connection.close();
         return this.getAccountByEmail(AccEmail);
