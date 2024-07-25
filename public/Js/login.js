@@ -19,6 +19,7 @@ const storage = getStorage(app);
 const db = getFirestore(app);
 
 
+
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
@@ -49,7 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             });
 
-            myModal.hide();
+            myModal.hide(); // Hide modal
+
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
@@ -61,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const nameResponse = await fetch(`/accountLogin/${email}`);
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
-                    const { AccName, AccEmail, AccCtcNo, AccPfp, AccAddr, AccPostalCode, AccDOB } = nameData;
+                    const { AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
 
                     localStorage.setItem('AccName', AccName);
                     localStorage.setItem('AccEmail', AccEmail);
@@ -138,7 +140,7 @@ function displayUserMenu(AccName, AccPfp) {
 
     userMenu.innerHTML = `
         <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="${image}" alt="${AccName}" class="rounded-circle" style="width: 32px; height: 32px;"> ${AccName}
+            <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 32px; height: 32px;"> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
@@ -189,3 +191,4 @@ function showAlert(type, msg) {
         alert.remove();
     }, 5000);
 }
+

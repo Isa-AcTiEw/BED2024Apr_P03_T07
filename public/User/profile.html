@@ -15,7 +15,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="../Js/bootstrap.bundle.min.js" defer></script>
     <script type="module" src="../Js/login.js" defer></script>
-    <script src="../Js/profile.js" defer></script>
+    <script type="module" src="../Js/profile.js" defer></script>
     <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script>
 </head>
 <body>
@@ -105,9 +105,9 @@
                 <div class="bg-white p-3 p-md-4 rounded shadow-sm">
                     <form id="picture-form">
                         <h5 class="mb-3 fw-bold">Picture</h5>
-                        <img id="image" src="../images/homepage pictures/blank-profile-picture-973460_1280.png" class="img-fluid mb-3" alt="Profile Picture">
+                        <img id="profile-image" src="../images/homepage pictures/blank-profile-picture-973460_1280.png" alt="Profile Picture Preview" class="img-fluid mb-3" alt="Profile Picture">
                         <label class="form-label">New Picture</label>
-                        <input name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
+                        <input id="profile-input"name="profile" type="file" accept=".jpg, .jpeg, .png, .webp" class="form-control shadow-none" required>
                         <button type="submit" class="btn text-white custom-bg shadow-none">Save Changes</button>
                     </form>
                 </div>

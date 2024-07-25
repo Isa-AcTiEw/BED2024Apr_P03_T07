@@ -57,7 +57,9 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 // Login
-app.post('/accountLogin', accountController.login);
+app.get('/accountLogin/:email', accountController.getAccountByEmail);
+app.put('/accountLogin/:email', accountController.updateAccount);
+app.post('/accountLogin/:email', accountController.login);
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
 
