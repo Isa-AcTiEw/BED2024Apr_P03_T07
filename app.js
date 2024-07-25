@@ -80,7 +80,7 @@ app.post('/verifyToken', verifyToken, (req, res) => {
 });
 
 // Account Register
-app.post('/accountLogin',accountController.registerAccount);
+app.post('/accountReg',accountController.registerAccount);
 
 // EventMgr and Event routes
 app.get('/EventMgr/getEvents/:id',eventController.getAllEventsByEventMgrID);
@@ -105,7 +105,8 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
-app.get("/booking/:id", bookingController.getBookingById);
+//app.get("/booking/:id", bookingController.getBookingById);
+app.get("/booking/:id", bookingController.getAllBookingByAccId);
 app.post("/booking", validateBooking, bookingController.createBooking);
 
 // Registration

@@ -42,6 +42,25 @@ class Booking {
 			: null;
     }
 
+	static async getAllBookingByAccId(id) {
+		const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT * FROM Booking WHERE AccID = @id`;
+		const request = connection.request().input("id", id);
+		const result = await request.query(sqlQuery);
+
+		connection.close();
+
+		return result.recordset.map(
+			(row) => new Booking(
+				row.BookID, 
+				row.BookDate, 
+				row.BookStatus, 
+				row.FacID, 
+				row.AccID
+			)
+		);
+	}
+
 	static async createBooking(newBooking) {
 		const connection = await sql.connect(dbConfig);
 		const sqlQuery = `INSERT INTO Booking (BookID, BookDate, BookStatus, FacID, AccID) OUTPUT inserted.BookID, inserted.BookDate, inserted.BookStatus, inserted.FacID, inserted.AccID VALUES (@BookID, GETDATE(), 'Pending', @FacID, @AccID);`

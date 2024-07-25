@@ -104,10 +104,11 @@ function displayUserMenu(AccName) {
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
-            <li><button class="dropdown-item" type="button">Bookings</button></li>
+            <li><a href="../User/bookings.html" class="dropdown-item">Bookings</button></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;
+    //<li><button class="dropdown-item" type="button">Bookings</button></li>
 
     menuPlaceholder.innerHTML = ''; // Clear previous menu content
     menuPlaceholder.appendChild(userMenu);
