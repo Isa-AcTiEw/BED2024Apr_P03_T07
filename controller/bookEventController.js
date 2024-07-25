@@ -4,6 +4,7 @@ const BookEvent = require('../model/BookEvent');
 const createBooking = async (req,res) =>{
     try{
         const booking = req.body;
+        console.log(booking);
         const BookedEvent = await BookEvent.createBooking(booking);
         res.status(201).json({message : "Resource sucessfully created",response:BookedEvent});
 
@@ -34,11 +35,8 @@ const retrieveUserEventBooked = async (req,res) =>{
     try{
         const AccID = req.params.id;
         const BookedEvents = await BookEvent.retrieveUserEventBooked(AccID);
-        if(BookedEvents.length != 0){
-            res.status(200).json({message : "Bookings sucessfully retrived" , content: BookedEvents})
-        }
-        else{
-            res.status(404).send("User has no events booked")
+        if(BookedEvents.length() > 0){
+            res.status(200).json({message: "Sucessfully retrieved user booked events", events: BookedEvents})
         }
 
     }

@@ -85,27 +85,37 @@ function displayEvent(event){
         const substring = LastBookID.substring(0,LastBookID.length - 1);
         const newNum = parseInt(LastBookID.charAt(4)) + 1;
         const BookID = substring + newNum;
+        console.log(BookID);
         if(!LastBookID){
             console.log("There is no current bookings")
         }
 
         const AccID = "ACC002"
-        const BookEventDate = new Date();
-        const formattedBookEventDate = BookEventDate.toISOString().slice(0, 19).replace('T', ' ').replace(/-/g, '-').slice(2);
-        console.log(formattedBookEventDate);
-        const url = "http://localhost:3000/ViewEvents/createBooking/"
-        const request = await fetch(url,{
-                method: 'POST',
-                headers:{
-                    'Content-Type':'application/json'
-                },
-                body: JSON.stringify({
-                    BookEventID: BookID,
-                    BookEventDate: BookEventDate,
-                    EventID: EventID,
-                    AccID: AccID
-                })
-            })
+        const BookDateTime = new Date();
+        function convertDate(BookDateTime){
+            console.log(BookDateTime)
+            const year = BookDateTime.getFullYear();
+            const month = BookDateTime.getMonth() + 1;
+            const day = BookDateTime.getDate();
+            const timestamp = BookDateTime.toLocaleTimeString('en-SG', { hour12: false });  // 24-hour format
+            const BookDate = year + "-" + month + "-" + day + " " + timestamp
+            console.log(BookDate) 
+        }
+              
+        // console.log(BookEventDateString);
+        // const url = "http://localhost:3000/ViewEvents/createBooking/"
+        // const request = await fetch(url,{
+        //         method: 'POST',
+        //         headers:{
+        //             'Content-Type':'application/json'
+        //         },
+        //         body: JSON.stringify({
+        //             BookEventID: BookID,
+        //             BookEventDate: formattedBookEventDate,
+        //             EventID: EventID,
+        //             AccID: AccID
+        //         })
+        //     })
 
         // call the post method
 

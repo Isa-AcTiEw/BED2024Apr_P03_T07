@@ -18,7 +18,7 @@ const getAllEventsByEventMgrID = async (req,res) =>{
 const getAllEventsById = async (req,res) =>{
   try{
     const EventID = req.params.id;
-    console.log(EventID);
+    console.log(EventID)
     const Events = await Event.getAllEventsById(EventID);
     if(!Events){
       res.status(404).json({message:"No event ID associated with event"})
