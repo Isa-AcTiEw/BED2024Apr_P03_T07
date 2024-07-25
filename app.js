@@ -16,6 +16,8 @@ const annController = require("./controller/annController");
 const fbkController = require("./controller/fbkController");
 const authController = require("./controller/authController");
 
+const eventBookingController = require("./controller/bookEventController");
+
 //middleware
 
 const bodyParser = require("body-parser");
@@ -56,7 +58,7 @@ app.get('/facilitiesMgr', (req, res) => {
 
 // Login
 app.get('/accountLogin/:email', accountController.getAccountByEmail);
-app.put('/accountLogin/:email',accountController.updateAccount);
+app.put('/accountLogin/:email', accountController.updateAccount);
 app.post('/accountLogin/:email', accountController.login);
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
@@ -79,7 +81,7 @@ app.post('/verifyToken', verifyToken, (req, res) => {
   res.json({ valid: true }); // Token is valid
 });
 
-// Account Register
+// Register
 app.post('/accountReg',accountController.registerAccount);
 
 // EventMgr and Event routes
@@ -88,6 +90,12 @@ app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
 app.put('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents',eventController.createEvent);
 app.get('/getEventID',eventController.LastEventID);
+
+// routes for BookEvents
+app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
+app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
+app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
+app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);

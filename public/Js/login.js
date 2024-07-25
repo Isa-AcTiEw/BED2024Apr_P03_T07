@@ -1,3 +1,25 @@
+// firebaseConfig.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyB5bmV1U17GEdr0IzsM7FlRj82tSB3c_W8",
+    authDomain: "bedprofilepic-a6848.firebaseapp.com",
+    projectId: "bedprofilepic-a6848",
+    storageBucket: "bedprofilepic-a6848.appspot.com",
+    messagingSenderId: "1004495624019",
+    appId: "1:1004495624019:web:9fcdf52d6f137d95c333a6",
+    measurementId: "G-0G6HG1V438"
+  };
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
+const db = getFirestore(app);
+
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
@@ -28,6 +50,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                 })
             });
 
+            myModal.hide(); // Hide modal
+
             if (response.ok) {
                 const data = await response.json();
                 const token = data.token;
@@ -35,6 +59,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.log('Token received:', token);
                 localStorage.setItem('token', token);
 
+                // Fetch data from mssql
                 const nameResponse = await fetch(`/accountLogin/${email}`);
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
@@ -52,7 +77,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                     document.getElementById('contentz').remove();
                 }
 
-                myModal.hide();
+                // Fetch user profile from Firestore
+                const docRef = doc(db, "users", email);
+                const docSnap = await getDoc(docRef);
+
+                if (docSnap.exists()) {
+                    const { profileUrl } = docSnap.data();
+                    localStorage.setItem('AccPfp', profileUrl);
+
+                    displayUserMenu(email, profileUrl);
+                    showAlert('success', 'Login successful!');
+                    document.getElementById('contentz').remove();
+                }
+
             } else {
                 showAlert('danger', 'Login failed. Try again.');
             }
@@ -88,19 +125,22 @@ async function checkUserLogin(token) {
 
 function loadUserMenu() {
     const AccName = localStorage.getItem('AccName');
+    const AccPfp = localStorage.getItem('AccPfp');
     if (AccName) {
-        displayUserMenu(AccName);
+        displayUserMenu(AccName, AccPfp);
         document.getElementById('contentz').remove();
     }
 }
 
-function displayUserMenu(AccName) {
+function displayUserMenu(AccName, AccPfp) {
     const menuPlaceholder = document.getElementById('menuPlaceholder');
     const userMenu = document.createElement('div');
     userMenu.className = 'btn-group';
+    const image = AccPfp ? AccPfp : '../images/homepage pictures/blank-profile-picture-973460_1280.png';
+
     userMenu.innerHTML = `
         <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="bi bi-person-circle"></i> ${AccName}
+            <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 32px; height: 32px;"> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
@@ -118,6 +158,7 @@ function displayUserMenu(AccName) {
         logoutButton.addEventListener('click', () => {
             localStorage.removeItem('token'); 
             localStorage.removeItem('AccName'); 
+            localStorage.removeItem('AccPfp');
 
             // Log the token status after clearing
             const clearedToken = localStorage.getItem('token');
@@ -151,3 +192,4 @@ function showAlert(type, msg) {
         alert.remove();
     }, 5000);
 }
+
