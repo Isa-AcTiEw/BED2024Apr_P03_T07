@@ -76,7 +76,9 @@ VALUES
 INSERT INTO Booking
 VALUES 
 ('B001', '2024-06-28', 'Pending', 'FAC001', 'ADM001'),
-('B002', '2024-06-29', 'Pending', 'FAC002', 'ADM001');
+('B002', '2024-06-29', 'Pending', 'FAC002', 'ADM001'),
+('B003', '2024-07-26', 'Pending', 'FAC003', 'ACC436'),
+('B004', '2024-07-26', 'Pending', 'FAC004', 'ACC436');
 
 INSERT INTO Registration
 VALUES 

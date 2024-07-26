@@ -191,18 +191,18 @@ async function updateProfile() {
 
     try {
         const response = await fetch(`/accountLogin/${localStorage.getItem('AccEmail')}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json', 
+            },
             body: JSON.stringify({
-                name,
-                phonenum,
-                dob,
-                postalcode,
-                address
+                AccName: name, 
+                AccCtcNo: phonenum, 
+                AccDOB: dob, 
+                AccPostalCode: postalcode,
+                AccAddr: address
             })
-        });
+        })
 
         if (!response.ok) {
             throw new Error('Failed to update profile information.');
