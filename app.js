@@ -57,7 +57,9 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 // Login
-app.post('/accountLogin', accountController.login);
+app.get('/accountLogin/:email', accountController.getAccountByEmail);
+app.put('/accountLogin/:email', accountController.updateAccount);
+app.post('/accountLogin/:email', accountController.login);
 function verifyToken(req, res, next) {
   const token = req.headers.authorization?.split(' ')[1];
 
@@ -114,7 +116,8 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
-app.get("/booking/:id", bookingController.getBookingById);
+//app.get("/booking/:id", bookingController.getBookingById);
+app.get("/booking/:id", bookingController.getAllBookingByAccId);
 app.post("/booking", validateBooking, bookingController.createBooking);
 
 // Registration
