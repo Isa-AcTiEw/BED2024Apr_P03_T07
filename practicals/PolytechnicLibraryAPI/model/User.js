@@ -33,5 +33,9 @@ class User{
         const result = await request.query(sqlQuery);
         return result.rowsAffected > 0;
     }
+
+    static async getAllEvents(){
+        
+    }
 }
 module.exports = User;
