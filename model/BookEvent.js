@@ -20,7 +20,7 @@ class BookEvent{
         const result = await request.query(sqlQuery);
         connection.close();
         // retrive the newlt created event to veriffy that the a new event is added
-        return this.getAllBookings(result.recordset[0].BookEventID); 
+        return result.rowsAffected;
 
     }
 
@@ -51,7 +51,7 @@ class BookEvent{
         const request = connection.request();
         request.input("AccID",AccID)
         const result = await request.query(sqlQuery)
-        return result.recordset[0];
+        return result.recordset;
     }
 
     static async retrieveUserEventBooked(AccID){
@@ -81,6 +81,16 @@ class BookEvent{
                     row.EventIntake)
             )
         );
+    }
+
+    static async retrieveEventBookingBookedID(){
+        const connection = request.connect(dbConfig);
+        const sqlQuery = `SELECT BookEventID AS 'BookEventID' FROM EventBooking WHERE 
+                          EventID IN (SELECT EventID FROM EventBooking 
+                          WHERE AccID = '@AccID')`
+        const request = connection.query(sqlQuery)
+        const result = await request.query(sqlQuery)
+        return result.recordset;
     }
 }
 

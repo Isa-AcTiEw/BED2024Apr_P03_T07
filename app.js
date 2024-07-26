@@ -96,6 +96,7 @@ app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEven
 app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
 app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
 app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
+app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsID);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);

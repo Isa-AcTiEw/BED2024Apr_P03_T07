@@ -99,24 +99,60 @@ function displayEvent(event){
             const day = BookDateTime.getDate();
             const timestamp = BookDateTime.toLocaleTimeString('en-SG', { hour12: false });  // 24-hour format
             const BookDate = year + "-" + month + "-" + day + " " + timestamp
-            console.log(BookDate) 
+            return BookDate
         }
-              
-        // console.log(BookEventDateString);
-        // const url = "http://localhost:3000/ViewEvents/createBooking/"
-        // const request = await fetch(url,{
-        //         method: 'POST',
-        //         headers:{
-        //             'Content-Type':'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             BookEventID: BookID,
-        //             BookEventDate: formattedBookEventDate,
-        //             EventID: EventID,
-        //             AccID: AccID
-        //         })
-        //     })
 
+        const BookEventDate = convertDate(BookDateTime)
+
+
+        // check if user has alreay booked the event call my backend
+
+        const bookEventIDs = await fetch(`http://localhost:3000/ViewEvents/createBooking/${AccID}`)
+        if(!bookEventIDs.ok){
+            alert("User has not booked any events")
+        }
+        else{
+            const EventIDData = await bookEventIDs.json()
+            const EventIDs = EventIDData["value"]
+            const EventIDList = [];
+            EventIDs.forEach(element => {
+                EventIDList.push(element["Event ID"]);
+            })
+            if(EventIDList.includes(EventID)){
+                alert("User has already booked the event");
+            }
+            
+            else{
+                console.log(BookEventDate);
+                const url = "http://localhost:3000/ViewEvents/createBooking/"
+                const response = await fetch(url,{
+                        method: 'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body: JSON.stringify({
+                            BookEventID: BookID,
+                            BookEventDate: BookEventDate,
+                            EventID: EventID,
+                            AccID: AccID
+                        })
+                    })
+                if(response.status === 201){
+                    alert("User has sucessfully Booked the event");
+                }
+                
+                else{
+                    alert("Unable to book the event");
+                }
+
+                
+    
+            }
+
+        }
+           
+    
+        
         // call the post method
 
     })

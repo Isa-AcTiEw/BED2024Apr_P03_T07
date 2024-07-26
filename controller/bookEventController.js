@@ -35,7 +35,7 @@ const retrieveUserEventBooked = async (req,res) =>{
     try{
         const AccID = req.params.id;
         const BookedEvents = await BookEvent.retrieveUserEventBooked(AccID);
-        if(BookedEvents.length() > 0){
+        if(BookedEvents != null){
             res.status(200).json({message: "Sucessfully retrieved user booked events", events: BookedEvents})
         }
 
@@ -62,9 +62,27 @@ const LastBookID = async (req,res) =>{
     }
   }
 
+  const retrieveBookedEventsID = async (req,res) =>{
+    try{
+        const AccID = req.params.id
+        const EventIDs = await BookEvent.retrieveBookedEventsID(AccID);
+        if(EventIDs != null){
+            res.status(200).json({"message":"Retrieved event id's successfully", value: EventIDs})
+        }
+        else{
+            res.status(404).send("User has no events booked")
+        }
+    }
+    catch(error){
+        console.error(error)
+        res.status(500).send("Unable to retrieve EventIDs of user booked events")
+    }
+  }
+
 module.exports = {
     createBooking,
     deleteBooking,
     retrieveUserEventBooked,
-    LastBookID
+    LastBookID,
+    retrieveBookedEventsID
 }
