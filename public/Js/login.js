@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             myModal.hide(); // Hide modal
 
             if (response.ok) {
-                const data = await response.json();
-                const token = data.token;
+                const token = await response.json();
+                // const token = await data.token;
 
                 console.log('Token received:', token);
                 localStorage.setItem('token', token);

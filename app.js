@@ -3,6 +3,7 @@ const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const secretKey = process.env.JWT_SECRETKEY;
 
 //controller
@@ -57,25 +58,27 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
+async function verifyToken(req, res, next) {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+  console.log(token);
+  if (!token) {
+      return res.status(403).json({ message: 'No token provided' });
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+          return res.status(401).json({ message: 'Failed to authenticate token' });
+      }
+      req.decoded = decoded;
+      next();
+  });
+};
+
 // Login
 app.get('/accountLogin/:email', accountController.getAccountByEmail);
 app.put('/accountLogin/:email', accountController.updateAccount);
 app.post('/accountLogin/:email', accountController.login);
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
 
-  if (!token) {
-      return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
-
-  try {
-      const decoded = jwt.verify(token, secretKey);
-      req.user = decoded;
-      next();
-  } catch (err) {
-      return res.status(403).json({ message: 'Invalid token.' });
-  }
-}
 
 // Route to verify token
 app.post('/verifyToken', verifyToken, (req, res) => {

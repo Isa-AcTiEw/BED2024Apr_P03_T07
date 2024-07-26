@@ -4,7 +4,6 @@ const secretKey = process.env.JWT_SECRETKEY;
 function verifyJWT(req, res, next){
         //  Exctract authorization headers from incoming request and split at " "
     const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
-
     if (!token) {
         return res.status(401).json({token:token });
     }

@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const sql = require('mssql');
 require('dotenv').config();  
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.ACCESS_TOKEN_SECRET;
+const secretKey = process.env.JWT_SECRETKEY;
 
 async function registerAccount(req, res) {
     const { AccName,AccEmail,AccCtcNo,AccAddr,AccPostalCode,AccDOB,AccPassword } = req.body;
@@ -34,10 +34,13 @@ async function registerAccount(req, res) {
 
 async function login(req, res) {
     const { AccEmail, AccPassword } = req.body;
+    console.log(AccPassword);
 
     try {
         const user = await Account.getAccountByEmail(AccEmail);
+        console.log(user.AccPassword);
         if (!user) {
+          console.log('hi');
           return res.status(401).json({ message: "Invalid credentials" });
         }
 
@@ -49,44 +52,46 @@ async function login(req, res) {
         }
 
         // Generate JWT token, payload refers to data and information we would like to store inside the user's token
-        const AccID = user.AccID;
-        // Extract ACC , ADM , EVT and FAL
-        const accountType = AccID.substring(0,3)
-        console.log(accountType);
+        const AccID = user["AccID"]
 
+        console.log(AccID)
+        // // Extract ACC , ADM , EVT and FAL
+        const accountType = AccID.substring(0,3)
+
+        console.log(accountType);
         if(accountType == "ACC"){
             const payload = {
-                id: user.AccID,
+                id: AccID,
                 role: "Member"
               };
-              const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+              const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
               return res.status(200).json(token)
         }
 
         else if(accountType == "EVT"){
             const payload = {
-                id:user.AccID,
+                id:AccID,
                 role: "Event Manager"
             }
-            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
             return res.status(200).json(token)
         }
 
         else if (accountType == "FAL"){
             const payload = {
-                id:user.AccID,
+                id:AccID,
                 role: "Facilities Manager"
             }
-            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
             return res.status(200).json(token)
         }
 
         else if (accountType == "ADM"){
             const payload = {
-                id:user.AccID,
+                id:AccID,
                 role: "Event Manager"
             }
-            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
             return res.status(200).json(token)
         }
         
@@ -131,7 +136,7 @@ const updateAccount = async (req, res) => {
 
 async function verifyToken(req, res, next) {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-
+    console.log(token);
     if (!token) {
         return res.status(403).json({ message: 'No token provided' });
     }
