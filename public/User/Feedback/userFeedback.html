@@ -18,14 +18,14 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
         <div class="container-fluid">
-            <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="../../index.html">SGoofy</a>
+            <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.html">SGoofy</a>
             <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active me-2"  href="../../index.html">Home</a>
+                        <a class="nav-link active me-2" aria-current="page" href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link me-2" href="#">Events</a>
@@ -37,13 +37,20 @@
                         <a class="nav-link me-2" href="#">Contact Us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" aria-current="page" href="#">Feedback</a>
+                        <a class="nav-link me-2" href="User/Feedback/userFeedback.html">Feedback</a>
                     </li>
                 </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
-                </form>
+                <div class="d-flex">
+                    <div id="menuPlaceholder" ></div>
+                    <div id="contentz">
+                        <button type="button" class="btn btn-outline-dark shadow-none me-lg-3 me-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+                            Login
+                        </button>
+                        <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#registerModal">
+                            Register
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -125,7 +132,7 @@
             const quality = qualityMap[rateValue];
             const datetime = new Date().toISOString();
             const desc = document.getElementById("feedbackDescInput").value;
-            const accountid = "ACC002";
+            const accountid = localStorage.getItem("AccID");
 
             if (!rateValue) {
                 alert('Please select a rating.');

@@ -62,8 +62,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const nameResponse = await fetch(`/accountLogin/${email}`);
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
-                    const { AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
+                    const { AccID, AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
 
+                    localStorage.setItem('AccID',AccID);
                     localStorage.setItem('AccName', AccName);
                     localStorage.setItem('AccEmail', AccEmail);
                     localStorage.setItem('AccCtcNo', AccCtcNo);
