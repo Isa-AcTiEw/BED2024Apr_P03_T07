@@ -83,12 +83,12 @@ class BookEvent{
         );
     }
 
-    static async retrieveEventBookingBookedID(){
-        const connection = request.connect(dbConfig);
-        const sqlQuery = `SELECT BookEventID AS 'BookEventID' FROM EventBooking WHERE 
-                          EventID IN (SELECT EventID FROM EventBooking 
-                          WHERE AccID = '@AccID')`
-        const request = connection.query(sqlQuery)
+    static async retrieveEventBookingBookedID(AccID){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT BookEventID AS 'BookEventID' FROM EventBooking
+                          WHERE AccID = 'ACC002'`
+        const request = connection.request();
+        request.input("AccID",AccID);
         const result = await request.query(sqlQuery)
         return result.recordset;
     }

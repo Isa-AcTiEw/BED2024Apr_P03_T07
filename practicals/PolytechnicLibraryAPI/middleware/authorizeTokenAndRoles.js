@@ -17,7 +17,13 @@ function verifyJWT(req, res, next) {
     }
 
     const authorizedRoles = {
-      "/books": ["member", "librarian"], // Users designated with the role of libarian or member can access books route
+      "/accountReg":["user"], // Users designated with the role of libarian or member can access books route
+      "/account/",
+      "/ViewEvents/createBooking":["user"],
+      "/EventBookings/deleteBooking/^BE00[0-9]",
+      "ViewEvents/createBooking":["user"],
+      "/accountLogin/:":["user"],
+      
       "/books/[0-9]+/availability": ["librarian"], // Only librarians can update availability, 
 
       // The regex expression [0-9]+ is to check if the proceeding characters after books/ is a sequence f digits 

@@ -49,17 +49,53 @@ async function login(req, res) {
         }
 
         // Generate JWT token, payload refers to data and information we would like to store inside the user's token
-        const payload = {
-          id: user.AccID,
-          // role not created ?? role: user.role, 
-        };
-        const token = jwt.sign(payload, secretKey, { expiresIn: "1800s" }); // Expires in 30min (automatically logsout user after 30min is up)
-        return res.status(200).json({ token });
+        const AccID = user.AccID;
+        // Extract ACC , EVT and FAL
+        const accountType = AccID.substring(0,3)
+        console.log(accountType);
+
+        if(accountType == "ACC"){
+            const payload = {
+                id: user.AccID,
+                role: "user"
+              };
+              const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+              return res.status(200).json(token)
+        }
+
+        else if(accountType == "EVT"){
+            const payload = {
+                id:user.AccID,
+                role: "Event Manager"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            return res.status(200).json(token)
+        }
+
+        else if (accountType == "FAL"){
+            const payload = {
+                id:user.AccID,
+                role: "Event Manager"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            return res.status(200).json(token)
+        }
+        
+        else{
+            return res.status(404).send("Unable to generate token for unknown user")
+        }
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: "Internal server error" });
     }
 };
+
+
+async function loginStaff(){
+    const {AccEmail,AccPassword} = req.body;
+
+    
+}
 
 const getAccountByEmail = async (req, res) => {
     const email = req.params.email;

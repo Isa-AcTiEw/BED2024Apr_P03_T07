@@ -44,6 +44,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/Admin/adminpage.html');
 });
@@ -96,10 +97,10 @@ app.get('/getEventByID/:id',eventController.getAllEventsById);
 // routes for BookEvents
 app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
 app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
-app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
+app.delete('/EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
 app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
-app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsID);
-
+app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsEventID);
+app.get('/EventBookings/getBookEventIDs/:id',eventBookingController.retrieveBookEventIDs);
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
 app.get('/announcements/:id', annController.getAnnouncementById);
