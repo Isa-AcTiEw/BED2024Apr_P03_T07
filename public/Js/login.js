@@ -140,7 +140,7 @@ function displayUserMenu(AccName, AccPfp) {
 
     userMenu.innerHTML = `
         <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 32px; height: 32px;"> ${AccName}
+            <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 35px; height: 35px;"> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>

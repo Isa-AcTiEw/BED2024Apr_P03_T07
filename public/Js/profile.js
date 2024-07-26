@@ -193,8 +193,8 @@ async function updateProfile() {
         const response = await fetch(`/accountLogin/${localStorage.getItem('AccEmail')}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
-            },
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
             body: JSON.stringify({
                 name,
                 phonenum,
@@ -229,6 +229,7 @@ async function updateProfile() {
         showAlert('danger', 'Failed to update profile information. Please try again later.');
     }
 }
+
 
 // Function to show alert messages
 function showAlert(type, message) {
