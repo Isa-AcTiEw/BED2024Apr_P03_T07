@@ -90,12 +90,15 @@ app.delete('/EventMgr/deleteEvents/:id',eventController.deleteEvent);
 app.put('/EventMgr/updateEvents/:id',eventController.updateEvent);
 app.post('/EventMgr/createEvents',eventController.createEvent);
 app.get('/getEventID',eventController.LastEventID);
+app.get('/getEvents',eventController.getAllEvents);
+app.get('/getEventByID/:id',eventController.getAllEventsById);
 
 // routes for BookEvents
 app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
 app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
 app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
 app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
+app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsID);
 
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
