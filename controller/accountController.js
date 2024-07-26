@@ -38,7 +38,7 @@ async function login(req, res) {
     try {
         const user = await Account.getAccountByEmail(AccEmail);
         if (!user) {
-          return res.status(401).json({ message: "Invalid credentials" });
+          return res.status(401).json({ message: "User not registered" });
         }
 
         // Compare password with hash

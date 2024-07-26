@@ -242,6 +242,7 @@ function showAlert(type, message) {
 
     setTimeout(() => {
         alertElement.remove();
+        location.reload();
     }, 5000);
 }
 
