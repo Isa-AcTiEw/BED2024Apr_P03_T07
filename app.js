@@ -113,7 +113,8 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
 app.get("/booking", bookingController.getAllBookings);
-app.get("/booking/:id", bookingController.getBookingById);
+//app.get("/booking/:id", bookingController.getBookingById);
+app.get("/booking/:id", bookingController.getAllBookingByAccId);
 app.post("/booking", validateBooking, bookingController.createBooking);
 
 // Registration

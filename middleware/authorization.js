@@ -15,14 +15,14 @@ function verifyJWT(req, res, next) {
         }
 
         const authorizedRoles = {
-            "/booking": ["member", "admin"],
-            "/booking/[0-9]+": ["admin"],
+            "/booking": ["ACC", "ADM"],
+            "/booking/[0-9]+": ["ADM"],
         };
 
         const requestEndpoint = req.url;
-        const userRole = decoded.role;
+        const userRole = decoded.AccID;
 
-        const authorizedRole = Object.entries(authrizedRoles).find(
+        const authorizedRole = Object.entries(authorizedRoles).find(
             ([endpoint, roles]) => {
                 const regex = new RegExp(`^${endpoint}}$`);
                 return regex.test(requestEndpoint) && roles.includes(userRole);
