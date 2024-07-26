@@ -1,8 +1,8 @@
 const Account = require("../model/Account");
 const bcrypt = require('bcrypt');
 const sql = require('mssql');
+require('dotenv').config();  
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: '../.env' });
 const secretKey = process.env.ACCESS_TOKEN_SECRET;
 
 async function registerAccount(req, res) {
@@ -50,14 +50,14 @@ async function login(req, res) {
 
         // Generate JWT token, payload refers to data and information we would like to store inside the user's token
         const AccID = user.AccID;
-        // Extract ACC , EVT and FAL
+        // Extract ACC , ADM , EVT and FAL
         const accountType = AccID.substring(0,3)
         console.log(accountType);
 
         if(accountType == "ACC"){
             const payload = {
                 id: user.AccID,
-                role: "user"
+                role: "Member"
               };
               const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
               return res.status(200).json(token)
@@ -75,6 +75,15 @@ async function login(req, res) {
         else if (accountType == "FAL"){
             const payload = {
                 id:user.AccID,
+                role: "Facilities Manager"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
+            return res.status(200).json(token)
+        }
+
+        else if (accountType == "ADM"){
+            const payload = {
+                id:user.AccID,
                 role: "Event Manager"
             }
             const token = jwt.sign(payload,secretKey ,{expiresIn: "3600s"})
@@ -90,12 +99,6 @@ async function login(req, res) {
     }
 };
 
-
-async function loginStaff(){
-    const {AccEmail,AccPassword} = req.body;
-
-    
-}
 
 const getAccountByEmail = async (req, res) => {
     const email = req.params.email;

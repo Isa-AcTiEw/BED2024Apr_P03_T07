@@ -15,10 +15,14 @@ function verifyJWT(req, res, next) {
         }
 
         const authorizedRoles = {
-            "/booking": ["ACC", "ADM"],
-            "/booking/[0-9]+": ["ADM"],
-        };
+            "/books": ["member", "librarian"], // Users designated with the role of libarian or member can access books route
+            "/books/[0-9]+/availability": ["librarian"], // Only librarians can update availability, 
+      
+            // The regex expression [0-9]+ is to check if the proceeding characters after books/ is a sequence f digits 
+          };
 
+        const accountRole = decoded.role;
+        
         const requestEndpoint = req.url;
         const userRole = decoded.AccID;
 

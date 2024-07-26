@@ -3,7 +3,7 @@ const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.ACCESS_TOKEN_SECRET;
+const secretKey = process.env.JWT_SECRETKEY;
 
 //controller
 const accountController = require("./controller/accountController");
