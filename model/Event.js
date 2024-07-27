@@ -114,8 +114,6 @@ class Event{
         return this.getAllEventsById(result.recordset[0].EventID); 
     }
 
-    
-
     static async getLastEventID(){
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT MAX(EventID) FROM Event`

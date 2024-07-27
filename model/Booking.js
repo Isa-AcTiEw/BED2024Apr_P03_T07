@@ -78,5 +78,19 @@ class Booking {
 
 		return this.getBookingById(result.recordset[0].BookID);
 	}
+
+	static async deleteBooking(id){
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `DELETE FROM Booking WHERE BookID = @BookID`
+        const request = connection.request();
+		
+        request.input("BookID",id);
+
+        const result = await request.query(sqlQuery);
+
+        connection.close();
+
+        return result.rowsAffected > 0;
+    }
 }
 module.exports = Booking;
