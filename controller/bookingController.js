@@ -49,11 +49,26 @@ const createBooking = async (req, res) => {
     }
 };
 
-
+const deleteBooking = async (req,res) =>{
+    try{
+      const bookingID = req.params.id;
+      const booking = Booking.deleteBooking(bookingID);
+      if(!booking){
+        return res.status(404).send('Booking not found')
+      }
+      return res.status(204).send('Booking sucessfully deleted')
+      
+    }
+    catch(error){
+      console.error(error);
+      res.status(500).send("Error retrieving booking");
+    }
+  }
 
 module.exports = {
     getAllBookings,
     getBookingById,
     getAllBookingByAccId,
-    createBooking
+    createBooking,
+    deleteBooking
 };

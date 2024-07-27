@@ -120,6 +120,7 @@ app.get("/booking", bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
 app.get("/booking/:id", bookingController.getAllBookingByAccId);
 app.post("/booking", validateBooking, bookingController.createBooking);
+app.delete("/booking/:id", bookingController.deleteBooking);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistrations);
@@ -128,6 +129,7 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 // Facilities
 app.get("/facilities", facilitiesController.getAllFacilities);
 app.get("/facilities/:id", facilitiesController.getFacilityById);
+app.get("/facilitiesId", facilitiesController.getLastFacilityId);
 app.post("/facilities", facilitiesController.createFacility);
 app.put("/facilities/:id", facilitiesController.updateFacility);
 app.delete("/facilities/:id", facilitiesController.deleteFacility);
