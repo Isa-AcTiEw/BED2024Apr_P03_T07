@@ -78,6 +78,12 @@ app.get('/facilitiesMgr', (req, res) => {
 app.get('/accountLogin/:email', accountController.getAccountByEmail);
 app.put('/accountLogin/:email', accountController.updateAccount);
 app.post('/accountLogin/:email', accountController.login);
+<<<<<<< HEAD
+=======
+
+function verifyToken(req, res, next) {
+  const token = req.headers.authorization?.split(' ')[1];
+>>>>>>> e05a1d8b57473e4bee585a43d1ba63ac4f13107c
 
 
 // Route to verify token
