@@ -1,6 +1,6 @@
 // firebaseConfig.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-storage.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -17,7 +17,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const storage = getStorage(app);
 const db = getFirestore(app);
-
 
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -63,8 +62,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const nameResponse = await fetch(`/accountLogin/${email}`);
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
-                    const { AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
+                    const { AccID, AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
 
+                    localStorage.setItem('AccID',AccID);
                     localStorage.setItem('AccName', AccName);
                     localStorage.setItem('AccEmail', AccEmail);
                     localStorage.setItem('AccCtcNo', AccCtcNo);
@@ -72,26 +72,29 @@ document.addEventListener('DOMContentLoaded', async () => {
                     localStorage.setItem('AccPostalCode', AccPostalCode);
                     localStorage.setItem('AccDOB', AccDOB);
 
-                    displayUserMenu(AccName);
-                    showAlert('success', 'Login successful!');
-                    document.getElementById('contentz').remove();
+                    // Fetch user profile from Firestore
+                    const docRef = doc(db, "Account", email);
+                    const docSnap = await getDoc(docRef);
+
+                    if (docSnap.exists()) {
+                        const { profileUrl } = docSnap.data();
+                        localStorage.setItem('AccPfp', profileUrl);
+
+                        showAlert('success', 'Login successful!');
+                        displayUserMenu(AccName, profileUrl);
+
+                        document.getElementById('contentz').remove();
+                    }
                 }
-
-                // Fetch user profile from Firestore
-                const docRef = doc(db, "users", email);
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    const { profileUrl } = docSnap.data();
-                    localStorage.setItem('AccPfp', profileUrl);
-
-                    displayUserMenu(email, profileUrl);
-                    showAlert('success', 'Login successful!');
-                    document.getElementById('contentz').remove();
-                }
-
             } else {
-                showAlert('danger', 'Login failed. Try again.');
+                const errorData = await response.json();
+                if (response.status === 404) {
+                    showAlert('danger', errorData.message || 'User not registered.');
+                } else if (response.status === 401) {
+                    showAlert('danger', errorData.message || 'Invalid credentials.');
+                } else {
+                    showAlert('danger', errorData.message || 'Login failed. Try again.');
+                }
             }
         } catch (error) {
             console.error('Login error:', error);
