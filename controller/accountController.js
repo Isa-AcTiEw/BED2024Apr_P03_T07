@@ -134,21 +134,31 @@ const updateAccount = async (req, res) => {
     }
 };
 
+// got error here 
 async function verifyToken(req, res, next) {
-    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-    console.log(token);
-    if (!token) {
-        return res.status(403).json({ message: 'No token provided' });
-    }
-
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) {
+    // Extract the Authorization header
+    const authHeader = req.headers['authorization'];
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        // Extract the token part
+        const token = authHeader.split(' ')[1];
+        
+        try {
+            // Verify the token using the secret key
+            jwt.verify(token, secretKey, (err, decoded) => {
+                if (err) {
+                    return res.status(401).json({ message: 'Failed to authenticate token' });
+                }
+                // Attach the decoded payload to the request object
+                next();
+            });
+        } catch (err) {
             return res.status(401).json({ message: 'Failed to authenticate token' });
         }
-        req.decoded = decoded;
-        next();
-    });
-};
+    } else {
+        return res.status(403).json({ message: 'No token provided' });
+    }
+}
 
 module.exports = {
     login,

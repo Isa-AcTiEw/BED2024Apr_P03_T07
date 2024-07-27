@@ -58,21 +58,21 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
-async function verifyToken(req, res, next) {
-  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  console.log(token);
-  if (!token) {
-      return res.status(403).json({ message: 'No token provided' });
-  }
+// async function verifyToken(req, res, next) {
+//   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+//   console.log(token);
+//   if (!token) {
+//       return res.status(403).json({ message: 'No token provided' });
+//   }
 
-  jwt.verify(token, secretKey, (err, decoded) => {
-      if (err) {
-          return res.status(401).json({ message: 'Failed to authenticate token' });
-      }
-      req.decoded = decoded;
-      next();
-  });
-};
+//   jwt.verify(token, secretKey, (err, decoded) => {
+//       if (err) {
+//           return res.status(401).json({ message: 'Failed to authenticate token' });
+//       }
+//       req.decoded = decoded;
+//       next();
+//   });
+// };
 
 // Login
 app.get('/accountLogin/:email', accountController.getAccountByEmail);
@@ -81,10 +81,14 @@ app.post('/accountLogin/:email', accountController.login);
 
 
 // Route to verify token
-app.post('/verifyToken', verifyToken, (req, res) => {
-  res.json({ valid: true }); // Token is valid
+// Protected route (POST example)
+app.post('/protected', accountController.verifyToken, (req, res) => {
+  console.log(req.body);
+  res.json({
+      message: 'This is a protected route.',
+      user: req.decoded // Access the decoded JWT payload here
+  });
 });
-
 // Register
 app.post('/accountReg',accountController.registerAccount);
 
