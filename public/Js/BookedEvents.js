@@ -1,9 +1,15 @@
-const AccID = "ACC002"
+const AccID = localStorage.getItem('AccID')
+const Token = localStorage.getItem('token');
 
 document.addEventListener('DOMContentLoaded',retrieveBookedEvents());
 
 async function retrieveBookedEvents(){
-    const response = await fetch(`http://localhost:3000/EventBookings/getBookings/${AccID}`)
+    console.log(Token);
+    const response = await fetch(`http://localhost:3000//EventBookings/getBookings/${AccID}` , {
+        headers:{
+            'Authorization':`Bearer ${Token}`
+        }
+    })
     if (response.status === 200){
         const eventContainer = document.getElementById("eventRow");
         const BookedEventsData = await response.json();
@@ -96,13 +102,40 @@ async function retrieveBookedEvents(){
         
 
     }
+    if(response.status === 401){
+        alert("Unauthorized please sign in");
+        let documentBody = document.body;
+        let content = "";
+        const div = document.createElement('div');
+        div.className = "card shadow";
+        content += 
+        `
+         <div class="card-body style="width: 300px; height: 230px font-size: 20px;">
+                <h3 class="card-title">Access is unauthorized</h3>
+                <p class="card-text">Please sign up as a member</p>
+                <button class="btn btn-primary d-flex justify-content-between" id= "goToEvent"  style="width: 200px; font-size: 20px;">Back to home page</button>
+        </div>
+        `
+        div.innerHTML = content;
+        documentBody.appendChild(div);
+        const button = document.getElementById("goToEvent");
+        button.addEventListener('click' , ()=>{
+            window.open('http://localhost:3000/','_blank');
+        })
+        
+
+    }
     else{
         alert("Unable to retrieve user events");
     }
 }
 
 async function retrieveBookEventIDs(){
-    const response = await fetch(`http://localhost:3000/EventBookings/getBookEventIDs/${AccID}`)
+    const response = await fetch(`http://localhost:3000/EventBookings/getBookEventIDs/${AccID}`,{
+        headers:{
+            "Authorization":`Bearer ${Token}`
+        }
+    })
     if(response.status === 200){
         alert("Retrieval of Booking IDs is successful");
         const listBookEventIDsData = await response.json();

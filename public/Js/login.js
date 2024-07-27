@@ -41,11 +41,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch(`/accountLogin/${email}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     AccEmail: email,
-                    AccPassword: password
+                    AccPassword: password,
+                    
                 })
             });
 
@@ -59,7 +60,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('token', token);
 
                 // Fetch data from mssql
-                const nameResponse = await fetch(`/accountLogin/${email}`);
+                const nameResponse = await fetch(`/accountLogin/${email}`,{
+                    headers:{
+                        'Authorization':`Bearer ${token}`
+                    }
+                });
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
                     const { AccID, AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
@@ -105,7 +110,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function checkUserLogin(token) {
     try {
-        const response = await fetch('/verifyToken', {
+        
+        const response = await fetch('http://localhost:3000/verrifyToken', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,6 +124,11 @@ async function checkUserLogin(token) {
             console.log('Token verification failed');
             localStorage.removeItem('token'); // Remove invalid token
             localStorage.removeItem('AccName'); // Remove AccName on token invalidation
+        }
+        else{
+            const payload = await response.json();
+            console.log(payload);
+            
         }
     } catch (error) {
         console.error('Error verifying token:', error);
@@ -148,6 +159,7 @@ function displayUserMenu(AccName, AccPfp) {
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
             <li><a href="../User/bookings.html" class="dropdown-item">Bookings</a></li>
+            <li><a href="../User/Event/BookedEvents.html" class="dropdown-item">Booked Events</a></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;

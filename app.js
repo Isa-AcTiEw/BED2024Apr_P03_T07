@@ -58,43 +58,14 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
-// async function verifyToken(req, res, next) {
-//   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-//   console.log(token);
-//   if (!token) {
-//       return res.status(403).json({ message: 'No token provided' });
-//   }
-
-//   jwt.verify(token, secretKey, (err, decoded) => {
-//       if (err) {
-//           return res.status(401).json({ message: 'Failed to authenticate token' });
-//       }
-//       req.decoded = decoded;
-//       next();
-//   });
-// };
 
 // Login
-app.get('/accountLogin/:email', accountController.getAccountByEmail);
-app.put('/accountLogin/:email', accountController.updateAccount);
+app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
+app.put('/accountLogin/:email', verifyJWT,accountController.updateAccount);
 app.post('/accountLogin/:email', accountController.login);
-<<<<<<< HEAD
-=======
-
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
->>>>>>> e05a1d8b57473e4bee585a43d1ba63ac4f13107c
+app.post('/verrifyToken',accountController.verifyToken);
 
 
-// Route to verify token
-// Protected route (POST example)
-app.post('/protected', accountController.verifyToken, (req, res) => {
-  console.log(req.body);
-  res.json({
-      message: 'This is a protected route.',
-      user: req.decoded // Access the decoded JWT payload here
-  });
-});
 // Register
 app.post('/accountReg',accountController.registerAccount);
 
@@ -108,12 +79,12 @@ app.get('/getEvents',eventController.getAllEvents);
 app.get('/getEventByID/:id',eventController.getAllEventsById);
 
 // routes for BookEvents
-app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
-app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
-app.delete('/EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
-app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
-app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsEventID);
-app.get('/EventBookings/getBookEventIDs/:id',eventBookingController.retrieveBookEventIDs);
+app.get('/EventBookings/getBookings/:id',verifyJWT,eventBookingController.retrieveUserEventBooked);
+app.post('/ViewEvents/createBooking/',verifyJWT,eventBookingController.createBooking);
+app.delete('/EventBookings/deleteBooking/:id',verifyJWT,eventBookingController.deleteBooking);
+app.get('/ViewEvents/createBooking',verifyJWT,eventBookingController.LastBookID);
+app.get('/ViewEvents/createBooking/:id',verifyJWT,eventBookingController.retrieveBookedEventsEventID);
+app.get('/EventBookings/getBookEventIDs/:id',verifyJWT,eventBookingController.retrieveBookEventIDs);
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
 app.get('/announcements/:id', annController.getAnnouncementById);

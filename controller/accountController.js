@@ -34,13 +34,10 @@ async function registerAccount(req, res) {
 
 async function login(req, res) {
     const { AccEmail, AccPassword } = req.body;
-    console.log(AccPassword);
 
     try {
         const user = await Account.getAccountByEmail(AccEmail);
-        console.log(user.AccPassword);
         if (!user) {
-          console.log('hi');
           return res.status(401).json({ message: "Invalid credentials" });
         }
 
@@ -52,13 +49,10 @@ async function login(req, res) {
         }
 
         // Generate JWT token, payload refers to data and information we would like to store inside the user's token
-        const AccID = user["AccID"]
-
-        console.log(AccID)
+        const AccID = user["AccID"];
         // // Extract ACC , ADM , EVT and FAL
         const accountType = AccID.substring(0,3)
 
-        console.log(accountType);
         if(accountType == "ACC"){
             const payload = {
                 id: AccID,
@@ -89,7 +83,7 @@ async function login(req, res) {
         else if (accountType == "ADM"){
             const payload = {
                 id:AccID,
-                role: "Event Manager"
+                role: "Admin"
             }
             const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
             return res.status(200).json(token)
@@ -137,27 +131,19 @@ const updateAccount = async (req, res) => {
 // got error here 
 async function verifyToken(req, res, next) {
     // Extract the Authorization header
-    const authHeader = req.headers['authorization'];
-    
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-        // Extract the token part
-        const token = authHeader.split(' ')[1];
-        
-        try {
-            // Verify the token using the secret key
-            jwt.verify(token, secretKey, (err, decoded) => {
-                if (err) {
-                    return res.status(401).json({ message: 'Failed to authenticate token' });
-                }
-                // Attach the decoded payload to the request object
-                next();
-            });
-        } catch (err) {
-            return res.status(401).json({ message: 'Failed to authenticate token' });
-        }
-    } else {
-        return res.status(403).json({ message: 'No token provided' });
+    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+    if (!token) {
+        return res.status(401).json({token:token });
     }
+
+    jwt.verify(token, secretKey, (error, decoded) =>{
+        if(error){
+            return res.status(401).json({message:"There is no token"})
+        }
+        else{
+            return res.status(200).json({message: "Token payload decoded" , value:decoded})
+        }
+    })
 }
 
 module.exports = {
