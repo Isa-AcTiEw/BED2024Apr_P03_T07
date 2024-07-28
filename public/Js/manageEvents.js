@@ -1,5 +1,5 @@
 
-
+document.addEventListener('DOMContentLoaded',handleEvents())
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
 async function handleEvents(){
     const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
@@ -80,7 +80,6 @@ function createrows(listEvent,tableBody){
     updateEvent();
 }
 
-document.addEventListener('DOMContentLoaded', handleEvents);
 
 
 
@@ -121,12 +120,17 @@ function deleteEvent(){
 
 
             const confirm = document.getElementById("confirmDel");
+            const returnbtn = document.getElementById("returnBtn");
+            returnbtn.addEventListener('click', ()=>{
+                myModal.hide()
+            })
+            
             console.log(confirm)
             confirm.addEventListener('click',() => {
                 // DELETE METHOD
                 deleteRequest(eventID)
                 myModal.hide();
-                handleEvents();
+                reloadPage();
                 // fetch again 
             })
 
@@ -170,9 +174,16 @@ function createEvent(){
         const result = await fetch("/getEventID");
         const data = await result.json();
         const lastEventID = data.value;
-        const substring = lastEventID.substring(0,lastEventID.length - 1);
-        const newNum = parseInt(lastEventID.charAt(6)) + 1;
-        const eventID = substring + newNum;
+        // extract the front portion of EventID ("Ev")
+        const id = 'Ev';
+        // remaining length excluding Ev
+        const padLength = totalLength - id.length;
+
+        const oldNum = lastEventID.substring(lastEventID.length - 1);
+        const newNum = parseInt(oldNum) + 1;
+        // pad the remainder of the string with 0 including newNum
+        const neweventID= newNum.toString().padStart(padLength, '0'); 
+        const eventID = substring + neweventID;
         const eventName = document.getElementById("addEventName").value;
         const eventDesc = document.getElementById("addEventDesc").value;
         const eventDate = document.getElementById("addEventDate").value;
@@ -207,7 +218,7 @@ function createEvent(){
         const modalElement = document.getElementById(`addEventsModal`);
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
-        handleEvents();
+        reloadPage();
     });
 
 }
@@ -352,8 +363,7 @@ function updateEvent(){
                 }
 
                 myModal.hide();
-
-                handleEvents();
+                reloadPage();
             })
             
             
@@ -370,6 +380,11 @@ function updateEvent(){
     
     
 }
+
+function reloadPage() {
+    console.log('Reloading the page using href');
+    window.location.href = window.location.href;
+  }
 
 
 

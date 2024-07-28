@@ -32,7 +32,9 @@ function verifyJWT(req, res, next){
                 "/ViewEvents/createBooking/ACC\\d+$":["Member"],
                 "/EventBookings/getBookEventIDs/ACC\\d+$":["Member"],
                 "/EventBookings/deleteBooking/BE00\\d+$":["Member"],
-        
+
+                // Place the content routes for bookedEvents
+                "/BookedEvents": ["Member"],
                 // Announcement routes
                 "/announcements":["Admin"],
                 "/announcements/[1-9]+":["Admin"],

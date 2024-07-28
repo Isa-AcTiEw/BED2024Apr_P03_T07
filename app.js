@@ -58,9 +58,9 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
-// app.get('/BookedEvents', (req, res) => {
-//   res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
-// });
+app.get('/BookedEvents',verifyJWT, (req, res) => {
+  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
+});
 
 app.get('/Bookings',(req,res) =>{
   res.sendFile(__dirname + "/public/User/bookings.html")
@@ -68,6 +68,10 @@ app.get('/Bookings',(req,res) =>{
 
 app.get('/Profile',(req,res) =>{
   res.sendFile(__dirname + "/public/User/profile.html")
+})
+
+app.get('/Events',(req,res) =>{
+  res.sendFile(__dirname + "/public/User/Event/ViewAllEvents.html")
 })
 // Login
 app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
