@@ -1,6 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const bookNowBtn = document.getElementById('bookNowBtn');
     const bookFacility = document.getElementById('bookfac-form');
     const myModal = new bootstrap.Modal(document.getElementById('bookfacModal'));
+
+    if (!token) {
+        bookNowBtn.addEventListener('click', () => {
+            alert('You must be logged in to book facilities.');
+        });
+        return;
+    }
 
     fetchFacilities();
 
@@ -17,7 +26,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const response = await fetch("/bookingId", {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
         let bookid = await response.json();
@@ -33,7 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch("/booking", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     "BookID": bookid,

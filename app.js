@@ -117,8 +117,8 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 // Booking
 app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
-app.get("/booking/:id", verifyJWT, bookingController.getAllBookingByAccId);
-app.get("/bookingId", verifyJWT, bookingController.getLastBookingId);
+app.get("/booking/:id", bookingController.getAllBookingByAccId);
+app.get("/bookingId", bookingController.getLastBookingId);
 app.post("/booking", verifyJWT, validateBooking, bookingController.createBooking);
 app.delete("/booking/:id", verifyJWT, bookingController.deleteBooking);
 
