@@ -5,32 +5,33 @@ function verifyJWT(req, res, next){
         //  Exctract authorization headers from incoming request and split at " "
         const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
         if (!token) {
-            console.log(token);
             return res.status(401).json({token:token });
         }
     
         jwt.verify(token, secretKey, (error, decoded) =>{
-            console.log(decoded);
             if(error){
+                console.error(error);
                 return res.status(401).json({message:"There is no token"})
             }
             const authorizedRoles = {
                 "/account/" : ["Member"],
                 "^/accountLogin/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$": ["Member", "Event Manager", "Facilities Manager", "Admin"],
+                "User/Event/BookedEvents" : ["Member"],
                 // EventMgr routes
                 "/getEventID":["Event Manager"],
                 "/getEvents" : ["Event Manager"],
-                "/getEventByID^EVT00[1-9]|EVT10[0-9]+":["Event Manager"],
-                "/EventMgr/deleteEvents/^Ev0000[1-9]|EVT10[0-9]+":["Event Manager"],
+                "/getEventByID^EVT00\\d+$":["Event Manager"],
+                "/EventMgr/deleteEvents/^Ev0000\\d+$":["Event Manager"],
                 "/EventMgr/createEvents":["Event Manager"],
-                "/EventMgr/updateEvents/^Ev0000[1-9]|EVT10[0-9]+":["Event Manager"],
+                "/EventMgr/updateEvents/^Ev0000\\d+$":["Event Manager"],
         
                 // BookEvents for member
-                "/EventBookings/getBookings/":["Member"],
+                "/EventBookings/getBookings/ACC/\\d+$":["Member"],
                 "/ViewEvents/createBooking":["Member"],
-                "/EventBookings/deleteBooking/^BE00\d+$" : ["Member"],
-                "/ViewEvents/createBooking/^BE00\d+$":["Member"],
-                "/EventBookings/getBookEventIDs/^BE00\d+$+":["Member"],
+                "/EventBookings/getBookings/ACC\\d+$" : ["Member"],
+                "/ViewEvents/createBooking/ACC\\d+$":["Member"],
+                "/EventBookings/getBookEventIDs/ACC\\d+$":["Member"],
+                "/EventBookings/deleteBooking/BE00\\d+$":["Member"],
         
                 // Announcement routes
                 "/announcements":["Admin"],

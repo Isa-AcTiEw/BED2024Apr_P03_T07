@@ -34,9 +34,13 @@ const deleteBooking = async (req,res) =>{
 const retrieveUserEventBooked = async (req,res) =>{
     try{
         const AccID = req.params.id;
+        console.log(AccID)
         const BookedEvents = await BookEvent.retrieveUserEventBooked(AccID);
         if(BookedEvents != null){
             res.status(200).json({message: "Sucessfully retrieved user booked events", events: BookedEvents})
+        }
+        else{
+            res.status(404).json({message: "User has no bookings"})
         }
 
     }
