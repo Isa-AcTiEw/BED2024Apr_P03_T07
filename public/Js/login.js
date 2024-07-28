@@ -174,6 +174,7 @@ function displayUserMenu(AccName, AccPfp) {
             localStorage.removeItem('token'); 
             localStorage.removeItem('AccName'); 
             localStorage.removeItem('AccPfp');
+            localStorage.removeItem('AccID');
 
             // Log the token status after clearing
             const clearedToken = localStorage.getItem('token');
