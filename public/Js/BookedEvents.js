@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded',retrieveBookedEvents());
 
 async function retrieveBookedEvents(){
     console.log(Token);
-    const response = await fetch(`http://localhost:3000//EventBookings/getBookings/${AccID}` , {
+    const response = await fetch(`http://localhost:3000/EventBookings/getBookings/${AccID}` , {
         headers:{
             'Authorization':`Bearer ${Token}`
         }
@@ -63,6 +63,7 @@ async function retrieveBookedEvents(){
                             const request = await fetch(url,{
                                 method: 'DELETE',
                                 headers:{
+                                    'Authorization':`Bearer ${Token}`,
                                     'Content-Type':'application/json'
                                 },
                             })
@@ -76,33 +77,13 @@ async function retrieveBookedEvents(){
                 })
             })
         }
-        else{
-            let documentBody = document.body;
-            let content = "";
-            const div = document.createElement('div');
-            div.className = "card shadow";
-            content += 
-            `
-            <div class="card-body style="width: 300px; height: 230px font-size: 20px;">
-                <h3 class="card-title">No Bookings made for User</h3>
-                <p class="card-text">Please create a booking</p>
-                <button class="btn btn-primary d-flex justify-content-between" id= "goToEvent"  style="width: 200px; font-size: 20px;">View Events to book</button>
-            </div>
-            `
-            div.innerHTML = content;
-            documentBody.appendChild(div);
-            const button = document.getElementById("goToEvent");
-            button.addEventListener('click' , ()=>{
-                window.open('http://localhost:3000/User/Event/ViewAllEvents.html','_blank');
-            })
-            
-        }
+        
         
 
         
 
     }
-    if(response.status === 401){
+    else if(response.status === 401){
         alert("Unauthorized please sign in");
         let documentBody = document.body;
         let content = "";
@@ -124,6 +105,29 @@ async function retrieveBookedEvents(){
         })
         
 
+    }
+    else if (response.status === 404){
+        console.log(response);
+        const message = resdata["message"];
+        alert("User has no bookings made");
+        let documentBody = document.body;
+        let content = "";
+        const div = document.createElement('div');
+        div.className = "card shadow";
+        content += 
+        `
+        <div class="card-body style="width: 300px; height: 230px font-size: 20px;">
+            <h3 class="card-title">${message}</h3>
+            <p class="card-text">Please create a booking</p>
+            <button class="btn btn-primary d-flex justify-content-between" id= "goToEvent"  style="width: 200px; font-size: 20px;">View Events to book</button>
+        </div>
+        `
+        div.innerHTML = content;
+        documentBody.appendChild(div);
+        const button = document.getElementById("goToEvent");
+        button.addEventListener('click' , ()=>{
+            window.open('http://localhost:3000/User/Event/ViewAllEvents.html','_blank');
+        })
     }
     else{
         alert("Unable to retrieve user events");

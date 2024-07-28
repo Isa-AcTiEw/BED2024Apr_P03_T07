@@ -55,6 +55,7 @@ class BookEvent{
     }
 
     static async retrieveUserEventBooked(AccID){
+        console.log(AccID);
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event WHERE
                           EventID IN 
