@@ -36,8 +36,9 @@ async function checkUserLogin(token) {
             const payload = await response.json();
             console.log(payload);
             const data = payload["value"];
-            const AccID = data.id;
-            console.log(AccID);
+            const setAccID = data.id;
+            localStorage.setItem('AccID',setAccID);
+            AccID = localStorage.getItem('AccID');
             handleEvents(AccID);
         }
     } catch (error) {
@@ -51,7 +52,7 @@ async function handleEvents(AccID){
     const url = `http://localhost:3000/EventMgr/getEvents/${AccID}`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
-    displayEvents(listEvent);
+    displayEvents(listEvent,AccID);
     
 }
 
@@ -256,7 +257,7 @@ function createEvent(){
                                    EventCat : eventCat,
                                    EventLocation: eventLocation,
                                    EventRegEndDate: formattedEventRegEndDate,
-                                   EventMgrID: "EVT001",
+                                   EventMgrID: AccID,
                                    EventIntake: eventIntake
                                    })
         })
@@ -265,6 +266,7 @@ function createEvent(){
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
         reloadPage();
+        
     });
 
 }
