@@ -150,16 +150,16 @@ function displayUserMenu(AccName, AccPfp) {
     const menuPlaceholder = document.getElementById('menuPlaceholder');
     const userMenu = document.createElement('div');
     userMenu.className = 'btn-group';
-    const image = AccPfp ? AccPfp : '../images/homepage pictures/blank-profile-picture-973460_1280.png';
+    const image = AccPfp ? AccPfp : 'images/homepage pictures/blank-profile-picture-973460_1280.png';
 
     userMenu.innerHTML = `
         <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 35px; height: 35px;"> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
-            <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
-            <li><a href="../User/bookings.html" class="dropdown-item">Bookings</a></li>
-            <li><a href="../User/Event/BookedEvents.html" class="dropdown-item">Booked Events</a></li>
+            <li><a href="/Profile" class="dropdown-item">Profile</a></li>
+            <li><a href="/Bookings" class="dropdown-item">Bookings</a></li>
+            <li><a href="/BookedEvents" class="dropdown-item">Booked Events</a></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;

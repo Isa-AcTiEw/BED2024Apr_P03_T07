@@ -58,7 +58,17 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
+app.get('/BookedEvents', (req, res) => {
+  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
+});
 
+app.get('/Bookings',(req,res) =>{
+  res.sendFile(__dirname + "/public/User/bookings.html")
+})
+
+app.get('/Profile',(req,res) =>{
+  res.sendFile(__dirname + "/public/User/profile.html")
+})
 // Login
 app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
 app.put('/accountLogin/:email', verifyJWT,accountController.updateAccount);
