@@ -35,7 +35,6 @@ const createFeedback = async (req, res) => {
 
 const updateFeedback = async (req, res) => {
     const FbkID = parseInt(req.params.id);
-    console.log(FbkID);
     const newFbkData = req.body;
     try {
         const updatedFeedback = await Feedback.updateFeedback(FbkID, newFbkData);
