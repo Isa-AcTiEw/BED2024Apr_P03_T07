@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const bookFacility = document.getElementById('bookfac-form');
-    const myModal = new bootstrap.Modal(document.getElementById('registerModal'));
+    const myModal = new bootstrap.Modal(document.getElementById('bookfacModal'));
 
     fetchFacilities();
 
