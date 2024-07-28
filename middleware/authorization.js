@@ -43,12 +43,14 @@ function verifyJWT(req, res, next){
         
                 // Booking routes
                 "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
+                "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
                 "/booking" : ["Member"],
         
         
                 // Facilities routes
                 "/facilities" : ["Facilities Manager"],
                 "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
+                "/facilitiesId" : ["Facilities Manager"], 
         
                 // Admin 
                 "/admin/^ADM[1-9]+" : ["Admin"]

@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let bookid = await response.json();
         const id = parseInt(bookid.value.slice(1,4)) + 1;
         let idtype = "B";
-        console.log(id.toString().length)
         if (id.toString().length < 3) {
             idtype += "0".repeat(3 - id.toString().length)
         }
@@ -40,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     "BookID": bookid,
                     // "BookDate": "01/07/2024",
                     "FacID": facility,
-                    "AccID": "ACC505"
+                    "AccID": localStorage.AccID
                 })
             });
 
