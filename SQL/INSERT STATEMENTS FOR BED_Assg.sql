@@ -85,4 +85,6 @@ VALUES
 ('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
 ('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
 
+INSERT INTO Admin VALUES ('ADM003','staffAccount@gmail.com','$2b$10$SsNAdfEZNxOYeMKEKhlVZOktrZrDEhbMyPNeVm24//dwy.TouzN9m')
+
 
