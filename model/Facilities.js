@@ -12,22 +12,21 @@ class Facilities {
         const sqlQuery = `SELECT * FROM Facilities`;
         const request = connection.request();
         const result = await request.query(sqlQuery);
-
-        connection.close();
-
-        return result.recordset.map(
-            (row) => new Facilities(row.FacID, row.FacName, row.FacDesc, row.FacID, row.AccID)
-        );
+        return result.recordset.map
+        ((row) => 
+            new Facilities(
+                     row.FacID,
+                     row.FacName,
+                     ));
     }
 
     static async getFacilityById(id) {
-        console.log(id);
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Facilities WHERE FacID = @id`;
 		const request = connection.request().input("id", id);
 		const result = await request.query(sqlQuery);
 
-		// connection.close();
+		connection.close();
 
 		return result.recordset[0]
 			? new Facilities(
@@ -47,7 +46,6 @@ class Facilities {
     }
 
     static async createFacility(newFacility) {
-        console.log(newFacility);
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES (@FacID, @FacName, @FacDesc);`;
         const request = connection.request();
@@ -58,7 +56,7 @@ class Facilities {
 
         const result = await request.query(sqlQuery);
 
-        // connection.close();
+        connection.close();
 
         return this.getFacilityById(result.recordset[0].FacID); 
     }
