@@ -174,17 +174,16 @@ function createEvent(){
         const result = await fetch("/getEventID");
         const data = await result.json();
         const lastEventID = data.value;
-        console.log(lastEventID);
         // extract the front portion of EventID ("Ev")
         const id = 'Ev';
         // remaining length excluding Ev
-        const padLength = lastEventID.length() - id.length();
+        const padLength = lastEventID.length - id.length;
 
-        const oldNum = lastEventID.substring(lastEventID.length - 1);
+        const oldNum = lastEventID.substring(id.length);
         const newNum = parseInt(oldNum) + 1;
         // pad the remainder of the string with 0 including newNum
-        const neweventID= newNum.toString().padStart(padLength, '0'); 
-        const eventID = substring + neweventID;
+        const neweventID = id+ newNum.toString().padStart(padLength, '0'); 
+
         const eventName = document.getElementById("addEventName").value;
         const eventDesc = document.getElementById("addEventDesc").value;
         const eventDate = document.getElementById("addEventDate").value;
@@ -203,7 +202,7 @@ function createEvent(){
                 'Content-Type': 'application/json'
                 
             },
-            body: JSON.stringify({ EventID:eventID,
+            body: JSON.stringify({ EventID:neweventID,
                                    EventName: eventName,
                                    EventDesc: eventDesc,
                                    EventPrice:"0",
