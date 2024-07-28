@@ -247,10 +247,8 @@
                 showAlert('danger','Please select a rating.');
                 return;
             }
-
             const method = feedbackId ? 'PUT' : 'POST';
             const url = feedbackId ? `/feedbacks/${feedbackId}` : '/feedbacks';
-
             const response = await fetch(url, {
                 method: method,
                 headers: {
@@ -259,9 +257,12 @@
                 body: JSON.stringify({ FbkName: name, FbkQuality: quality, FbkDateTime: datetime, FbkDesc: desc, AccID: accountid })
             });
 
+            console.log(response);
+
             if (response.ok) {
                 feedbackData = { FbkName: name, FbkQuality: quality, FbkDateTime: datetime, FbkDesc: desc, AccID: accountid };
-                feedbackId = feedbackId || (await response.json()).id;
+                data = await response.json();
+                feedbackId = data.FbkID;
                 feedbackModal.show();
             } else {
                 showAlert('danger','Failed to submit feedback. Please try again.');
@@ -287,6 +288,7 @@
                 const newFeedbackData = {
                     FbkName: document.getElementById("feedbackTitleInput").value,
                     FbkQuality: qualityMap[document.querySelector('input[name="rate"]:checked')?.value],
+                    FbkDateTime: new Date().toISOString(),
                     FbkDesc: document.getElementById("feedbackDescInput").value,
                     AccID: feedbackData.AccID
                 };
@@ -298,6 +300,8 @@
                     },
                     body: JSON.stringify(newFeedbackData)
                 });
+
+                console.log(response);
 
                 if (response.ok) {
                     showAlert('success','Feedback updated successfully!');

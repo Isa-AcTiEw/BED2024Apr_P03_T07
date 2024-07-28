@@ -1,11 +1,58 @@
 
-document.addEventListener('DOMContentLoaded',handleEvents())
+const token = localStorage.getItem('token')
+
+document.addEventListener('DOMContentLoaded',async()=>{
+    const token = localStorage.getItem('token');
+        if (token) {
+            console.log('Token found:', token);
+            await checkUserLogin(token); 
+        }
+        else {
+            alert('You must be logged in to view this page.');
+            window.location.href = '../index.html';
+        }
+})
+
+async function checkUserLogin(token) {
+    try {
+        console.log(token);
+        
+        const response = await fetch('http://localhost:3000/verrifyToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ token })
+        });
+
+        if (!response.ok) {
+            console.log('Token verification failed');
+            showAlert('success',"Unable to retrieve token as not logged in as Admin")
+            localStorage.removeItem('token'); // Remove invalid token
+            localStorage.removeItem('AccName'); // Remove AccName on token invalidation
+        }
+        else{
+            const payload = await response.json();
+            console.log(payload);
+            const data = payload["value"];
+            const setAccID = data.id;
+            localStorage.setItem('AccID',setAccID);
+            AccID = localStorage.getItem('AccID');
+            handleEvents(AccID);
+        }
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        localStorage.removeItem('token'); // Remove token on error
+        localStorage.removeItem('AccName'); // Remove AccName on error
+    }
+}
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
-async function handleEvents(){
-    const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
+async function handleEvents(AccID){
+    const url = `http://localhost:3000/EventMgr/getEvents/${AccID}`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
-    displayEvents(listEvent);
+    displayEvents(listEvent,AccID);
     
 }
 
@@ -210,7 +257,7 @@ function createEvent(){
                                    EventCat : eventCat,
                                    EventLocation: eventLocation,
                                    EventRegEndDate: formattedEventRegEndDate,
-                                   EventMgrID: "EVT001",
+                                   EventMgrID: AccID,
                                    EventIntake: eventIntake
                                    })
         })
@@ -219,6 +266,7 @@ function createEvent(){
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
         reloadPage();
+        
     });
 
 }
@@ -385,6 +433,26 @@ function reloadPage() {
     console.log('Reloading the page using href');
     window.location.href = window.location.href;
   }
+
+  function showAlert(type, msg) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    if (!alertPlaceholder) {
+        console.error('Alert placeholder element not found.');
+        return;
+    }
+
+    const alert = document.createElement('div');
+    alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+    alert.innerHTML = `
+        <strong>${msg}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    alertPlaceholder.appendChild(alert);
+    setTimeout(() => {
+        alert.remove();
+    }, 5000);
+}
 
 
 

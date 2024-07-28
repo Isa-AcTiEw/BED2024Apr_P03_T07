@@ -13,8 +13,9 @@ const getAllFeedbacks = async (req, res) => {
 const getFeedbackById = async (req, res) => {
     const FeedbackId = req.params.id;
     try {
-        const Feedback = await Feedback.getFeedbackById(FeedbackId);
-        res.json(Feedback);
+        const feedback = await Feedback.getFeedbackById(FeedbackId);
+        res.json(feedback);
+        
     } catch (error) {
         console.error(error);
         res.status(500).send("Error retrieving Feedback")

@@ -120,7 +120,11 @@ async function displayBookings(bookingArray, token) {
                         'Authorization': `Bearer ${token}`
                     }
                 });
-                if (!response.ok) {
+                if(response.ok){
+                    showAlert('success','Delete booking sucessfully')
+                    
+                }
+                else if (!response.ok) {
                     showAlert('danger', 'Failed to delete booking. Try again.');
                 }
             } catch (error) {
@@ -149,5 +153,6 @@ function showAlert(type, message) {
 
     setTimeout(() => {
         alertElement.remove();
-    }, 5000);
+        location.reload();
+    }, 5000)
 }
