@@ -66,6 +66,7 @@ class Feedback {
     }
 
     static async updateFeedback(FbkID, newFeedbackData) {
+        console.log(newFeedbackData);
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `UPDATE Feedback SET FbkName = @FbkName, FbkQuality = @FbkQuality, FbkDateTime = @FbkDateTime,
         FbkDesc = @FbkDesc WHERE FbkID = @FbkID`;

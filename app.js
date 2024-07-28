@@ -115,7 +115,7 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Feedbacks
 app.get('/feedbacks', fbkController.getAllFeedbacks);
-app.get('/feedbacks/:id', verifyJWT, fbkController.getFeedbackById);
+app.get('/feedbacks/:id', fbkController.getFeedbackById);
 app.post('/feedbacks',fbkController.createFeedback);
 app.put('/feedbacks/:id',fbkController.updateFeedback);
 app.delete('/feedbacks/:id',fbkController.deleteFeedback);
@@ -136,7 +136,7 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 app.get("/facilities",facilitiesController.getAllFacilities);
 app.get("/facilities/:id", verifyJWT, facilitiesController.getFacilityById);
 app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
-app.post("/facilities", verifyJWT, facilitiesController.createFacility);
+app.post("/facilities",  facilitiesController.createFacility);
 app.put("/facilities/:id", verifyJWT, facilitiesController.updateFacility);
 app.delete("/facilities/:id", verifyJWT, facilitiesController.deleteFacility);
 

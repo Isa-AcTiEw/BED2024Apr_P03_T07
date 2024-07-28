@@ -102,6 +102,10 @@ async function retrieveBookedEvents(){
                             const myModal = new bootstrap.Modal(document.getElementById('deleteBookedEventModal'))
                             myModal.show();
                             const delButton = document.getElementById('confirmDel');
+                            const returnButton = document.getElementById('returnBtn');
+                            returnButton.addEventListener('click',()=>{
+                                myModal.hide();
+                            })
                             delButton.addEventListener('click' , async ()=>{
                                 const url = `http://localhost:3000/EventBookings/deleteBooking/${BookEventIDs["BookEventID"]}`
                                 console.log(url);
@@ -116,8 +120,7 @@ async function retrieveBookedEvents(){
                                 console.log(request);
                                 if(request.status === 204){
                                     myModal.hide();
-                                    showAlert('success',`Booking id ${eindex} has been deleted`)
-                                    
+                                    location.reload()
                                 }
                             })
                         }  
@@ -196,15 +199,23 @@ async function retrieveBookEventIDs(){
     }
 }
 
-function showAlert(type, message) {
-    const alertPlaceholder = document.getElementById('alertPlaceholder');
-    const alertElement = document.createElement('div');
-    alertElement.className = `alert alert-${type}`;
-    alertElement.role = 'alert';
-    alertElement.innerText = message;
-    alertPlaceholder.appendChild(alertElement);
 
+function showAlert(type, msg) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    if (!alertPlaceholder) {
+        console.error('Alert placeholder element not found.');
+        return;
+    }
+
+    const alert = document.createElement('div');
+    alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+    alert.innerHTML = `
+        <strong>${msg}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    alertPlaceholder.appendChild(alert);
     setTimeout(() => {
-        alertElement.remove();
-        }, 5000);
+        alert.remove();
+    }, 5000);
 }
