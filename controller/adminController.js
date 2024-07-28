@@ -1,19 +1,36 @@
 const Admin = require("../model/Admin");
+const bcrypt = require('bcrypt');
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const secretKey = process.env.JWT_SECRETKEY;
 
-const getAdminById = async (req, res) => {
-    const adminId = req.params.id;
+async function stafflogin(req, res) {
+    const { AdminEmail, AdminPassword } = req.body;
+
     try {
-        const admin = await Admin.getAdminById(adminId);
-        if (!admin) {
-            return res.status(404).send("Admin not found");
+        const staff = await Admin.getAdminByEmail(AdminEmail);
+        if (!staff) {
+            return res.status(401).json({ message: "Invalid credentials" });
         }
-        res.json(admin);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Error retrieving admin")
+
+        // Compare password with hash
+        const isMatch = await bcrypt.compare(AdminPassword, staff.AdminPassword);
+        if (!isMatch) {
+            return res.status(401).json({ message: "Invalid password" });
+        }
+
+        const payload = {
+            id: staff.AdminID,
+            role: "Staff"
+        };
+        const token = jwt.sign(payload, secretKey, { expiresIn: "36000s" });
+        return res.status(200).json({ token });  // Return token as JSON object
+    } catch (err) {
+        console.error('Error during staff login:', err);
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 
 module.exports = {
-    getAdminById
+    stafflogin
 };
