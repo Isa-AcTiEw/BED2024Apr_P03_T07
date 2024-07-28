@@ -32,7 +32,9 @@ function verifyJWT(req, res, next){
                 "/ViewEvents/createBooking/ACC\\d+$":["Member"],
                 "/EventBookings/getBookEventIDs/ACC\\d+$":["Member"],
                 "/EventBookings/deleteBooking/BE00\\d+$":["Member"],
-        
+
+                // Place the content routes for bookedEvents
+                "/BookedEvents": ["Member"],
                 // Announcement routes
                 "/announcements":["Admin"],
                 "/announcements/[1-9]+":["Admin"],
@@ -46,6 +48,7 @@ function verifyJWT(req, res, next){
                 "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
                 "/booking" : ["Member"],
                 "/bookingId" : ["Member"],
+                "/Bookings" : ["Member"],
         
         
                 // Facilities routes
