@@ -16,6 +16,8 @@ const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
 const fbkController = require("./controller/fbkController");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./middleware/swagger-output.json");
 const authController = require("./controller/authController");
 
 const eventBookingController = require("./controller/bookEventController");
@@ -35,6 +37,7 @@ const app = express();
 
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddlewarePublic); // Mount the static middleware
 

@@ -177,7 +177,7 @@ function createEvent(){
         // extract the front portion of EventID ("Ev")
         const id = 'Ev';
         // remaining length excluding Ev
-        const padLength = totalLength - id.length;
+        const padLength = lastEventID.length() - id.length();
 
         const oldNum = lastEventID.substring(lastEventID.length - 1);
         const newNum = parseInt(oldNum) + 1;

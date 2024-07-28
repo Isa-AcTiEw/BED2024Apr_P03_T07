@@ -54,17 +54,14 @@ CREATE TABLE EventBooking(
 );
 
 -- Create Admin table
+-- Create Admin table
 CREATE TABLE Admin(
-	AdminID varchar(10) NOT NULL,
-	AdminName varchar(30) NOT NULL,
-	AdminEmail varchar(30) NOT NULL,
-	AdminApproval varchar(30) NOT NULL,
-	CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
-	CONSTRAINT FK_Admin_Account 
-		FOREIGN KEY(AdminID) REFERENCES Account(AccID),
-	CONSTRAINT CHK_AdminApproval CHECK 
-		(AdminApproval IN 
-		('Approved', 'Pending', 'Rejected'))
+ AdminID varchar(10) NOT NULL,
+ AdminEmail varchar(30) UNIQUE NOT NULL,
+ AdminPassword varchar(MAX) NOT NULL,
+ CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
+ CONSTRAINT FK_Admin_Account 
+  FOREIGN KEY(AdminID) REFERENCES Account(AccID)
 );
 
 -- Create Announcement table
