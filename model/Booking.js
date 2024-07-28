@@ -42,6 +42,14 @@ class Booking {
 			: null;
     }
 
+	static async getLastBookingID() {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT MAX(BookID) FROM Booking`
+        const request = connection.request();
+        const result = await request.query(sqlQuery)
+        return result.recordset[0];
+    }
+
 	static async getAllBookingByAccId(id) {
 		const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Booking WHERE AccID = @id`;

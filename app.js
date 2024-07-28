@@ -110,9 +110,10 @@ app.put('/feedbacks/:id',fbkController.updateFeedback);
 app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
-app.get("/booking", bookingController.getAllBookings);
+app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
 app.get("/booking/:id", bookingController.getAllBookingByAccId);
+app.get("/bookingId", bookingController.getLastBookingId);
 app.post("/booking", validateBooking, bookingController.createBooking);
 app.delete("/booking/:id", bookingController.deleteBooking);
 

@@ -24,6 +24,18 @@ const getBookingById = async (req, res) => {
     }
 };
 
+const getLastBookingId = async (req,res) =>{
+    try {
+      const BookID = await Booking.getLastBookingID();
+      if(BookID != null){
+        res.status(200).json({"value":BookID[""]});
+      }
+    } catch(error) {
+      console.error(error);
+      res.status(500).send("Unable to retrive the BookID")
+    }
+};
+
 const getAllBookingByAccId = async (req, res) => {
     const accId = req.params.id;
     try {
@@ -68,6 +80,7 @@ const deleteBooking = async (req,res) =>{
 module.exports = {
     getAllBookings,
     getBookingById,
+    getLastBookingId,
     getAllBookingByAccId,
     createBooking,
     deleteBooking
