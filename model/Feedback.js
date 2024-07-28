@@ -45,18 +45,20 @@ class Feedback {
     static async createFeedback(newFbkData) {
         const connection = await sql.connect(dbConfig);
     
-        const sqlQuery = `INSERT INTO Feedback (FbkName, FbkQuality, FbkDateTime, FbkDesc, AccID) 
-        VALUES (@FbkName, @FbkQuality, @FbkDateTime, @FbkDesc, @AccID); SELECT SCOPE_IDENTITY() AS FbkID`;
+        const sqlQuery = `
+            INSERT INTO Feedback (FbkName, FbkQuality, FbkDateTime, FbkDesc, AccID) 
+            OUTPUT INSERTED.FbkID
+            SELECT @FbkName, @FbkQuality, @FbkDateTime, @FbkDesc, @AccID
+            FROM Account
+            WHERE AccID = @AccID`;
 
         const request = connection.request();
         request.input("FbkName", newFbkData.FbkName);
         request.input("FbkQuality", newFbkData.FbkQuality);
         request.input("FbkDateTime", newFbkData.FbkDateTime);
         request.input("FbkDesc", newFbkData.FbkDesc);
+        request.input("AccID", newFbkData.AccID);
 
-        // accID must change after implementing user sign in to set accID to the respective user
-        request.input("AccID", "ACC002");
-    
         const result = await request.query(sqlQuery);
     
         connection.close();
