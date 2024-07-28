@@ -45,6 +45,7 @@ function verifyJWT(req, res, next){
                 "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
                 "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
                 "/booking" : ["Member"],
+                "/bookingId" : ["Member"],
         
         
                 // Facilities routes
