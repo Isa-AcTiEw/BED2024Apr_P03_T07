@@ -3,6 +3,7 @@ const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 const jwt = require('jsonwebtoken');
+const Account = require('./model/Account');
 require('dotenv').config();
 const secretKey = process.env.JWT_SECRETKEY;
 
@@ -69,6 +70,10 @@ app.get('/Bookings',(req,res) =>{
 app.get('/Profile',(req,res) =>{
   res.sendFile(__dirname + "/public/User/profile.html")
 })
+
+// Staff Login
+app.post('/staffLogin', adminController.stafflogin);
+
 // Login
 app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
 app.put('/accountLogin/:email', verifyJWT,accountController.updateAccount);
@@ -128,9 +133,6 @@ app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
 app.post("/facilities", verifyJWT, facilitiesController.createFacility);
 app.put("/facilities/:id", verifyJWT, facilitiesController.updateFacility);
 app.delete("/facilities/:id", verifyJWT, facilitiesController.deleteFacility);
-
-// Admin
-app.get("/admin/:id", adminController.getAdminById);
 
 // Account
 app.get("/account/:email", accountController.getAccountByEmail);
