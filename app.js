@@ -115,7 +115,7 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Feedbacks
 app.get('/feedbacks', fbkController.getAllFeedbacks);
-app.get('/feedbacks/:id',fbkController.getFeedbackById);
+app.get('/feedbacks/:id', verifyJWT, fbkController.getFeedbackById);
 app.post('/feedbacks',fbkController.createFeedback);
 app.put('/feedbacks/:id',fbkController.updateFeedback);
 app.delete('/feedbacks/:id',fbkController.deleteFeedback);
@@ -125,7 +125,7 @@ app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
 app.get("/booking/:id", bookingController.getAllBookingByAccId);
 app.get("/bookingId", bookingController.getLastBookingId);
-app.post("/booking", verifyJWT, validateBooking, bookingController.createBooking);
+app.post("/booking", validateBooking, bookingController.createBooking);
 app.delete("/booking/:id", verifyJWT, bookingController.deleteBooking);
 
 // Registration
@@ -133,7 +133,7 @@ app.get("/registration", registrationController.getAllRegistrations);
 app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities
-app.get("/facilities", facilitiesController.getAllFacilities);
+app.get("/facilities",facilitiesController.getAllFacilities);
 app.get("/facilities/:id", verifyJWT, facilitiesController.getFacilityById);
 app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
 app.post("/facilities", verifyJWT, facilitiesController.createFacility);

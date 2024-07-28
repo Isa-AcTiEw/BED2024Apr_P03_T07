@@ -12,12 +12,12 @@ class Facilities {
         const sqlQuery = `SELECT * FROM Facilities`;
         const request = connection.request();
         const result = await request.query(sqlQuery);
-
-        connection.close();
-
-        return result.recordset.map(
-            (row) => new Facilities(row.FacID, row.FacName, row.FacDesc, row.FacID, row.AccID)
-        );
+        return result.recordset.map
+        ((row) => 
+            new Facilities(
+                     row.FacID,
+                     row.FacName,
+                     ));
     }
 
     static async getFacilityById(id) {

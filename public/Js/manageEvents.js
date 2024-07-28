@@ -174,7 +174,6 @@ function createEvent(){
         const result = await fetch("/getEventID");
         const data = await result.json();
         const lastEventID = data.value;
-        console.log("Last Event ID: ", lastEventID)
         // extract the front portion of EventID ("Ev")
         const id = 'Ev';
         // remaining length excluding Ev

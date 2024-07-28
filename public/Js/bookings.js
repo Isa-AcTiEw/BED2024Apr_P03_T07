@@ -61,9 +61,10 @@ async function getFacilityName(facID, token) {
             console.error(`Failed to fetch facility details. Status: ${response.status}`);
             return 'Unknown Facility';
         }
+        
 
         const data = await response.json();
-        return data.facilityName; 
+        return data.FacName;
     } catch (error) {
         console.error('Error fetching facility details:', error);
         return 'Unknown Facility';
@@ -72,7 +73,6 @@ async function getFacilityName(facID, token) {
 
 async function displayBookings(bookingArray, token) {
     const bookingContainer = document.getElementById('booking-container');
-
     if (bookingArray.length === 0) {
         bookingContainer.innerHTML = `<h2>No Booking</h2>`;
         return;
@@ -93,24 +93,24 @@ async function displayBookings(bookingArray, token) {
 
     for (let i = 0; i < bookingArray.length; i++) {
         const facilityName = await getFacilityName(bookingArray[i].FacID, token);
+        const facName = await facilityName;
         bookingHtml += `
             <tr>
                 <td>${bookingArray[i].BookID}</td>
                 <td>${formatDate(bookingArray[i].BookDate)}</td>
                 <td>${bookingArray[i].BookStatus}</td>
-                <td>${facilityName}</td>
+                <td>${facName}</td>
                 <td><button class="btn btn-danger delete-btn" data-booking-id="${bookingArray[i].BookID}">Delete</button></td>
             </tr>`;
     }
 
-    bookingHtml += `
-            </tbody>
-        </table>`;
+    
 
     bookingContainer.innerHTML = bookingHtml;
 
     document.querySelectorAll('.delete-btn').forEach(button => {
         button.addEventListener('click', async (event) => {
+            event.preventDefault();
             const bookingID = event.target.getAttribute('data-booking-id');
             try {
                 const response = await fetch(`/booking/${bookingID}`, {

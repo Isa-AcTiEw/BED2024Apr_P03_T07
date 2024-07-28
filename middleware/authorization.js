@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { user } = require("../config/db_Config");
 require('dotenv').config();
 const secretKey = process.env.JWT_SECRETKEY;
 function verifyJWT(req, res, next){
@@ -45,15 +46,15 @@ function verifyJWT(req, res, next){
         
                 // Booking routes
                 "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                "/booking" : ["Member"],
+                "/booking/B00\\d+$" : ["Member"],
+                "/booking/B00\\d+$" : ["Member"],
                 "/bookingId" : ["Member"],
                 "/Bookings" : ["Member"],
         
         
                 // Facilities routes
                 "/facilities" : ["Facilities Manager"],
-                "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
+                "/facilities/FAC00\\d+$" : ["Member"],
                 "/facilitiesId" : ["Facilities Manager"], 
         
                 // Admin 
