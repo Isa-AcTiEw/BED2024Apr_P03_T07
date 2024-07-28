@@ -3,7 +3,8 @@ const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 const jwt = require('jsonwebtoken');
-const secretKey = process.env.ACCESS_TOKEN_SECRET;
+require('dotenv').config();
+const secretKey = process.env.JWT_SECRETKEY;
 
 //controller
 const accountController = require("./controller/accountController");
@@ -44,6 +45,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
+
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/Admin/adminpage.html');
 });
@@ -56,31 +58,23 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
-// Login
-app.get('/accountLogin/:email', accountController.getAccountByEmail);
-app.put('/accountLogin/:email', accountController.updateAccount);
-app.post('/accountLogin/:email', accountController.login);
-
-function verifyToken(req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-      return res.status(401).json({ message: 'Access denied. No token provided.' });
-  }
-
-  try {
-      const decoded = jwt.verify(token, secretKey);
-      req.user = decoded;
-      next();
-  } catch (err) {
-      return res.status(403).json({ message: 'Invalid token.' });
-  }
-}
-
-// Route to verify token
-app.post('/verifyToken', verifyToken, (req, res) => {
-  res.json({ valid: true }); // Token is valid
+app.get('/BookedEvents', (req, res) => {
+  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
 });
+
+app.get('/Bookings',(req,res) =>{
+  res.sendFile(__dirname + "/public/User/bookings.html")
+})
+
+app.get('/Profile',(req,res) =>{
+  res.sendFile(__dirname + "/public/User/profile.html")
+})
+// Login
+app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
+app.put('/accountLogin/:email', verifyJWT,accountController.updateAccount);
+app.post('/accountLogin/:email', accountController.login);
+app.post('/verrifyToken',accountController.verifyToken);
+
 
 // Register
 app.post('/accountReg',accountController.registerAccount);
@@ -95,12 +89,12 @@ app.get('/getEvents',eventController.getAllEvents);
 app.get('/getEventByID/:id',eventController.getAllEventsById);
 
 // routes for BookEvents
-app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
-app.post('/ViewEvents/createBooking/',eventBookingController.createBooking);
-app.delete('EventBookings/deleteBooking/:id',eventBookingController.deleteBooking);
-app.get('/ViewEvents/createBooking',eventBookingController.LastBookID);
-app.get('/ViewEvents/createBooking/:id',eventBookingController.retrieveBookedEventsID);
-
+app.get('/EventBookings/getBookings/:id',verifyJWT,eventBookingController.retrieveUserEventBooked);
+app.post('/ViewEvents/createBooking/',verifyJWT,eventBookingController.createBooking);
+app.delete('/EventBookings/deleteBooking/:id',verifyJWT,eventBookingController.deleteBooking);
+app.get('/ViewEvents/createBooking',verifyJWT,eventBookingController.LastBookID);
+app.get('/ViewEvents/createBooking/:id',verifyJWT,eventBookingController.retrieveBookedEventsEventID);
+app.get('/EventBookings/getBookEventIDs/:id',verifyJWT,eventBookingController.retrieveBookEventIDs);
 // Announcments
 app.get('/announcements', annController.getAllAnnouncements);
 app.get('/announcements/:id', annController.getAnnouncementById);

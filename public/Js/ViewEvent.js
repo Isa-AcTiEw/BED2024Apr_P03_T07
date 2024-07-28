@@ -81,80 +81,89 @@ function displayEvent(event){
         const data = await response.json();
         console.log(data);
         const LastBookID = data.value;
+        if(LastBookID == null){
+            const BookID = "BE001"
+            bookEvent(BookID);
+
+        }
+        else{
+            const substring = LastBookID.substring(0,LastBookID.length - 1);
+            const newNum = parseInt(LastBookID.charAt(4)) + 1;
+            const BookID = substring + newNum;
+            bookEvent(BookID);
+        }
         console.log(LastBookID)
-        const substring = LastBookID.substring(0,LastBookID.length - 1);
-        const newNum = parseInt(LastBookID.charAt(4)) + 1;
-        const BookID = substring + newNum;
-        console.log(BookID);
+        
+
         if(!LastBookID){
             console.log("There is no current bookings")
         }
 
-        const AccID = "ACC002"
-        const BookDateTime = new Date();
-        function convertDate(BookDateTime){
-            console.log(BookDateTime)
-            const year = BookDateTime.getFullYear();
-            const month = BookDateTime.getMonth() + 1;
-            const day = BookDateTime.getDate();
-            const timestamp = BookDateTime.toLocaleTimeString('en-SG', { hour12: false });  // 24-hour format
-            const BookDate = year + "-" + month + "-" + day + " " + timestamp
-            return BookDate
+        
+
+        
+    })
+
+}
+
+async function bookEvent(bookingID){
+    const BookID = bookingID;
+    const AccID = "ACC002"
+    const BookDateTime = new Date();
+    function convertDate(BookDateTime){
+        console.log(BookDateTime)
+        const year = BookDateTime.getFullYear();
+        const month = BookDateTime.getMonth() + 1;
+        const day = BookDateTime.getDate();
+        const timestamp = BookDateTime.toLocaleTimeString('en-SG', { hour12: false });  // 24-hour format
+        const BookDate = year + "-" + month + "-" + day + " " + timestamp
+        return BookDate
+    }
+
+    const BookEventDate = convertDate(BookDateTime)
+    // check if user has alreay booked the event call my backend
+
+    const bookEventIDs = await fetch(`http://localhost:3000/ViewEvents/createBooking/${AccID}`)
+    if(!bookEventIDs.ok){
+        alert("User has not booked any events")
+    }
+    else{
+        const EventIDData = await bookEventIDs.json()
+        const EventIDs = EventIDData["value"]
+        const EventIDList = [];
+        EventIDs.forEach(element => {
+            EventIDList.push(element["Event ID"]);
+        })
+        if(EventIDList.includes(EventID)){
+            alert("User has already booked the event");
         }
-
-        const BookEventDate = convertDate(BookDateTime)
-
-
-        // check if user has alreay booked the event call my backend
-
-        const bookEventIDs = await fetch(`http://localhost:3000/ViewEvents/createBooking/${AccID}`)
-        if(!bookEventIDs.ok){
-            alert("User has not booked any events")
-        }
+        
         else{
-            const EventIDData = await bookEventIDs.json()
-            const EventIDs = EventIDData["value"]
-            const EventIDList = [];
-            EventIDs.forEach(element => {
-                EventIDList.push(element["Event ID"]);
-            })
-            if(EventIDList.includes(EventID)){
-                alert("User has already booked the event");
+            console.log(BookEventDate);
+            const url = "http://localhost:3000/ViewEvents/createBooking/"
+            const response = await fetch(url,{
+                    method: 'POST',
+                    headers:{
+                        'Content-Type':'application/json'
+                    },
+                    body: JSON.stringify({
+                        BookEventID: BookID,
+                        BookEventDate: BookEventDate,
+                        EventID: EventID,
+                        AccID: AccID
+                    })
+                })
+            if(response.status === 201){
+                alert("User has sucessfully Booked the event");
             }
             
             else{
-                console.log(BookEventDate);
-                const url = "http://localhost:3000/ViewEvents/createBooking/"
-                const response = await fetch(url,{
-                        method: 'POST',
-                        headers:{
-                            'Content-Type':'application/json'
-                        },
-                        body: JSON.stringify({
-                            BookEventID: BookID,
-                            BookEventDate: BookEventDate,
-                            EventID: EventID,
-                            AccID: AccID
-                        })
-                    })
-                if(response.status === 201){
-                    alert("User has sucessfully Booked the event");
-                }
-                
-                else{
-                    alert("Unable to book the event");
-                }
-
-                
-    
+                alert("Unable to book the event");
             }
 
+            
+
         }
-           
-    
-        
-        // call the post method
 
-    })
-
+    }
 }

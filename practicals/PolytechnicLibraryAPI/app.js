@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
 // Routes
 app.post('/register', userController.registerUser); // user registration route
-app.post('/login', userController.login);
+app.post('/login',  userController.login);
 app.get('/books', verifyJWT, booksController.getAllBooks);
 app.put('/books/:bookId/:availability', verifyJWT, booksController.updateAvailability);
 

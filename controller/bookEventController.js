@@ -4,7 +4,6 @@ const BookEvent = require('../model/BookEvent');
 const createBooking = async (req,res) =>{
     try{
         const booking = req.body;
-        console.log(booking);
         const BookedEvent = await BookEvent.createBooking(booking);
         res.status(201).json({message : "Resource sucessfully created",response:BookedEvent});
 
@@ -18,6 +17,7 @@ const createBooking = async (req,res) =>{
 const deleteBooking = async (req,res) =>{
     try{
         const BookEventID = req.params.id;
+        console.log(BookEventID);
         const bookingFound = BookEvent.deleteBooking(BookEventID);
         if(!bookingFound){
             return res.status(404).send("Booked event not found");
@@ -62,7 +62,7 @@ const LastBookID = async (req,res) =>{
     }
   }
 
-  const retrieveBookedEventsID = async (req,res) =>{
+  const retrieveBookedEventsEventID = async (req,res) =>{
     try{
         const AccID = req.params.id
         const EventIDs = await BookEvent.retrieveBookedEventsID(AccID);
@@ -79,10 +79,31 @@ const LastBookID = async (req,res) =>{
     }
   }
 
+  const retrieveBookEventIDs = async (req,res) =>{
+    try{
+        const AccID = req.params.id;
+        const BookEventIDs = await BookEvent.retrieveEventBookingBookedID(AccID);
+        if(BookEventIDs != null){
+            res.status(200).json({message: "BookEventIDs for user have been sucessfully retrieved",value:BookEventIDs})
+            
+        }
+        else{
+            res.status(404).send("There is no events booked by the user")
+        }
+
+    }
+    
+    catch(error){
+        console.error(error);
+        res.status(500).send("Unable to retrive BookEventIDs associated with the user")
+    }
+}
+
 module.exports = {
     createBooking,
     deleteBooking,
     retrieveUserEventBooked,
     LastBookID,
-    retrieveBookedEventsID
+    retrieveBookedEventsEventID,
+    retrieveBookEventIDs
 }

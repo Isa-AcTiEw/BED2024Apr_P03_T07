@@ -41,25 +41,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch(`/accountLogin/${email}`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     AccEmail: email,
-                    AccPassword: password
+                    AccPassword: password,
+                    
                 })
             });
 
             myModal.hide(); // Hide modal
 
             if (response.ok) {
-                const data = await response.json();
-                const token = data.token;
+                const token = await response.json();
+                // const token = await data.token;
 
                 console.log('Token received:', token);
                 localStorage.setItem('token', token);
 
                 // Fetch data from mssql
-                const nameResponse = await fetch(`/accountLogin/${email}`);
+                const nameResponse = await fetch(`/accountLogin/${email}`,{
+                    headers:{
+                        'Authorization':`Bearer ${token}`
+                    }
+                });
                 if (nameResponse.ok) {
                     const nameData = await nameResponse.json();
                     const { AccID, AccName, AccEmail, AccCtcNo, AccAddr, AccPostalCode, AccDOB } = nameData;
@@ -105,7 +110,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function checkUserLogin(token) {
     try {
-        const response = await fetch('/verifyToken', {
+        
+        const response = await fetch('http://localhost:3000/verrifyToken', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -118,6 +124,11 @@ async function checkUserLogin(token) {
             console.log('Token verification failed');
             localStorage.removeItem('token'); // Remove invalid token
             localStorage.removeItem('AccName'); // Remove AccName on token invalidation
+        }
+        else{
+            const payload = await response.json();
+            console.log(payload);
+            
         }
     } catch (error) {
         console.error('Error verifying token:', error);
@@ -139,15 +150,16 @@ function displayUserMenu(AccName, AccPfp) {
     const menuPlaceholder = document.getElementById('menuPlaceholder');
     const userMenu = document.createElement('div');
     userMenu.className = 'btn-group';
-    const image = AccPfp ? AccPfp : '../images/homepage pictures/blank-profile-picture-973460_1280.png';
+    const image = AccPfp ? AccPfp : 'images/homepage pictures/blank-profile-picture-973460_1280.png';
 
     userMenu.innerHTML = `
         <button type="button" class="btn btn-secondary dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <img id="myimg" src="${image}" alt="${AccName}" class="rounded-circle" style="width: 35px; height: 35px;"> ${AccName}
         </button>
         <ul class="dropdown-menu dropdown-menu-lg-end">
-            <li><a href="../User/profile.html" class="dropdown-item">Profile</a></li>
-            <li><a href="../User/bookings.html" class="dropdown-item">Bookings</a></li>
+            <li><a href="/Profile" class="dropdown-item">Profile</a></li>
+            <li><a href="/Bookings" class="dropdown-item">Bookings</a></li>
+            <li><a href="/BookedEvents" class="dropdown-item">Booked Events</a></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;

@@ -17,9 +17,47 @@ function verifyJWT(req, res, next) {
     }
 
     const authorizedRoles = {
-      "/books": ["member", "librarian"], // Users designated with the role of libarian or member can access books route
-      "/books/[0-9]+/availability": ["librarian"], // Only librarians can update availability, 
+      "/accountReg":["Member"], // Users designated with the role of libarian or member can access books route
+      "/account/" : ["Member"],
+      "/accountLogin/:":["Member"],
+      // regex expression for email (starts with lower or upper or special characters notated by [] has an @ in between and a dot to seperate the domain name)
+      "/account/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$":["Member"],
 
+      // EventMgr routes
+      "/EventMgr/getEvents/^EVT00[1-9]+":["Event Manager"],
+      "/getEventID":["Event Manager"],
+      "/getEvents" : ["Event Manager"],
+      "/getEventByID^Ev0000[0-9]+":["Event Manager"],
+      "/EventMgr/deleteEvents/^Ev0000[1-9]+":["Event Manager"],
+      "/EventMgr/createEvents":["Event Manager"],
+      "/EventMgr/updateEvents/^EVT00[1-9]+":["Event Manager"],
+
+      // BookEvents for member
+      "/EventBookings/getBookings/^BE00[1-9]+":["Member"],
+      "/ViewEvents/createBooking":["Member"],
+      "/EventBookings/deleteBooking/^BE00[1-9]+" : ["Member"],
+      "/ViewEvents/createBooking/^BE00[1-9]+":["Member"],
+      "/EventBookings/getBookEventIDs/^BE00[1-9]+":["Member"],
+
+      // Announcement routes
+      "/announcements":["Admin"],
+      "/announcements/[1-9]+":["Admin"],
+      
+      // Feedbacks routes
+      "/feedbacks/[1-9]+":["Member"],
+      "/feedbacks":["Member"],
+
+      // Booking routes
+      "/booking/^B00[1-9]+" : ["Member"],
+      "/booking" : ["Member"],
+
+
+      // Facilities routes
+      "/facilities" : ["Facilities Manager"],
+      "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
+
+      // Admin 
+      "/admin/^ADM[1-9]+" : ["Admin"]
       // The regex expression [0-9]+ is to check if the proceeding characters after books/ is a sequence f digits 
     };
 

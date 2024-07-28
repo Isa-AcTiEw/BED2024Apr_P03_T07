@@ -1,9 +1,9 @@
 const Account = require("../model/Account");
 const bcrypt = require('bcrypt');
 const sql = require('mssql');
+require('dotenv').config();  
 const jwt = require('jsonwebtoken');
-require('dotenv').config({ path: '../.env' });
-const secretKey = process.env.ACCESS_TOKEN_SECRET;
+const secretKey = process.env.JWT_SECRETKEY;
 
 async function registerAccount(req, res) {
     const { AccName,AccEmail,AccCtcNo,AccAddr,AccPostalCode,AccDOB,AccPassword } = req.body;
@@ -38,7 +38,7 @@ async function login(req, res) {
     try {
         const user = await Account.getAccountByEmail(AccEmail);
         if (!user) {
-          return res.status(401).json({ message: "User not registered" });
+          return res.status(401).json({ message: "Invalid credentials" });
         }
 
         // Compare password with hash
@@ -49,17 +49,55 @@ async function login(req, res) {
         }
 
         // Generate JWT token, payload refers to data and information we would like to store inside the user's token
-        const payload = {
-          id: user.AccID,
-          // role not created ?? role: user.role, 
-        };
-        const token = jwt.sign(payload, secretKey, { expiresIn: "1800s" }); // Expires in 30min (automatically logsout user after 30min is up)
-        return res.status(200).json({ token });
+        const AccID = user["AccID"];
+        // // Extract ACC , ADM , EVT and FAL
+        const accountType = AccID.substring(0,3)
+
+        if(accountType == "ACC"){
+            const payload = {
+                id: AccID,
+                role: "Member"
+              };
+              const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
+              return res.status(200).json(token)
+        }
+
+        else if(accountType == "EVT"){
+            const payload = {
+                id:AccID,
+                role: "Event Manager"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
+            return res.status(200).json(token)
+        }
+
+        else if (accountType == "FAL"){
+            const payload = {
+                id:AccID,
+                role: "Facilities Manager"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
+            return res.status(200).json(token)
+        }
+
+        else if (accountType == "ADM"){
+            const payload = {
+                id:AccID,
+                role: "Admin"
+            }
+            const token = jwt.sign(payload,secretKey ,{expiresIn: "36000s"})
+            return res.status(200).json(token)
+        }
+        
+        else{
+            return res.status(404).send("Unable to generate token for unknown user")
+        }
     } catch (err) {
       console.error(err);
       return res.status(500).json({ message: "Internal server error" });
     }
 };
+
 
 const getAccountByEmail = async (req, res) => {
     const email = req.params.email;
@@ -90,21 +128,23 @@ const updateAccount = async (req, res) => {
     }
 };
 
+// got error here 
 async function verifyToken(req, res, next) {
-    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-
+    // Extract the Authorization header
+    const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
     if (!token) {
-        return res.status(403).json({ message: 'No token provided' });
+        return res.status(401).json({token:token });
     }
 
-    jwt.verify(token, secretKey, (err, decoded) => {
-        if (err) {
-            return res.status(401).json({ message: 'Failed to authenticate token' });
+    jwt.verify(token, secretKey, (error, decoded) =>{
+        if(error){
+            return res.status(401).json({message:"There is no token"})
         }
-        req.decoded = decoded;
-        next();
-    });
-};
+        else{
+            return res.status(200).json({message: "Token payload decoded" , value:decoded})
+        }
+    })
+}
 
 module.exports = {
     login,
