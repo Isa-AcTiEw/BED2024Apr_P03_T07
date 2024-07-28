@@ -1,6 +1,10 @@
 const EventID = localStorage.getItem("EventID");
+const AccID = localStorage.getItem("AccID");
+const Token = localStorage.getItem('token');
+
 
 // fetch the event based on the id 
+
 
 document.addEventListener('DOMContentLoaded',retrieveEventByID())
 
@@ -75,32 +79,28 @@ function displayEvent(event){
     // Call the bookEventMethod
     const button = document.getElementById("bookingButton");
 
+
     button.addEventListener('click', async (e)=>{
         // fetch the latest bookingID
-        const response = await fetch("http://localhost:3000/ViewEvents/createBooking");
+        const response = await fetch(`http://localhost:3000/ViewEvents/createBooking`,{
+            headers:{
+                'Authorization':`Bearer ${Token}`
+            }
+        });
         const data = await response.json();
         console.log(data);
         const LastBookID = data.value;
         if(LastBookID == null){
-            const BookID = "BE001"
-            bookEvent(BookID);
-
-        }
-        else{
-            const substring = LastBookID.substring(0,LastBookID.length - 1);
-            const newNum = parseInt(LastBookID.charAt(4)) + 1;
-            const BookID = substring + newNum;
+            const BookID = 'BE001'
             bookEvent(BookID);
         }
-        console.log(LastBookID)
         
-
-        if(!LastBookID){
-            console.log("There is no current bookings")
-        }
-
-        
-
+        const prefix = "BE";
+        const padlength = LastBookID.length - prefix.length;
+        const newNum = parseInt(LastBookID.substring(LastBookID.length -1)) + 1;
+        const BookID = prefix + newNum.toString().padStart(padlength,"0");
+        console.log(BookID)
+        bookEvent(BookID)
         
     })
 
@@ -108,10 +108,10 @@ function displayEvent(event){
 
 async function bookEvent(bookingID){
     const BookID = bookingID;
-    const AccID = "ACC002"
     const BookDateTime = new Date();
     function convertDate(BookDateTime){
         console.log(BookDateTime)
+        // get the year, month and day parts of the date
         const year = BookDateTime.getFullYear();
         const month = BookDateTime.getMonth() + 1;
         const day = BookDateTime.getDate();
@@ -121,49 +121,81 @@ async function bookEvent(bookingID){
     }
 
     const BookEventDate = convertDate(BookDateTime)
+    
     // check if user has alreay booked the event call my backend
-
-    const bookEventIDs = await fetch(`http://localhost:3000/ViewEvents/createBooking/${AccID}`)
-    if(!bookEventIDs.ok){
-        alert("User has not booked any events")
-    }
-    else{
-        const EventIDData = await bookEventIDs.json()
-        const EventIDs = EventIDData["value"]
-        const EventIDList = [];
-        EventIDs.forEach(element => {
-            EventIDList.push(element["Event ID"]);
+    if(Token != null){
+        const bookEventIDs = await fetch(`http://localhost:3000/ViewEvents/createBooking/${AccID}`,{
+            headers:{
+                'Authorization':`Bearer ${Token}`
+            }
         })
-        if(EventIDList.includes(EventID)){
-            alert("User has already booked the event");
+        if(bookEventIDs.status === 401){
+            showAlert('danger','Please sign in as a member in order to book')
         }
-        
         else{
-            console.log(BookEventDate);
-            const url = "http://localhost:3000/ViewEvents/createBooking/"
-            const response = await fetch(url,{
-                    method: 'POST',
-                    headers:{
-                        'Content-Type':'application/json'
-                    },
-                    body: JSON.stringify({
-                        BookEventID: BookID,
-                        BookEventDate: BookEventDate,
-                        EventID: EventID,
-                        AccID: AccID
-                    })
-                })
-            if(response.status === 201){
-                alert("User has sucessfully Booked the event");
+            const EventIDData = await bookEventIDs.json()
+            const EventIDs = EventIDData["value"]
+            const EventIDList = [];
+            EventIDs.forEach(element => {
+                EventIDList.push(element["Event ID"]);
+            })
+            if(EventIDList.includes(EventID)){
+                alert("User has already booked the event");
             }
             
             else{
-                alert("Unable to book the event");
+                
+                console.log(BookEventDate);
+                console.log(AccID)
+                const url = `http://localhost:3000/ViewEvents/createBooking`
+                const response = await fetch(url,{
+                        method: 'POST',
+                        headers:{
+                            'Authorization':`Bearer ${Token}`,
+                            'Content-Type':'application/json'
+                        },
+                        body: JSON.stringify({
+                            BookEventID: BookID,
+                            BookEventDate: BookEventDate,
+                            EventID: EventID,
+                            AccID: AccID
+                        })
+                    })
+                if(response.status === 201){
+                    showAlert('success', "User has sucessfully booked the event")
+                }
+    
+                else if(response.status === 401){
+                    showAlert('danger','Unauthorized you are not a user')
+                }
+                
+                else{
+                    alert("Unable to book the event");
+                }
+    
+                
+    
             }
-
-            
-
+    
         }
-
+        
     }
+    
+    else{
+        showAlert('danger',"Please login as a user to book events")
+    }
+   
+}
+
+function showAlert(type, message) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    const alertElement = document.createElement('div');
+    alertElement.className = `alert alert-${type}`;
+    alertElement.role = 'alert';
+    alertElement.innerText = message;
+    alertPlaceholder.appendChild(alertElement);
+
+    setTimeout(() => {
+        alertElement.remove();
+        }, 5000);
 }

@@ -55,17 +55,17 @@ class BookEvent{
     }
 
     static async retrieveUserEventBooked(AccID){
-        console.log(AccID);
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT * FROM Event WHERE
                           EventID IN 
                           (
                            SELECT EventID FROM EventBooking
-                           WHERE AccID = 'ACC002'
+                           WHERE AccID = @AccID
                         )`
         const request = connection.request();
-        request.input("AccID",AccID);
+        request.input("AccID", AccID);
         const result = await request.query(sqlQuery);
+        console.log(result)
         connection.close();
         return result.recordset.map(
             ((row) => 
@@ -87,7 +87,7 @@ class BookEvent{
     static async retrieveEventBookingBookedID(AccID){
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `SELECT BookEventID AS 'BookEventID' FROM EventBooking
-                          WHERE AccID = 'ACC002'`
+                          WHERE AccID = @AccID`
         const request = connection.request();
         request.input("AccID",AccID);
         const result = await request.query(sqlQuery)

@@ -90,6 +90,7 @@ class Event{
 
 
     static async createEvent(event){
+        console.log(event);
         // Consider a subquery to autoincrement last EventID
         const connection = await sql.connect(dbConfig);
         const sqlQuery = 
