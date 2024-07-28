@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         let facid = await response.json();
         const id = parseInt(facid.value.slice(3,7)) + 1;
         let idtype = "FAC";
-        if (id.toString.length < 3) {
-            idtype += "0".repeat(3 - id.toString.length)
+        if (id.toString().length < 3) {
+            idtype += "0".repeat(3 - id.toString().length)
         }
         facid = idtype + id
 
