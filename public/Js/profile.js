@@ -23,6 +23,20 @@ const auth = getAuth();
 const profileInfoForm = document.getElementById('profile-form');
 const pictureForm = document.getElementById('picture-form');
 
+// No user should be able to reach profile.html w/o logging in 
+document.addEventListener('DOMContentLoaded', async() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        console.log('Token found:', token);
+        await checkUserLogin(token); 
+        loadUserMenu(); 
+    }
+    else {
+        alert('You must be logged in to view this page.');
+        window.location.href = '../index.html';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     // Load and display user information from localStorage
     const name = localStorage.getItem('AccName');
@@ -172,6 +186,10 @@ profileInfoForm.addEventListener('submit', async function(e) {
 
 // Function to update user profile
 async function updateProfile() {
+    const token = localStorage.getItem('token');
+    const email = localStorage.getItem('AccEmail')
+
+
     // Gather updated data from the form
     const name = document.getElementById('name').value;
     const phonenum = document.getElementById('phonenum').value;
@@ -190,10 +208,11 @@ async function updateProfile() {
     }
 
     try {
-        const response = await fetch(`/accountLogin/${localStorage.getItem('AccEmail')}`, {
+        const response = await fetch(`/accountLogin/${email}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json', 
+                'Authorization':`Bearer ${token}`
             },
             body: JSON.stringify({
                 AccName: name, 

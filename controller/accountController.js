@@ -98,7 +98,6 @@ async function login(req, res) {
     }
 };
 
-
 const getAccountByEmail = async (req, res) => {
     const email = req.params.email;
     try {

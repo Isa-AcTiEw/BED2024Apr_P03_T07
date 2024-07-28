@@ -16,9 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
-            font-family: "Poppins", sans-serif;
-            font-weight: 400;
-            font-style: normal;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f0f0;
         }
         .custom-alert {
             position: fixed;
@@ -71,6 +70,11 @@
         .actions-column {
             width: 300px;
         }
+        
+        #adminPanelDropdown {
+            font-size: 20px;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -78,15 +82,26 @@
         <h3 class="mb-0">WEBSITE</h3>
         <a href="adminlogin.html" class="btn btn-light btn-sm">LOG OUT</a>
     </div>
+    
     <div class="col-lg-2 bg-dark border-top border-3 border-secondary" id="menu">
         <nav class="navbar navbar-expand-lg navbar-dark">
             <div class="container-fluid flex-lg-column align-items-stretch">
-                <h4 class="mt-2 text-light">ADMIN PANEL</h4>
-                <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminDropdown" aria-controls="adminDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                <div class="d-flex align-items-center w-100">
+                    <h4 class="mt-2 text-light mb-0">ADMIN</h4>
+                    <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#adminDropdown"
+                            aria-controls="adminDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
                 <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="adminDropdown">
                     <ul class="nav nav-pills flex-column">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="adminPanelDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin Panel</a>
+                            <ul class="dropdown-menu" aria-labelledby="adminPanelDropdown">
+                                <li><a class="dropdown-item" href="../EventMgr/eventMgrPanel.html">Events Panel</a></li>
+                                <li><a class="dropdown-item" href="../FacilitiesMgr/facilitiesmgrpage.html">Facilities Panel</a></li>
+                            </ul>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-white" href="adminpage.html">Announcements</a>
                         </li>
@@ -98,6 +113,7 @@
             </div>
         </nav>
     </div>
+
     <div class="container-fluid" id="main-content">
         <div class="row">
             <div class="col-lg-10 ms-auto p-4 overflow-hidden">

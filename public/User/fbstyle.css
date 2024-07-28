@@ -17,7 +17,7 @@ body {
 }
 
 .container{
-    margin-top: 6%;
+    margin-top: 4%;
     position: relative;
     width: 400px;
     padding: 20px 30px;
@@ -27,6 +27,8 @@ body {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+
+    margin-bottom: 50px;
   }
 
   .container .post{
@@ -68,18 +70,7 @@ body {
     float: right;
     transition: all 0.2s ease;
   }
-/*   input:not(:checked) ~ label:hover,
-  input:not(:checked) ~ label:hover ~ label{
-    color: rgb(232, 187, 197);
-  }
-  input:checked ~ label{
-    color: rgb(232, 187, 197);
-  }
-  input#rate-5:checked ~ label{
-    color: rgb(232, 187, 197);
-    text-shadow: 0 0 20px rgb(247, 185, 199);;
-  } */
-
+  
 input:not(:checked) ~ label:hover,
 input:not(:checked) ~ label:hover ~ label{
   color: #fd4;
@@ -171,3 +162,4 @@ form .textarea textarea{
   line-height: 1;
   color: #000;
 }
+

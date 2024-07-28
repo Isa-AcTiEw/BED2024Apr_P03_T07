@@ -46,9 +46,8 @@
         }
 
         .form-container {
-            padding: 10px; 
+            padding: 10px;
         }
-        
     </style>
 </head>
 
@@ -58,11 +57,11 @@
             <h4 class="bg-dark text-white py-3 mb-4">STAFF LOGIN PANEL</h4>
             <div class="form-container">
                 <div class="mb-3">
-                    <input name="admin_name" required type="text" class="form-control shadow-none text-center"
-                        placeholder="Admin Name">
+                    <input id="staff_email" name="staff_email" required type="email" class="form-control shadow-none text-center"
+                        placeholder="Staff Email">
                 </div>
                 <div class="mb-4">
-                    <input name="admin_pass" required type="password" class="form-control shadow-none text-center"
+                    <input id="staff_pass" name="staff_pass" required type="password" class="form-control shadow-none text-center"
                         placeholder="Password">
                 </div>
                 <button name="adminLogin" type="submit" class="btn custom-bg">LOGIN</button>
@@ -72,46 +71,56 @@
     <div id="alertPlaceholder"></div>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
+        document.addEventListener('DOMContentLoaded', async () => {
+            document.getElementById('loginForm').addEventListener('submit', async function (event) {
+                event.preventDefault();
 
-            const admin_name = document.querySelector('input[name="admin_name"]').value;
-            const admin_pass = document.querySelector('input[name="admin_pass"]').value;
+                const email = document.getElementById('staff_email').value;
+                const password = document.getElementById('staff_pass').value;
 
-            const filteredData = {
-                admin_name: admin_name.trim(),
-                admin_pass: admin_pass.trim()
-            };
+                try {
+                    const response = await fetch('/staffLogin', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            AdminEmail: email,
+                            AdminPassword: password,
+                        })
+                    });
 
-            try {
-                // CHANGE (HARDCODED AdminName and AdminPass)
-                if (admin_name === 'iamadmin' && admin_pass === "123456") {
-                    sessionStorage.setItem('adminLogin', true);
-                    sessionStorage.setItem('AdminID', 'ADM001');
-                    window.location.href = 'adminpage.html'; // Redirect to adminpage.html
-                } else {
-                    showAlert('error', 'Login failed - Invalid Credentials!');
+                    if (response.ok) {
+                        const result = await response.json();
+                        console.log('Token received:', result.token);
+                        localStorage.setItem('token', result.token);
+                        window.location.href = 'adminpage.html';
+                    } else {
+                        const errorText = await response.text();
+                        console.error('Error response text:', errorText);
+                        showAlert('danger', 'Login failed - Invalid Credentials!');
+                        document.getElementById('loginForm').reset();
+                    }
+                } catch (error) {
+                    console.error('Error during login:', error);
+                    showAlert('danger', 'An error occurred. Please try again.');
                     document.getElementById('loginForm').reset();
                 }
-            } catch (error) {
-                console.error('Error querying database:', error);
-                showAlert('error', 'An error occurred. Please try again.');
-                document.getElementById('loginForm').reset();
+            });
+
+            function showAlert(type, msg) {
+                const alertPlaceholder = document.getElementById('alertPlaceholder');
+                const alert = document.createElement('div');
+                alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+                alert.innerHTML = `
+                    <strong>${msg}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+                alertPlaceholder.appendChild(alert);
+                setTimeout(() => {
+                    alert.remove();
+                }, 5000);
             }
         });
-
-        function showAlert(type, msg) {
-            const alertPlaceholder = document.getElementById('alertPlaceholder');
-            const alert = document.createElement('div');
-            alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
-            alert.innerHTML = `
-                <strong>${msg}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
-            alertPlaceholder.appendChild(alert);
-            setTimeout(() => {
-                alert.remove();
-            }, 5000);
-        }
     </script>
 </body>
 </html>

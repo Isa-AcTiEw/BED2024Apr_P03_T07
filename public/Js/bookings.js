@@ -1,3 +1,17 @@
+// No user should be able to reach booking.html w/o logging in 
+document.addEventListener('DOMContentLoaded', async() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        console.log('Token found:', token);
+        await checkUserLogin(token); 
+        loadUserMenu(); 
+    }
+    else {
+        alert('You must be logged in to view this page.');
+        window.location.href = '../index.html';
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
     getAllBookings()
 });

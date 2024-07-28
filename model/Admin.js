@@ -2,29 +2,24 @@ const sql = require("mssql");
 const dbConfig = require("../config/db_Config");
 
 class Admin {
-    constructor(AdminID, AdminName, AdminEmail, AdminApproval) {
+    constructor(AdminID, AdminEmail, AdminPassword) {
         this.AdminID = AdminID;
-        this.AdminName = AdminName;
         this.AdminEmail = AdminEmail;
-        this.AdminApproval = AdminApproval;
+        this.AdminPassword = AdminPassword;
     }
 
-    static async getAdminById(id) {
+    static async getAdminByEmail(email) {
         const connection = await sql.connect(dbConfig);
-        const sqlQuery = `SELECT * FROM Admin WHERE AdminID = @id`;
-		const request = connection.request().input("id", id);
+        const sqlQuery = `SELECT * FROM Admin WHERE AdminEmail = @email`;
+        const request = connection.request();
+		request.input("email", email);
 		const result = await request.query(sqlQuery);
 
-		connection.close();
-
-		return result.recordset[0]
-			? new Admin(
-				result.recordset[0].AdminID,
-                result.recordset[0].AdminName,
-				result.recordset[0].AdminEmail,
-				result.recordset[0].AdminApproval,
-			)
-			: null;
+		if (result.recordset.length > 0) {
+            const row = result.recordset[0];
+            return new Admin(row.AdminID, row.AdminEmail, row.AdminPassword);
+        }
+        return null;
     }
 }
 module.exports = Admin;

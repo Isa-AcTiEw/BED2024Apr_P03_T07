@@ -3,6 +3,7 @@ const validateEvent = require("./middleware/validateEvent");
 const express = require("express");
 const dbConfig = require("./config/db_Config");
 const jwt = require('jsonwebtoken');
+const Account = require('./model/Account');
 require('dotenv').config();
 const secretKey = process.env.JWT_SECRETKEY;
 
@@ -70,9 +71,12 @@ app.get('/Profile',(req,res) =>{
   res.sendFile(__dirname + "/public/User/profile.html")
 })
 
-app.get('/Events',(req,res) =>{
-  res.sendFile(__dirname + "/public/User/Event/ViewAllEvents.html")
-})
+// app.get('/Events',(req,res) =>{
+//   res.sendFile(__dirname + "/public/User/Event/ViewAllEvents.html")
+// })
+// Staff Login
+app.post('/staffLogin', adminController.stafflogin);
+
 // Login
 app.get('/accountLogin/:email',verifyJWT,accountController.getAccountByEmail);
 app.put('/accountLogin/:email', verifyJWT,accountController.updateAccount);
@@ -114,11 +118,12 @@ app.put('/feedbacks/:id',fbkController.updateFeedback);
 app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 
 // Booking
-app.get("/booking", bookingController.getAllBookings);
+app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
-app.get("/booking/:id", bookingController.getAllBookingByAccId);
-app.post("/booking", validateBooking, bookingController.createBooking);
-app.delete("/booking/:id", bookingController.deleteBooking);
+app.get("/booking/:id", verifyJWT, bookingController.getAllBookingByAccId);
+app.get("/bookingId", verifyJWT, bookingController.getLastBookingId);
+app.post("/booking", verifyJWT, validateBooking, bookingController.createBooking);
+app.delete("/booking/:id", verifyJWT, bookingController.deleteBooking);
 
 // Registration
 app.get("/registration", registrationController.getAllRegistrations);
@@ -126,14 +131,11 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities
 app.get("/facilities", facilitiesController.getAllFacilities);
-app.get("/facilities/:id", facilitiesController.getFacilityById);
-app.get("/facilitiesId", facilitiesController.getLastFacilityId);
-app.post("/facilities", facilitiesController.createFacility);
-app.put("/facilities/:id", facilitiesController.updateFacility);
-app.delete("/facilities/:id", facilitiesController.deleteFacility);
-
-// Admin
-app.get("/admin/:id", adminController.getAdminById);
+app.get("/facilities/:id", verifyJWT, facilitiesController.getFacilityById);
+app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
+app.post("/facilities", verifyJWT, facilitiesController.createFacility);
+app.put("/facilities/:id", verifyJWT, facilitiesController.updateFacility);
+app.delete("/facilities/:id", verifyJWT, facilitiesController.deleteFacility);
 
 // Account
 app.get("/account/:email", accountController.getAccountByEmail);
