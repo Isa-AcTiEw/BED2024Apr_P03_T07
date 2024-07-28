@@ -24,6 +24,18 @@ const getFacilityById = async (req, res) => {
     }
 };
 
+const getLastFacilityId = async (req,res) =>{
+    try {
+      const FacID = await Facilities.getLastFacilityID();
+      if(FacID != null){
+        res.status(200).json({"value":FacID[""]});
+      }
+    } catch(error) {
+      console.error(error);
+      res.status(500).send("Unable to retrive the FacID")
+    }
+};
+
 const createFacility = async (req, res) => {
     const newFacility = req.body;
     try {
@@ -67,6 +79,7 @@ const deleteFacility = async (req, res) => {
 module.exports = {
     getAllFacilities,
 	getFacilityById,
+    getLastFacilityId,
     createFacility,
     updateFacility,
     deleteFacility

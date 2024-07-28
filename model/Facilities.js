@@ -37,6 +37,14 @@ class Facilities {
 			: null;
     }
 
+    static async getLastFacilityID() {
+        const connection = await sql.connect(dbConfig);
+        const sqlQuery = `SELECT MAX(FacID) FROM Facilities`
+        const request = connection.request();
+        const result = await request.query(sqlQuery)
+        return result.recordset[0];
+    }
+
     static async createFacility(newFacility) {
         const connection = await sql.connect(dbConfig);
         const sqlQuery = `INSERT INTO Facilities (FacID, FacName, FacDesc) OUTPUT inserted.FacID VALUES (@FacID, @FacName, @FacDesc);`;
