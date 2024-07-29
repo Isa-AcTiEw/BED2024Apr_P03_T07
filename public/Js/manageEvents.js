@@ -1,11 +1,30 @@
 
-const token = localStorage.getItem('token')
-
+const token = localStorage.getItem('token');
 document.addEventListener('DOMContentLoaded',async()=>{
     const token = localStorage.getItem('token');
         if (token) {
             console.log('Token found:', token);
-            await checkUserLogin(token); 
+            const logout = document.getElementById('logout')
+            console.log(logout);
+            if (logout) {
+                logout.addEventListener('click', (event) => {
+                event.preventDefault()
+                localStorage.removeItem('token'); 
+                localStorage.removeItem('AccName'); 
+                localStorage.removeItem('AccID');
+
+            // Log the token status after clearing
+            const clearedToken = localStorage.getItem('token');
+            console.log('Token after logout:', clearedToken);
+
+            showAlert('success', 'Logout successful!');
+            setTimeout(() => {
+                window.location.href = '../index.html'; 
+            }, 1000); 
+        });
+        await checkUserLogin(token); 
+        }
+            
         }
         else {
             alert('You must be logged in to view this page.');

@@ -4,7 +4,10 @@ const Token = localStorage.getItem('token');
 
 if(Token != null){
     console.log(Token);
-    document.addEventListener('DOMContentLoaded',verifyRole(Token));
+    document.addEventListener('DOMContentLoaded',retrieveBookedEvents());
+}
+else if (Token = null){
+    alert(`Token is null ${Token}`)
 }
 else{
     showAlert('danger',"User has not logged in please log in");
@@ -14,7 +17,7 @@ else{
 
 async function verifyRole(){
     console.log(Token);
-    const response = await fetch("/BookedEvents",{
+    const response = await fetch("User/Event/BookedEvents",{
         headers:{
             'Authorization':`Bearer ${Token}`
         }
@@ -131,9 +134,8 @@ async function retrieveBookedEvents(){
         }
         else{
             alert("You have not booked any events");
-            let documentBody = document.body;
             let content = "";
-            const div = document.createElement('div');
+            const div = document.getElementById("noBookings");
             div.className = "card shadow";
             content += 
             `
@@ -144,7 +146,6 @@ async function retrieveBookedEvents(){
             </div>
             `
             div.innerHTML = content;
-            documentBody.appendChild(div);
             const button = document.getElementById("goToEvent");
             button.addEventListener('click' , ()=>{
                 window.open('http://localhost:3000/','_blank');
@@ -159,7 +160,7 @@ async function retrieveBookedEvents(){
     else if (response.status === 404){
         console.log(response);
         const message = resdata["message"];
-        alert("User has no bookings made");
+        alert("Unable to retrive bookings");
         let documentBody = document.body;
         let content = "";
         const div = document.createElement('div');
@@ -191,7 +192,6 @@ async function retrieveBookEventIDs(){
         }
     })
     if(response.status === 200){
-        alert("Retrieval of Booking IDs is successful");
         const listBookEventIDsData = await response.json();
         const BookedEventsIDs = listBookEventIDsData["value"];
         console.log(BookedEventsIDs);
