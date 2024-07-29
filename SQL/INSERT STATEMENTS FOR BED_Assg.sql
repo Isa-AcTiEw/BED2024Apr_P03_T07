@@ -4,7 +4,7 @@ USE bedAssg_db;
 --SELECT * FROM Booking WHERE AccID = 'ACC505'
 --delete from Booking where AccID = 'ACC505'
 
---INSERT INTO Admin VALUES ('ADM003','staffAccount@gmail.com','$2b$10$SsNAdfEZNxOYeMKEKhlVZOktrZrDEhbMyPNeVm24//dwy.TouzN9m')
+INSERT INTO Admin VALUES ('ADM003','staffAccount@gmail.com','$2b$10$SsNAdfEZNxOYeMKEKhlVZOktrZrDEhbMyPNeVm24//dwy.TouzN9m')
 
 SELECT * FROM Account
 INSERT INTO Account 
