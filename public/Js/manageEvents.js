@@ -1,11 +1,58 @@
 
+const token = localStorage.getItem('token')
 
+document.addEventListener('DOMContentLoaded',async()=>{
+    const token = localStorage.getItem('token');
+        if (token) {
+            console.log('Token found:', token);
+            await checkUserLogin(token); 
+        }
+        else {
+            alert('You must be logged in to view this page.');
+            window.location.href = '../index.html';
+        }
+})
+
+async function checkUserLogin(token) {
+    try {
+        console.log(token);
+        
+        const response = await fetch('http://localhost:3000/verrifyToken', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ token })
+        });
+
+        if (!response.ok) {
+            console.log('Token verification failed');
+            showAlert('success',"Unable to retrieve token as not logged in as Admin")
+            localStorage.removeItem('token'); // Remove invalid token
+            localStorage.removeItem('AccName'); // Remove AccName on token invalidation
+        }
+        else{
+            const payload = await response.json();
+            console.log(payload);
+            const data = payload["value"];
+            const setAccID = data.id;
+            localStorage.setItem('AccID',setAccID);
+            AccID = localStorage.getItem('AccID');
+            handleEvents(AccID);
+        }
+    } catch (error) {
+        console.error('Error verifying token:', error);
+        localStorage.removeItem('token'); // Remove token on error
+        localStorage.removeItem('AccName'); // Remove AccName on error
+    }
+}
 // retrive the eventMgr from local storage and then fetch() api request to get the events associated with event manager
-async function handleEvents(){
-    const url = `http://localhost:3000/EventMgr/getEvents/EVT001`;
+async function handleEvents(AccID){
+    const url = `http://localhost:3000/EventMgr/getEvents/${AccID}`;
     // handleEvents has to be asynchronus to await the promise to be fufilled from getEvents
     const listEvent = await getEvents(url);
-    displayEvents(listEvent);
+    displayEvents(listEvent,AccID);
     
 }
 
@@ -80,7 +127,6 @@ function createrows(listEvent,tableBody){
     updateEvent();
 }
 
-document.addEventListener('DOMContentLoaded', handleEvents);
 
 
 
@@ -121,12 +167,17 @@ function deleteEvent(){
 
 
             const confirm = document.getElementById("confirmDel");
+            const returnbtn = document.getElementById("returnBtn");
+            returnbtn.addEventListener('click', ()=>{
+                myModal.hide()
+            })
+            
             console.log(confirm)
             confirm.addEventListener('click',() => {
                 // DELETE METHOD
                 deleteRequest(eventID)
                 myModal.hide();
-                handleEvents();
+                reloadPage();
                 // fetch again 
             })
 
@@ -170,9 +221,16 @@ function createEvent(){
         const result = await fetch("/getEventID");
         const data = await result.json();
         const lastEventID = data.value;
-        const substring = lastEventID.substring(0,lastEventID.length - 1);
-        const newNum = parseInt(lastEventID.charAt(6)) + 1;
-        const eventID = substring + newNum;
+        // extract the front portion of EventID ("Ev")
+        const id = 'Ev';
+        // remaining length excluding Ev
+        const padLength = lastEventID.length - id.length;
+
+        const oldNum = lastEventID.substring(id.length);
+        const newNum = parseInt(oldNum) + 1;
+        // pad the remainder of the string with 0 including newNum
+        const neweventID = id+ newNum.toString().padStart(padLength, '0'); 
+
         const eventName = document.getElementById("addEventName").value;
         const eventDesc = document.getElementById("addEventDesc").value;
         const eventDate = document.getElementById("addEventDate").value;
@@ -191,7 +249,7 @@ function createEvent(){
                 'Content-Type': 'application/json'
                 
             },
-            body: JSON.stringify({ EventID:eventID,
+            body: JSON.stringify({ EventID:neweventID,
                                    EventName: eventName,
                                    EventDesc: eventDesc,
                                    EventPrice:"0",
@@ -199,7 +257,7 @@ function createEvent(){
                                    EventCat : eventCat,
                                    EventLocation: eventLocation,
                                    EventRegEndDate: formattedEventRegEndDate,
-                                   EventMgrID: "EVT001",
+                                   EventMgrID: AccID,
                                    EventIntake: eventIntake
                                    })
         })
@@ -207,7 +265,8 @@ function createEvent(){
         const modalElement = document.getElementById(`addEventsModal`);
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
-        handleEvents();
+        reloadPage();
+        
     });
 
 }
@@ -352,8 +411,7 @@ function updateEvent(){
                 }
 
                 myModal.hide();
-
-                handleEvents();
+                reloadPage();
             })
             
             
@@ -369,6 +427,31 @@ function updateEvent(){
     });
     
     
+}
+
+function reloadPage() {
+    console.log('Reloading the page using href');
+    window.location.href = window.location.href;
+  }
+
+  function showAlert(type, msg) {
+    const alertPlaceholder = document.getElementById('alertPlaceholder');
+    if (!alertPlaceholder) {
+        console.error('Alert placeholder element not found.');
+        return;
+    }
+
+    const alert = document.createElement('div');
+    alert.className = `alert ${type === 'success' ? 'alert-success' : 'alert-danger'} alert-dismissible fade show custom-alert`;
+    alert.innerHTML = `
+        <strong>${msg}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+
+    alertPlaceholder.appendChild(alert);
+    setTimeout(() => {
+        alert.remove();
+    }, 5000);
 }
 
 

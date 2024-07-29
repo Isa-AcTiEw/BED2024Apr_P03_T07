@@ -1,6 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    const bookNowBtn = document.getElementById('bookNowBtn');
     const bookFacility = document.getElementById('bookfac-form');
     const myModal = new bootstrap.Modal(document.getElementById('bookfacModal'));
+
+    bookNowBtn.addEventListener('click', () => {
+        if (!token) {
+            showAlert('danger', 'You must be logged in to book facilities.');
+        } else {
+            myModal.show();
+        }
+    });
 
     fetchFacilities();
 

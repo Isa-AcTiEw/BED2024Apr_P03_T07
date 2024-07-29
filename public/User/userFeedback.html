@@ -15,6 +15,7 @@
     <script src="../Js/bootstrap.bundle.min.js" defer></script>
     <script src="../Js/feedback.js" defer></script>
     <script type="module" src="../Js/login.js" defer></script>
+    <script type="module" src="../Js/login.js" defer></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
@@ -29,7 +30,7 @@
                         <a class="nav-link me-2" href="../index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="./Event/ViewAllEvents.html">Events</a>
+                        <a class="nav-link me-2" href="./ViewAllEvents.html">Events</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link me-2" href="./facilities.html">Facilities</a>
@@ -229,6 +230,7 @@
         addForm.addEventListener("submit", async (e) => {
             e.preventDefault();
 
+            const token = localStorage.getItem("token");
             const name = document.getElementById("feedbackTitleInput").value;
             const rateValue = document.querySelector('input[name="rate"]:checked')?.value;
             const quality = qualityMap[rateValue];
@@ -245,10 +247,8 @@
                 showAlert('danger','Please select a rating.');
                 return;
             }
-
             const method = feedbackId ? 'PUT' : 'POST';
             const url = feedbackId ? `/feedbacks/${feedbackId}` : '/feedbacks';
-
             const response = await fetch(url, {
                 method: method,
                 headers: {
@@ -257,9 +257,12 @@
                 body: JSON.stringify({ FbkName: name, FbkQuality: quality, FbkDateTime: datetime, FbkDesc: desc, AccID: accountid })
             });
 
+            console.log(response);
+
             if (response.ok) {
                 feedbackData = { FbkName: name, FbkQuality: quality, FbkDateTime: datetime, FbkDesc: desc, AccID: accountid };
-                feedbackId = feedbackId || (await response.json()).id;
+                data = await response.json();
+                feedbackId = data.FbkID;
                 feedbackModal.show();
             } else {
                 showAlert('danger','Failed to submit feedback. Please try again.');
@@ -285,6 +288,7 @@
                 const newFeedbackData = {
                     FbkName: document.getElementById("feedbackTitleInput").value,
                     FbkQuality: qualityMap[document.querySelector('input[name="rate"]:checked')?.value],
+                    FbkDateTime: new Date().toISOString(),
                     FbkDesc: document.getElementById("feedbackDescInput").value,
                     AccID: feedbackData.AccID
                 };
@@ -292,10 +296,12 @@
                 const response = await fetch(`/feedbacks/${feedbackId}`, {
                     method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(newFeedbackData)
                 });
+
+                console.log(response);
 
                 if (response.ok) {
                     showAlert('success','Feedback updated successfully!');

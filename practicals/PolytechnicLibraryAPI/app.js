@@ -14,6 +14,7 @@ const port = process.env.PORT || 2000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 
+
 // Routes
 app.post('/register', userController.registerUser); // user registration route
 app.post('/login',  userController.login);

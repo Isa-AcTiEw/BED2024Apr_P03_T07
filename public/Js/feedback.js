@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             const data = await response.json();
             const fbkList = document.getElementById("feedbacks-data");
-            fbkList.innerHTML = ''; 
+            
 
             data.forEach((fbk, index) => {
                 const row = document.createElement("tr");

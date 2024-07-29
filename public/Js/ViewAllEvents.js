@@ -70,7 +70,7 @@ function displayEvents(events){
                 if (index === bindex) {
                     // Handle the button click event here
                     localStorage.setItem("EventID",eID);
-                    window.location.href = "http://localhost:3000/User/Event/ViewEvent.html";
+                    window.location.href = "http://localhost:3000/User/ViewEvent.html";
                 }
             });
         });

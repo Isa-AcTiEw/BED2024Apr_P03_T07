@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const { user } = require("../config/db_Config");
 require('dotenv').config();
 const secretKey = process.env.JWT_SECRETKEY;
 function verifyJWT(req, res, next){
@@ -32,7 +33,9 @@ function verifyJWT(req, res, next){
                 "/ViewEvents/createBooking/ACC\\d+$":["Member"],
                 "/EventBookings/getBookEventIDs/ACC\\d+$":["Member"],
                 "/EventBookings/deleteBooking/BE00\\d+$":["Member"],
-        
+
+                // Place the content routes for bookedEvents
+                "/BookedEvents": ["Member"],
                 // Announcement routes
                 "/announcements":["Admin"],
                 "/announcements/[1-9]+":["Admin"],
@@ -42,17 +45,17 @@ function verifyJWT(req, res, next){
                 "/feedbacks":["Member"],
         
                 // Booking routes
-                "/booking/^ACC(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                // "/booking" : ["Member"],
+                "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
+                "/booking/B00\\d+$" : ["Member"],
+                "/booking/B00\\d+$" : ["Member"],
                 "/bookingId" : ["Member"],
                 "/Bookings" : ["Member"],
         
         
                 // Facilities routes
-                // "/facilities" : ["Facilities Manager"],
-                // "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
-                // "/facilitiesId" : ["Facilities Manager"], 
+                "/facilities" : ["Facilities Manager"],
+                "/facilities/FAC00\\d+$" : ["Member"],
+                "/facilitiesId" : ["Facilities Manager"], 
         
                 // Admin 
                 "/admin/^ADM[1-9]+" : ["Admin"]

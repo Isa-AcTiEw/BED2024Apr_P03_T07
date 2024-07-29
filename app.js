@@ -16,6 +16,8 @@ const registrationController = require("./controller/registrationController");
 const facilitiesController = require("./controller/facilitiesController");
 const annController = require("./controller/annController");
 const fbkController = require("./controller/fbkController");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./middleware/swagger-output.json");
 const authController = require("./controller/authController");
 
 const eventBookingController = require("./controller/bookEventController");
@@ -35,6 +37,7 @@ const app = express();
 
 // Include body-parser middleware to handle JSON data
 app.use(bodyParser.json());
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(bodyParser.urlencoded({ extended: true })); // For form data handling
 app.use(staticMiddlewarePublic); // Mount the static middleware
 
@@ -59,9 +62,9 @@ app.get('/facilitiesMgr', (req, res) => {
   res.sendFile(__dirname + '/public/Facilities/facilitiesMgrPanel.html');
 });
 
-// app.get('/BookedEvents', (req, res) => {
-//   res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
-// });
+app.get('/BookedEvents',verifyJWT, (req, res) => {
+  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
+});
 
 app.get('/Bookings',(req,res) =>{
   res.sendFile(__dirname + "/public/User/bookings.html")
@@ -71,6 +74,9 @@ app.get('/Profile',(req,res) =>{
   res.sendFile(__dirname + "/public/User/profile.html")
 })
 
+// app.get('/Events',(req,res) =>{
+//   res.sendFile(__dirname + "/public/User/Event/ViewAllEvents.html")
+// })
 // Staff Login
 app.post('/staffLogin', adminController.stafflogin);
 
@@ -109,7 +115,7 @@ app.delete('/announcements/:id', annController.deleteAnnouncement);
 
 // Feedbacks
 app.get('/feedbacks', fbkController.getAllFeedbacks);
-app.get('/feedbacks/:id',fbkController.getFeedbackById);
+app.get('/feedbacks/:id', fbkController.getFeedbackById);
 app.post('/feedbacks',fbkController.createFeedback);
 app.put('/feedbacks/:id',fbkController.updateFeedback);
 app.delete('/feedbacks/:id',fbkController.deleteFeedback);
@@ -117,8 +123,8 @@ app.delete('/feedbacks/:id',fbkController.deleteFeedback);
 // Booking
 app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
-app.get("/booking/:id", verifyJWT, bookingController.getAllBookingByAccId);
-app.get("/bookingId", verifyJWT, bookingController.getLastBookingId);
+app.get("/booking/:id", bookingController.getAllBookingByAccId);
+app.get("/bookingId", bookingController.getLastBookingId);
 app.post("/booking", validateBooking, bookingController.createBooking);
 app.delete("/booking/:id", verifyJWT, bookingController.deleteBooking);
 
@@ -127,12 +133,12 @@ app.get("/registration", registrationController.getAllRegistrations);
 app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities
-app.get("/facilities", facilitiesController.getAllFacilities);
-app.get("/facilities/:id", facilitiesController.getFacilityById);
-app.get("/facilitiesId", facilitiesController.getLastFacilityId);
-app.post("/facilities", facilitiesController.createFacility);
-app.put("/facilities/:id", facilitiesController.updateFacility);
-app.delete("/facilities/:id", facilitiesController.deleteFacility);
+app.get("/facilities",facilitiesController.getAllFacilities);
+app.get("/facilities/:id", verifyJWT, facilitiesController.getFacilityById);
+app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
+app.post("/facilities",  facilitiesController.createFacility);
+app.put("/facilities/:id", verifyJWT, facilitiesController.updateFacility);
+app.delete("/facilities/:id", verifyJWT, facilitiesController.deleteFacility);
 
 // Account
 app.get("/account/:email", accountController.getAccountByEmail);
