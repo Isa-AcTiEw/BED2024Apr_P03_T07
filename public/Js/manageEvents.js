@@ -348,7 +348,7 @@ function updateEvent(){
                                     <label for="event_cat" class="form-label">Event Category</label>
                                     <select class="form-select" id="editEventCat" required>
                                         <option selected>${EventCat}</option>
-                                        <option value="Active Ageing">Active Ageing</option>
+                                        <option value="Active Aging">Active Aging</option>
                                         <option value="Cooking">Cooking</option>                                                                         
                                         <option value="Arts and Culture">Arts and Culture</option>
                                         <option value="Festivities">Festivities</option>
