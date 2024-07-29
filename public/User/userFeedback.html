@@ -215,10 +215,12 @@
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        //Initialize variables
         const addForm = document.getElementById("form");
         const feedbackModal = new bootstrap.Modal(document.getElementById('feedbackModal'));
-        let feedbackData = {};
-        let feedbackId = null;
+        let feedbackData = {}; // Stores feedback details
+        let feedbackId = null; // tracks the feedback being edited or null for new feedback
         const qualityMap = {
             1: "Poor",
             2: "Average",
@@ -226,6 +228,8 @@
             4: "Very Good",
             5: "Excellent"
         };
+
+        // qualityMap maps numeric settings to descriptive strings for feedback quality
 
         addForm.addEventListener("submit", async (e) => {
             e.preventDefault();
@@ -247,6 +251,8 @@
                 showAlert('danger','Please select a rating.');
                 return;
             }
+
+            // Determining HTTP method and URL based on whether feedbackId is set (update) or not (create)
             const method = feedbackId ? 'PUT' : 'POST';
             const url = feedbackId ? `/feedbacks/${feedbackId}` : '/feedbacks';
             const response = await fetch(url, {
@@ -257,6 +263,7 @@
                 body: JSON.stringify({ FbkName: name, FbkQuality: quality, FbkDateTime: datetime, FbkDesc: desc, AccID: accountid })
             });
 
+            // Sending POST or PUT request to the server with feedback data in JSON format
             console.log(response);
 
             if (response.ok) {
@@ -272,17 +279,19 @@
         document.querySelector('.btn-close-custom').addEventListener('click', () => {
             location.reload();
         });
+        // Event listener for custom close button to reload the page on click
 
         document.getElementById(`btn-edit`).addEventListener('click', () => {
             feedbackModal.hide();
-
+                // Event listener for edit button to hide feedback modal
             document.getElementById('fbksubmitbutton').innerHTML = `
                 <button type="button" class="btn btn-primary" id="btn-save-changes">Save Changes</button>
             `;
-
+             // Update submit button in modal footer to "Save Changes"
             document.getElementById("feedbackTitleInput").value = feedbackData.FbkName;
             document.getElementById("feedbackDescInput").value = feedbackData.FbkDesc;
             document.querySelector(`input[name="rate"][value="${Object.keys(qualityMap).find(key => qualityMap[key] === feedbackData.FbkQuality)}"]`).checked = true;
+            // Populate form fields with existing feedback data: title, description, and rating
 
             document.getElementById('btn-save-changes').addEventListener('click', async () => {
                 const newFeedbackData = {
@@ -300,6 +309,8 @@
                     },
                     body: JSON.stringify(newFeedbackData)
                 });
+
+                // Send PUT request to update feedback with new data
 
                 console.log(response);
 
