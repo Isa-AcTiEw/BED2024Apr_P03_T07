@@ -17,6 +17,7 @@ class Facilities {
             new Facilities(
                      row.FacID,
                      row.FacName,
+                     row.FacDesc
                      ));
     }
 

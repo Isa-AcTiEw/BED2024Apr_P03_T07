@@ -8,7 +8,6 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="../../CSS/bootstrap.min.css" type="text/css" rel="stylesheet">
-        <link href="../../CSS/profile.css" type = "text/css" rel="stylesheet">
         <link rel="stylesheet" href="../../CSS/homepage.css" type="text/css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,40 +17,54 @@
         <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
-        <script type="module" src="../../Js/login.js" defer></script>
-        <script type="module" src = "../../Js/BookedEvents.js" defer></script>
-        <script src="../../Js/bootstrap.bundle.min.js" defer></script>
-    </head>
-    <body>
-       
+        <script type="module" src="../Js/login.js" defer></script>
+        <script type="module" src = "../Js/BookedEvents.js" defer></script>
+        <script src="../Js/bootstrap.bundle.min.js" defer></script>
         <style>
             p{
                 font-size: 20px;
             }
+
+            body {
+                font-family: "Poppins", sans-serif;
+                font-size: 15px;
+                background-color:rgb(252, 252, 252);
+            }
+            .navbar-brand{
+                font-family: "Playwrite IT Moderna", cursive;
+                font-optical-sizing: auto;
+                font-style: normal;
+                color: #d2b5bc;
+            }
+            nav.navbar {
+                width: 100%;
+            }
         </style>
+    </head>
+    <body>
         <!-- The navbar will be here -->
         <nav class="navbar navbar-expand-lg navbar-light bg-white px-lg-3 py-lg-2 shadow-sm sticky-top">
             <div class="container-fluid">
-                <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="../../index.html">SGoofy</a>
+                <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="../index.html">SGoofy</a>
                 <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link me-2" aria-current="page" href="../../index.html">Home</a>
+                            <a class="nav-link active me-2" aria-current="page" href="../index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-2" href="../Event/ViewAllEvents.html">Events</a>
+                            <a class="nav-link me-2" href="../User/ViewAllEvents.html">Events</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-2" href="../facilities.html">Facilities</a>
+                            <a class="nav-link me-2" href="../User/facilities.html">Facilities</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-2" href="#">Contact Us</a>
+                            <a class="nav-link me-2" href="../index.html">Contact Us</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link me-2" href="../userFeedback.html">Feedback</a>
+                            <a class="nav-link me-2" href="../User/userFeedback.html">Feedback</a>
                         </li>
                     </ul>
                     <div class="d-flex">
@@ -99,7 +112,14 @@
                 </div>
               </div>
             </div>
-          </div>
+        </div>
+
+          <!-- Footer -->
+        <footer>
+            <div class="text-center p-3 bg-dark text-white">
+                © 2024 SGoofy. All Rights Reserved.
+            </div>
+        </footer>
 
         
     </body>
