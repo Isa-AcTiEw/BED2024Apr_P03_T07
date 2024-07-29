@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function getAllBookings() {
+    const token = localStorage.getItem('token');
+
     try {
         const token = localStorage.getItem('token');
         console.log('Token:', token); // Debugging

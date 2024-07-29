@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Retrieve form data
         const facility = document.getElementById("editFacCat").value;
         const bookdate = document.getElementById("facbookdate").value;
+        const token = localStorage.getItem('token');
 
         // Retrieve booking id
         const response = await fetch("/bookingId", {

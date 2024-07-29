@@ -1,4 +1,10 @@
+CREATE DATABASE bedAssg_db
+DROP DATABASE bedAssg_db
 USE bedAssg_db;
+--SELECT * FROM Booking WHERE AccID = 'ACC505'
+--delete from Booking where AccID = 'ACC505'
+
+--INSERT INTO Admin VALUES ('ADM003','staffAccount@gmail.com','$2b$10$SsNAdfEZNxOYeMKEKhlVZOktrZrDEhbMyPNeVm24//dwy.TouzN9m')
 
 SELECT * FROM Account
 INSERT INTO Account 
@@ -33,10 +39,6 @@ VALUES
 ('Ev00005', 'Learning Generative A.I.', 
 'Hone your generative A.I. skills learn how to prompt effectively and understand the ethical concerns of generative A.I.', 
 '0', '2024-07-14' , 'Lifelong Learning', 'Bishan Community Club', '2024-06-30', 'EVT001', '300')
-
-INSERT INTO EventBooking
-VALUES
-('BE001','2024-24-7 17:44:55','Ev00003','ACC002');
 
 INSERT INTO Admin
 VALUES
@@ -76,15 +78,11 @@ VALUES
 INSERT INTO Booking
 VALUES 
 ('B001', '2024-06-28', 'Pending', 'FAC001', 'ADM001'),
-('B002', '2024-06-29', 'Pending', 'FAC002', 'ADM001'),
-('B003', '2024-07-26', 'Pending', 'FAC003', 'ACC436'),
-('B004', '2024-07-26', 'Pending', 'FAC004', 'ACC436');
+('B002', '2024-06-29', 'Pending', 'FAC002', 'ADM001');
 
 INSERT INTO Registration
 VALUES 
 ('R001', '2024-06-28', 'Active', 'Ev00001', 'EVT001'),
 ('R002', '2024-06-29', 'Active', 'Ev00002', 'EVT001');
-
-INSERT INTO Admin VALUES ('ADM003','staffAccount@gmail.com','$2b$10$SsNAdfEZNxOYeMKEKhlVZOktrZrDEhbMyPNeVm24//dwy.TouzN9m')
 
 
