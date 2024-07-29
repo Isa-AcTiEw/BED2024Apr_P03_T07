@@ -119,7 +119,7 @@ app.get("/booking", verifyJWT, bookingController.getAllBookings);
 //app.get("/booking/:id", bookingController.getBookingById);
 app.get("/booking/:id", verifyJWT, bookingController.getAllBookingByAccId);
 app.get("/bookingId", verifyJWT, bookingController.getLastBookingId);
-app.post("/booking", verifyJWT, validateBooking, bookingController.createBooking);
+app.post("/booking", validateBooking, bookingController.createBooking);
 app.delete("/booking/:id", verifyJWT, bookingController.deleteBooking);
 
 // Registration
@@ -128,11 +128,11 @@ app.get("/registration/:id", registrationController.getRegistrationById)
 
 // Facilities
 app.get("/facilities", facilitiesController.getAllFacilities);
-app.get("/facilities/:id", verifyJWT, facilitiesController.getFacilityById);
-app.get("/facilitiesId", verifyJWT, facilitiesController.getLastFacilityId);
-app.post("/facilities", verifyJWT, facilitiesController.createFacility);
-app.put("/facilities/:id", verifyJWT, facilitiesController.updateFacility);
-app.delete("/facilities/:id", verifyJWT, facilitiesController.deleteFacility);
+app.get("/facilities/:id", facilitiesController.getFacilityById);
+app.get("/facilitiesId", facilitiesController.getLastFacilityId);
+app.post("/facilities", facilitiesController.createFacility);
+app.put("/facilities/:id", facilitiesController.updateFacility);
+app.delete("/facilities/:id", facilitiesController.deleteFacility);
 
 // Account
 app.get("/account/:email", accountController.getAccountByEmail);

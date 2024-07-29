@@ -152,13 +152,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Failed to load facilities. Please try again later.');
         }
     }
+    const token = localStorage.getItem('token');
     const addForm = document.getElementById("addFacilityForm");
     addForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const response = await fetch("/facilitiesId", {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
         let facid = await response.json();

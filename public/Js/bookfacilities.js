@@ -12,12 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Retrieve form data
         const facility = document.getElementById("editFacCat").value;
         const bookdate = document.getElementById("facbookdate").value;
+        const token = localStorage.getItem('token');
 
         // Retrieve booking id
         const response = await fetch("/bookingId", {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
         let bookid = await response.json();
@@ -33,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch("/booking", {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify({
                     "BookID": bookid,

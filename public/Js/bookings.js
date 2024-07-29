@@ -1,33 +1,38 @@
-// No user should be able to reach booking.html w/o logging in 
-document.addEventListener('DOMContentLoaded', async() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        console.log('Token found:', token);
-        await checkUserLogin(token); 
-        loadUserMenu(); 
-    }
-    else {
-        alert('You must be logged in to view this page.');
-        window.location.href = '../index.html';
-    }
-});
+// // No user should be able to reach booking.html w/o logging in 
+// document.addEventListener('DOMContentLoaded', async() => {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//         console.log('Token found:', token);
+//         await checkUserLogin(token); 
+//         //loadUserMenu(); 
+//         getAllBookings()
+//     }
+//     else {
+//         alert('You must be logged in to view this page.');
+//         window.location.href = '../index.html';
+//     }
+// });
 
 document.addEventListener('DOMContentLoaded', () => {
     getAllBookings()
 });
 
 async function getAllBookings() {
+    const token = localStorage.getItem('token');
+
     try {
         const accountid = await fetch(`/account/${localStorage.AccEmail}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
         const response = await fetch(`/booking/${await accountid.json().then(result => result.AccID)}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         });
         if (response.ok) {

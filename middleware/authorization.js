@@ -42,17 +42,17 @@ function verifyJWT(req, res, next){
                 "/feedbacks":["Member"],
         
                 // Booking routes
-                "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
+                "/booking/^ACC(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
                 "/booking/^B(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                "/booking" : ["Member"],
+                // "/booking" : ["Member"],
                 "/bookingId" : ["Member"],
                 "/Bookings" : ["Member"],
         
         
                 // Facilities routes
-                "/facilities" : ["Facilities Manager"],
-                "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
-                "/facilitiesId" : ["Facilities Manager"], 
+                // "/facilities" : ["Facilities Manager"],
+                // "/facilities/^FAC00[1-9]+" : ["Facilities Manager"],
+                // "/facilitiesId" : ["Facilities Manager"], 
         
                 // Admin 
                 "/admin/^ADM[1-9]+" : ["Admin"]

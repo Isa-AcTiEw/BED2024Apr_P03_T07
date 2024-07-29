@@ -41,30 +41,15 @@ CREATE TABLE Event(
 		FOREIGN KEY (EventMgrID) REFERENCES EventMgr(EventMgrID)
 );
 
-CREATE TABLE EventBooking(
-	BookEventID varchar(10) NOT NULL,
-	BookEventDate smalldatetime NOT NULL,
-	EventID varchar(10) NULL,
-	AccID varchar(10) NULL,
-	CONSTRAINT PK_EventBooking PRIMARY KEY (BookEventID),
-	CONSTRAINT FK_EventBooking_Event 
-		FOREIGN KEY (EventID) REFERENCES Event(EventID)
-	CONSTRAINT FK_EventBooking_Account 
-		FOREIGN KEY (AccID) REFERENCES Account(AccID)
-);
 
 -- Create Admin table
 CREATE TABLE Admin(
-	AdminID varchar(10) NOT NULL,
-	AdminName varchar(30) NOT NULL,
-	AdminEmail varchar(30) NOT NULL,
-	AdminApproval varchar(30) NOT NULL,
-	CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
-	CONSTRAINT FK_Admin_Account 
-		FOREIGN KEY(AdminID) REFERENCES Account(AccID),
-	CONSTRAINT CHK_AdminApproval CHECK 
-		(AdminApproval IN 
-		('Approved', 'Pending', 'Rejected'))
+ AdminID varchar(10) NOT NULL,
+ AdminEmail varchar(30) UNIQUE NOT NULL,
+ AdminPassword varchar(MAX) NOT NULL,
+ CONSTRAINT PK_Admin PRIMARY KEY (AdminID),
+ CONSTRAINT FK_Admin_Account 
+  FOREIGN KEY(AdminID) REFERENCES Account(AccID)
 );
 
 -- Create Announcement table
