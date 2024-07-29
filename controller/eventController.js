@@ -6,7 +6,6 @@ const { request } = require('express');
 const getAllEventsByEventMgrID = async (req,res) =>{
     try {
         const EventMgrID = req.params.id;
-        console.log(EventMgrID, "page reloded");
         const Events = await EventMgr.getAllEventsByEventMgrID(EventMgrID);
         res.json(Events);
       } catch (error) {

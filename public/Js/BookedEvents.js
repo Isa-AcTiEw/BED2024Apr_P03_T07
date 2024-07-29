@@ -6,12 +6,11 @@ if(Token != null){
     console.log(Token);
     document.addEventListener('DOMContentLoaded',retrieveBookedEvents());
 }
-else if (Token = null){
-    alert(`Token is null ${Token}`)
-}
-else{
+else if (Token == null){
+    alert(`Token is null ${Token}`);
     showAlert('danger',"User has not logged in please log in");
 }
+
 
 
 
