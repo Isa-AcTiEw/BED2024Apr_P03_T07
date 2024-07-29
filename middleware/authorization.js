@@ -5,6 +5,7 @@ const secretKey = process.env.JWT_SECRETKEY;
 function verifyJWT(req, res, next){
         //  Exctract authorization headers from incoming request and split at " "
         const token = req.headers.authorization && req.headers.authorization.split(" ")[1];
+        console.log(token)
         if (!token) {
             return res.status(401).json({token:token });
         }
@@ -16,7 +17,7 @@ function verifyJWT(req, res, next){
             }
             const authorizedRoles = {
                 "/account/" : ["Member"],
-                "/accountLogin/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$": ["Member", "Event Manager", "Facilities Manager", "Admin"],
+                "/accountLogin/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$||/accountLogin/[a-zA-Z0-9._%+-]+%40[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$ ": ["Member", "Event Manager", "Facilities Manager", "Admin"],
                 "User/Event/BookedEvents" : ["Member"],
                 // EventMgr routes
                 "/getEventID":["Event Manager"],

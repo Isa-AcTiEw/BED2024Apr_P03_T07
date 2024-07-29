@@ -1,3 +1,5 @@
+
+
 document.addEventListener('DOMContentLoaded', async () => {
     async function fetchAnnouncements() {
         try {
@@ -173,6 +175,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         modalInstance.hide();
     });
+
+    const logout = document.getElementById('logout')
+    console.log(logout);
+        if (logout) {
+            logout.addEventListener('click', (event) => {
+            event.preventDefault()
+            localStorage.removeItem('token'); 
+            localStorage.removeItem('AccName'); 
+            localStorage.removeItem('AccID');
+
+        // Log the token status after clearing
+        const clearedToken = localStorage.getItem('token');
+        console.log('Token after logout:', clearedToken);
+        setTimeout(() => {
+            window.location.href = '../index.html'; 
+        }, 1000); 
+        });
+        }
 
     await fetchAnnouncements();
 });

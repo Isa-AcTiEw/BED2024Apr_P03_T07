@@ -63,9 +63,8 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 app.get('/BookedEvents',verifyJWT, (req, res) => {
-  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
+  res.sendFile(__dirname + '/public/User/BookedEvents.html');
 });
-
 app.get('/Bookings',(req,res) =>{
   res.sendFile(__dirname + "/public/User/bookings.html")
 })
@@ -100,7 +99,7 @@ app.get('/getEvents',eventController.getAllEvents);
 app.get('/getEventByID/:id',eventController.getAllEventsById);
 
 // routes for BookEvents
-app.get('/EventBookings/getBookings/:id',verifyJWT,eventBookingController.retrieveUserEventBooked);
+app.get('/EventBookings/getBookings/:id',eventBookingController.retrieveUserEventBooked);
 app.post('/ViewEvents/createBooking/',verifyJWT,eventBookingController.createBooking);
 app.delete('/EventBookings/deleteBooking/:id',verifyJWT,eventBookingController.deleteBooking);
 app.get('/ViewEvents/createBooking',verifyJWT,eventBookingController.LastBookID);
