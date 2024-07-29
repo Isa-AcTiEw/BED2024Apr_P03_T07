@@ -4,12 +4,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const bookFacility = document.getElementById('bookfac-form');
     const myModal = new bootstrap.Modal(document.getElementById('bookfacModal'));
 
-    if (!token) {
-        bookNowBtn.addEventListener('click', () => {
-            alert('You must be logged in to book facilities.');
-        });
-        return;
-    }
+    bookNowBtn.addEventListener('click', () => {
+        if (!token) {
+            showAlert('danger', 'You must be logged in to book facilities.');
+        } else {
+            myModal.show();
+        }
+    });
 
     fetchFacilities();
 
