@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             
             const data = await response.json();
-            console.log(data)
             if(data != null){
                 const facList = document.getElementById("fac-list");
 
@@ -15,7 +14,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     
                 data.forEach((fac, index) => {
                     const facItem = document.createElement("div");
-                    console.log(fac)
     
                     facItem.classList.add("col-12", "mb-4");
                     facItem.innerHTML = `
