@@ -16,7 +16,7 @@ function verifyJWT(req, res, next){
             }
             const authorizedRoles = {
                 "/account/" : ["Member"],
-                "^/accountLogin/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$": ["Member", "Event Manager", "Facilities Manager", "Admin"],
+                "/accountLogin/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$": ["Member", "Event Manager", "Facilities Manager", "Admin"],
                 "User/Event/BookedEvents" : ["Member"],
                 // EventMgr routes
                 "/getEventID":["Event Manager"],
@@ -46,8 +46,8 @@ function verifyJWT(req, res, next){
         
                 // Booking routes
                 "/booking/^ADM(00[1-9]|0[1-9]\\d|[1-9]\\d{2})$" : ["Member"],
-                "/booking/B00\\d+$" : ["Member"],
-                "/booking/B00\\d+$" : ["Member"],
+                "/booking/B\\d+$" : ["Member"],
+                "/booking" : ["Member"],
                 "/bookingId" : ["Member"],
                 "/Bookings" : ["Member"],
         

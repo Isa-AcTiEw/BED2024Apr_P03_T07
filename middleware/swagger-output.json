@@ -1,8 +1,8 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
-    "description": "Description of your API",
+    "title": "This is our Sgoofy API for",
+    "description": "This API allows adminsitrative staff to manage events, facilities and memebers of the community club. It also allows users to manage their booked events. booked facilities, their account and provide feedback to the adminstrative staff and view announcements created by the administrative staff.",
     "version": "1.0.0"
   },
   "host": "localhost:3000",
@@ -10,7 +10,15 @@
   "schemes": [
     "http"
   ],
-  "paths": {
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header",
+      "description": "Enter 'Bearer' [space] and then your token in the text input below.\n\nExample: 'Bearer then token retrived'"
+    }
+},
+"paths": {
     "/retrieveEvents/All": {
       "get": {
         "description": "",
@@ -53,6 +61,11 @@
             "in": "header",
             "type": "string"
           }
+        ],
+        "security": [
+        {
+          "Bearer": []
+        }
         ],
         "responses": {
           "200": {
@@ -136,6 +149,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+          "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -164,11 +181,39 @@
             "type": "string"
           },
           {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "AccName": {
+                  "example": "any"
+                },
+                "AccCtcNo": {
+                  "example": "any"
+                },
+                "AccAddr":{
+                  "example": "any"
+                },
+                "AccPostalCode":{
+                  "example": "any"
+                },
+                "AccDOB":{
+                  "example": "any"
+                }
+              }
+            }
+          },
+          {
             "name": "authorization",
             "in": "header",
             "type": "string"
           }
         ],
+        "security": [
+          {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -238,6 +283,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -401,6 +450,41 @@
     "/EventMgr/createEvents": {
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "EventName": {
+                  "example": "any"
+                },
+                "EventDesc": {
+                  "example": "any"
+                },
+                "EventPrice": {
+                  "example": "0"
+                },
+                "EventDate": {
+                  "example": "any"
+                },
+                "EventCat": {
+                  "example": "any"
+                },
+                "EventLocation": {
+                  "example": "any"
+                },
+                "EventRegEndDate": {
+                  "example": "any"
+                },
+                "EventIntake": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -477,6 +561,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -504,8 +592,33 @@
             "name": "authorization",
             "in": "header",
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "BookEventID": {
+                  "example": "BE003"
+                },
+                "BookEventDate": {
+                  "example": "2024-07-29 13:11:00"
+                },
+                "EventID": {
+                  "example": "Ev00005"
+                },
+                "AccID": {
+                  "example": "ACC291"
+                }
+              }
+            }
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "201": {
             "description": "Created"
@@ -538,6 +651,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "204": {
             "description": "No Content"
@@ -566,7 +683,12 @@
             "in": "header",
             "type": "string"
           }
+
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -588,7 +710,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "BookEventID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -599,6 +721,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -623,7 +749,7 @@
         "description": "",
         "parameters": [
           {
-            "name": "id",
+            "name": "AccID",
             "in": "path",
             "required": true,
             "type": "string"
@@ -634,6 +760,10 @@
             "type": "string"
           }
         ],
+        "security": [
+        {
+            "Bearer": []
+        }],
         "responses": {
           "200": {
             "description": "OK"
@@ -1204,4 +1334,5 @@
       }
     }
   }
+  
 }
