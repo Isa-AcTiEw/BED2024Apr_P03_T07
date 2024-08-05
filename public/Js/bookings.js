@@ -2,8 +2,9 @@ document.addEventListener('DOMContentLoaded', () => {
     getAllBookings();
 });
 
+
 async function getAllBookings() {
-    const token = localStorage.getItem('token');
+    //const token = localStorage.getItem('token');
 
     try {
         const token = localStorage.getItem('token');
