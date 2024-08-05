@@ -63,9 +63,8 @@ app.get('/facilitiesMgr', (req, res) => {
 });
 
 app.get('/BookedEvents',verifyJWT, (req, res) => {
-  res.sendFile(__dirname + '/public/User/Event/BookedEvents.html');
+  res.sendFile(__dirname + '/public/User/BookedEvents.html');
 });
-
 app.get('/Bookings',(req,res) =>{
   res.sendFile(__dirname + "/public/User/bookings.html")
 })

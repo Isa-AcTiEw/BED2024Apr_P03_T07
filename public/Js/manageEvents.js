@@ -1,11 +1,30 @@
 
-const token = localStorage.getItem('token')
-
+const token = localStorage.getItem('token');
 document.addEventListener('DOMContentLoaded',async()=>{
     const token = localStorage.getItem('token');
         if (token) {
             console.log('Token found:', token);
-            await checkUserLogin(token); 
+            const logout = document.getElementById('logout')
+            console.log(logout);
+            if (logout) {
+                logout.addEventListener('click', (event) => {
+                event.preventDefault()
+                localStorage.removeItem('token'); 
+                localStorage.removeItem('AccName'); 
+                localStorage.removeItem('AccID');
+
+            // Log the token status after clearing
+            const clearedToken = localStorage.getItem('token');
+            console.log('Token after logout:', clearedToken);
+
+            showAlert('success', 'Logout successful!');
+            setTimeout(() => {
+                window.location.href = '../index.html'; 
+            }, 1000); 
+        });
+        await checkUserLogin(token); 
+        }
+            
         }
         else {
             alert('You must be logged in to view this page.');
@@ -329,7 +348,7 @@ function updateEvent(){
                                     <label for="event_cat" class="form-label">Event Category</label>
                                     <select class="form-select" id="editEventCat" required>
                                         <option selected>${EventCat}</option>
-                                        <option value="Active Ageing">Active Ageing</option>
+                                        <option value="Active Aging">Active Aging</option>
                                         <option value="Cooking">Cooking</option>                                                                         
                                         <option value="Arts and Culture">Arts and Culture</option>
                                         <option value="Festivities">Festivities</option>
