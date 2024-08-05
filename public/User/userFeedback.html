@@ -316,6 +316,7 @@
 
                 if (response.ok) {
                     showAlert('success','Feedback updated successfully!');
+                    location.reload();
                 } else {
                     showAlert('danger','Failed to update feedback. Please try again.');
                 }

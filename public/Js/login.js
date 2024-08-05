@@ -159,7 +159,7 @@ function displayUserMenu(AccName, AccPfp) {
         <ul class="dropdown-menu dropdown-menu-lg-end">
             <li><a href="/Profile" class="dropdown-item">Profile</a></li>
             <li><a href="/Bookings" class="dropdown-item">Bookings</a></li>
-            <li><a href="/BookedEventsyay" class="dropdown-item">Booked Events</a></li>
+            <li><a href="/User/BookedEvents.html" class="dropdown-item">Booked Events</a></li>
             <li><button class="dropdown-item" type="button" id="logout-button">Logout</button></li>
         </ul>
     `;
